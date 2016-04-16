@@ -13,6 +13,7 @@
     
     homeController.init= function(app){
      
+        /*
         app.get("/",function(req,res,next){
              try {
                  
@@ -32,7 +33,11 @@
              }
                
         });   
-           
+           */
+        app.get("/",function(req,res){
+            res.send("welcome to mykathua.com");
+            
+        });   
         app.get("/api/users",function(req,res,next){
         
         data.getUsers(function(err,results){
