@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "description": "node js powered webs site",
   "main": "server.js",
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/navs23/mykathua.git"
+  },
   "author": "Naveen Sharma <navs@hotmail.co.uk>",
   "dependencies": {
     "async": "~0.2.8",
@@ -23,6 +26,16 @@
     "passport-google-oauth": "^1.0.0",
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.4",
-    "socket.io": "^1.0.6"
-  }
+    "socket.io": "^1.0.6",
+    "msssql":"^3.0.1"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "devDependencies": {},
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/navs23/mykathua/issues"
+  },
+  "homepage": "https://github.com/navs23/mykathua#readme"
 }
