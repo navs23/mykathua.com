@@ -1,0 +1,23 @@
+@html.extend('layout',function(model){
+
+@html.block("main",function(model){
+    @if (model.error){
+        <p class="text-error"> error occured:@model.error</p>
+        }
+<h1>@model.title</h1>
+
+})
+
+})
+
+<script type="text/javascript">
+     $(document).ready(function () {
+
+        
+      
+       
+      
+
+});
+
+</script>

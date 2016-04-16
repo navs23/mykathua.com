@@ -1,0 +1,105 @@
+@html.extend('layout',function(model){
+
+@html.block("css",function(){
+<link rel="stylesheet" href="/resources/css/local/media.css"/>
+});
+@html.block("js",function(){
+<script src="/resources/js/local/media.js"></script>  
+});
+@html.block("main",function(model){
+    @if (model.error){
+        <p class="text-error"> error occured:@model.error</p>
+        }
+      
+<table border="0" class="table table-bordered" id="tblStory">
+     <thead><tr class="table-heading-row" ><td style="text-align:center">
+         
+         <span class="Story-heading">National stories </span><i id="nationalStoriesSpin" class="fa fa-spinner fa-pulse"></i>
+     </td>
+     <td style="text-align:center"><span class="Story-heading">Kathua in news</span>&nbsp;<i id="kathuaNewsSpin" class="fa fa-spinner fa-pulse"></i>
+    </td>
+        <td  style="text-align:center;">
+            <table><tr><td style="text-align:center"><span class="Story-heading">Your stories</span>&nbsp;<i id="yourStoriesSpin" class="fa fa-spinner fa-pulse"></i></td><td> <a>Post your story</a></td></tr></table>
+            
+          
+        </td>
+        <td  style="text-align:center;">
+            <table><tr><td style="text-align:center"><span class="Story-heading">@@Kathua</span><i id="tweetsSpin" class="fa fa-spinner fa-pulse"></i></td></tr></table>
+            
+          
+        </td>
+    </tr></thead>    
+    <tr style="valign:top;">
+       <td>
+<div id="news-national" class="news-national">
+    <table class="news-items" border="0">
+   
+   @model.gNews.forEach(function(i){
+   <tr>
+       <td style="width:70px;"><a href='@i.link' target='_new'><img src='@i.thumbnail' style='width:70px;height:70px'/></a></td>
+      <td style="width:100%;" colspan="2">@html.raw(i.description.trim())<span><a href='@i.link' target='_new'>read more</a></span></td>
+      </tr>
+   })
+    </table>
+    
+</div>
+</td>
+<td><div id="divStateNews" >
+    <table class="news-items" border="1">
+   
+   @model.deNews.forEach(function(i){
+   <tr>
+       <td style="width:70px;"><a href='@i.link' target='_new'><img src='@i.thumbnail' style='width:70px;height:70px'/></a></td>
+      <td style="width:100%;" colspan="2">@html.raw(i.description)<span><a href='@i.link' target='_new'>read more</a></span></td>
+      </tr>
+   })
+   
+    @model.jagranNews.forEach(function(i){
+   <tr>
+       <td style="width:70px;"><a href='@i.link' target='_new'><img src='@i.thumbnail' style='width:70px;height:70px'/>
+            </a></td>
+      <td style="width:100%;" colspan="2">
+           <a href='@i.link' target='_new'>@i.news</a><span>@i.date</span> 
+          @html.raw(i.description)<span><a href='@i.link' target='_new'>read more</a></span></td>
+      </tr>
+   })
+  
+    @model.auNews.forEach(function(i){
+   <tr>
+       <td style="width:70px;"><a href='@i.link' target='_new'><img src='@i.thumbnail' style='width:70px;height:70px'/>
+            </a></td>
+      <td style="width:100%;" colspan="2">
+           <a href='@i.link' target='_new'>@i.news</a><span>@i.date</span> 
+          @html.raw(i.description)<span><a href='@i.link' target='_new'>read more</a></span></td>
+      </tr>
+   })
+   
+    </table>
+<div>
+   
+    
+</div>
+    
+    
+</div></td>
+<td valign="top" colspan="1">
+<div id="divContent" ></div>
+
+</td>
+<td><div id="divTweets" class="kth-tweets" >
+    
+    <ul></ul>
+</div></td>
+</tr>
+</table>
+
+})
+
+})
+
+<script type="text/javascript">
+   
+
+
+
+</script>

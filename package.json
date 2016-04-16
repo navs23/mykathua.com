@@ -1,0 +1,28 @@
+{
+  "name": "mykathua.com",
+  "version": "0.0.0",
+  "description": "node js powered webs site",
+  "main": "server.js",
+  "repository": "",
+  "author": "Naveen Sharma <navs@hotmail.co.uk>",
+  "dependencies": {
+    "async": "~0.2.8",
+    "bootstrap": "^3.3.6",
+    "browserify": "^13.0.0",
+    "browsify": "0.0.4",
+    "carousel": "0.0.3",
+    "connect-flash": "^0.1.1",
+    "ejs": "^2.4.1",
+    "ejs-locals": "^1.0.2",
+    "express": "~3.2.4",
+    "font-awesome": "^4.5.0",
+    "jplayer": "^2.9.2",
+    "method-override": "^2.3.5",
+    "passport": "^0.3.2",
+    "passport-facebook": "^2.1.0",
+    "passport-google-oauth": "^1.0.0",
+    "passport-local": "^1.0.0",
+    "passport-twitter": "^1.0.4",
+    "socket.io": "^1.0.6"
+  }
+}

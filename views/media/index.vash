@@ -1,0 +1,98 @@
+@html.extend('layout',function(model){
+
+@html.block("css",function(){
+<link rel="stylesheet" href="/resources/css/local/media.css"/>
+});
+@html.block("js",function(){
+<script src="/resources/js/local/media.js"></script>  
+});
+@html.block("main",function(model){
+    @if (model.error){
+        <p class="text-error"> error occured:@model.error</p>
+        }
+        
+      
+<!--<table border="1" class="table table-bordered table-responsive" id="tblStory">-->
+<div class="row">
+  <div class="col-md-4" style="background-color:none;">
+      <h2>Top National Stories</h2>
+  <div id="divNational" class="news-national">
+     
+   @model.news.googleNews.forEach(function(e){
+   
+   <div class="row">
+       <div class="col-md-12">
+           <a href="@e.link" target="_new"><img height="50" width="50" class ="img-thumbnail text-center" style="vertical-align:middle;" src="@e.thumbnail"/></a>
+           <span class="text-small">@e.description<a href="@e.link" target="_new">read more</a></span>
+       </div>
+    </div>
+   })
+   
+</div>    
+</div>
+
+  <div class="col-md-4" style="background-color:none;">
+      <h2>Regional News</h2>
+  <div id="divRegional" class="news-national">
+     
+   @model.news.jammuNews.forEach(function(e){
+   
+   <div class="row">
+       <div class="col-md-12">
+           <a href="@e.link" target="_new"><img height="50" width="50" class ="img-thumbnail text-center" style="vertical-align:middle;" src="@e.thumbnail"/></a>
+           <span class="text-small">@e.description<a href="@e.link" target="_new">read more</a></span>
+       </div>
+    </div>
+   })
+   
+</div>    
+</div>
+
+  <div class="col-md-4" style="background-color:none;">
+      <h2>Local News</h2>
+  <div id="divRegional" class="news-national">
+    
+   @if (model.news.dailyexcelsiorNews !=undefined)
+   {
+   @model.news.dailyexcelsiorNews.forEach(function(e){
+   
+   <div class="row">
+       <div class="col-md-12">
+           <a href="@e.link" target="_new"><img height="50" width="50" class ="img-thumbnail text-center" style="vertical-align:middle;" src="@e.thumbnail"/></a>
+           <span class="text-small">@e.description<a href="@e.link" target="_new">read more</a></span>
+       </div>
+    </div>
+    
+   })
+   }
+   @if (model.news.jagranNews != undefined)
+   {
+    @model.news.jagranNews.forEach(function(e){
+   
+   <div class="row">
+       <div class="col-md-12">
+           <a href="@e.link" target="_new"><img height="50" width="50" class ="img-thumbnail text-center" style="vertical-align:middle;" src="@e.thumbnail"/></a>
+           <span class="text-small">@e.description<a href="@e.link" target="_new">read more</a></span>
+       </div>
+    </div>
+    
+   })
+   }
+</div>    
+</div>
+
+</div>
+
+})
+
+})
+
+<script type="text/javascript">
+   
+  $(document).ready(function () {
+
+    
+});
+
+
+</script>

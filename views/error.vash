@@ -1,0 +1,41 @@
+@html.extend('layout',function(model){
+
+@html.block("css",function(){
+<link rel="stylesheet" href="/resources/css/local/home.css"/>
+
+});
+@html.block("js",function(){
+<script src="/resources/js/local/media.js"></script>  
+ 
+});
+<div class="container">
+@html.block("main",function(model){
+
+<div class="row">
+<div class="col-md-8">
+<p>
+     @if (model.errorMessage !=undefined){
+    <p>model.errorMessage</p>
+      }
+      
+</p>
+
+
+})
+
+</div>
+
+
+</div>
+
+</div>
+})
+
+
+
+<script type="text/javascript">
+      $(document).ready(function () {
+   
+});
+
+</script>

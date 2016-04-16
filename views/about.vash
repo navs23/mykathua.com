@@ -1,0 +1,42 @@
+@html.extend('layout',function(model){
+@html.block("js",function(){
+
+ <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+});
+<h1>@model.title</h1>
+
+
+@html.block("main",function(model){
+<ul id="messages"></ul>
+    <form action="">
+      <input id="m" autocomplete="off" /><button>Send</button>
+    </form>
+
+});
+
+});
+
+<script type="text/javascript">
+$(document).ready(function(){
+     var socket = io();
+     $('form').submit(function(){
+        socket.disconnect(); 
+        return;
+        socket.emit('message', $('#m').val());
+        $('#m').val('');
+        return false;
+        
+      });
+      
+      
+      socket.on('message', function(msg){
+          
+            //$('#messages').text(msg.title + '|' + msg.starttime);
+            
+            $("#messages").fadeOut(function() {
+            $(this).text(msg.title + '|' + msg.starttime).fadeIn();
+});
+      });
+     
+});
+</script>

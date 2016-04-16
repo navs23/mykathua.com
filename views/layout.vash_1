@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+    <head>
+        <title>@model.title</title>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="/resources/css/site.css"/>
+        <link rel="stylesheet" href="/resources/css/bootstrap-responsive.min.css"/>
+        <link rel="stylesheet" href="/resources/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/resources/css/jquery-comments.css"/>
+        <link rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.min.css"/>
+                @html.block("css")
+        <script src="/resources/js/jquery.min.js"></script>
+        <script src="/resources/js/bootstrap.min.js"></script>
+        <script src="/resources/js/angular.min.js"></script>
+        <script src="/resources/js/util.js"></script>  
+        <script src="/resources/js/jquery-comments.min.js"></script>  
+        @html.block("js")
+   </head>
+    
+    <body>
+        <!-- menu-->
+        <button type="button" class="btn btn-default navbar-btn">Sign in</button>
+        <!-- end menu-->
+        
+    <div class="menu-top-div">
+     <!--  <img class="header" src="/resources/img/kth-main.png" />-->
+    <div class="weather">@html.raw(model.weather)</div>
+</div>
+    <div class="nav-menubar" id="divMenuBar">
+        <ul>
+           
+        <li><a href="/">Home</a></li>
+        <li><a  href="/music/">Folk Music</a></li>
+        <li><a href="/gallery/">Gallery</a></li>
+        <li><a href="/media/">News/Articles</a></li>
+        <li><a href="/message/">My Message</a></li>                       
+        <li><a href="/classified/">Classified</a></li>
+        <li><a href="/trainstatus/">Live Train Status</a></li>
+        <li><a href="/account/">Fellow KATHUAITES</a></li>
+         @if (model.user==undefined){
+        <li><a href="/login/">Log in</a></li>
+        }
+        else
+        {
+       
+        <li><a href="/profile/">Profile</a>|<a href="/logout/">Log Out</a></li>
+        }    
+        </ul>
+        
+    </div>
+     @if (model.user!=undefined){
+     if(model.user.profile_image_url !=undefined)
+     {
+     <img src='@model.user.profile_image_url' alt='@model.user.displayName'/><p>Hello @model.user.displayName,</p>
+     }
+     else{
+      <i>Hello @model.user.displayName,</i> 
+     }
+        
+    }
+    <div class="main">
+            @html.block("main")
+    </div>
+    
+
+    
+    
+    <footer>footer</footer>
+    </body> 
+    
+</html>
+
+<script type="text/javascript">
+     $(document).ready(function () {
+      
+    
+      
+
+});
+
+</script>

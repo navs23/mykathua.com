@@ -1,0 +1,21 @@
+.kth-tweets ul {list-style: none;}
+
+ .kth-tweets ul li {
+            color: #76949F;
+            text-decoration: none;
+            border-right: 1px solid #eee;
+            font-size:.75em;      
+          
+        }
+/*
+.div-story
+{
+    
+    display:none;
+    
+}
+.div-comments{
+    display:none;
+    
+}
+*/

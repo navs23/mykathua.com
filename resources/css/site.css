@@ -1,0 +1,149 @@
+
+.menu-top-div{
+    
+margin-top:0px;
+position: relative;    
+ 
+}
+
+.weather{
+    
+position: absolute;
+top: 0px;
+left: 10px; 
+padding: 0px;
+background-color: transparent;
+border: 0px;
+color:yellow;
+font-size: .5em !important;
+}
+
+
+img.header{
+    
+   width:100%;
+    height:165px;
+    border:0px solid;
+    
+}
+#menu-top-img p{
+    
+    text-align:center;
+    font-size:22px;
+    color:white;
+}
+
+
+.divMenuBar {
+    background-color:#404040 ;
+    
+}
+
+
+#divMenuBar ul
+{
+   list-style-type: none;
+   padding:10px;
+}
+
+#divMenuBar li {
+float: left;
+margin-right: 10px;
+}
+
+/*
+
+div.navbar-collapse a:hover {
+  
+
+letter-spacing:.1.5em;
+font-size:22px;
+transition:font-size 1s,letter-spacing 1s;
+}*/
+footer
+{
+    background-color:#E8E8E8;
+    position:relative;
+    width:100%;
+    bottom:0px;
+    height:25px;
+     text-align:center;
+    font-size:1em;
+    color:black;
+}
+.news-national{
+  
+    
+    
+}
+.Story-heading
+{
+    
+    font-size:20px;
+}
+.table-heading-row
+{
+    
+    background-color: whiteSmoke;
+    padding: 0;
+    zoom: 1;
+    height: 35px;
+}
+#tblStory tr td
+{
+    width:200px;
+    font-size:12px;
+}
+.div-story{
+   
+    
+}
+
+
+.menuitem
+{
+    color:white !important;
+    
+}
+
+.dropdown-toggle
+{
+  background-color:#404040 ;
+    
+}
+.dropdown-menu
+{
+    
+}
+#tblContacts thead
+{
+    
+    
+}
+
+#secLeftSidebar
+{
+    
+    padding-bottom: 20px;
+    
+}
+
+.border-right
+{
+  border-right: dotted 1px black;
+  max-height: 500px;
+  float: left;
+
+}
+
+.border-left
+{
+    border-left: dotted 1px black;
+}
+
+.marquee {
+  width: 200px;
+  overflow: hidden;
+  border: 0px solid #ccc;
+  
+}

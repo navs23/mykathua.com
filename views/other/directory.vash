@@ -1,0 +1,47 @@
+@html.extend('layout',function(model){
+
+@html.block("main",function(model){
+    @if (model.error){
+        <p class="text-error"> error occured:@model.error</p>
+        }
+    <p><strong>Important names and contact details</strong>  - <i>sourced from official records</i></p>
+<div>@html.raw(model.data)</div>
+
+})
+@html.block("leftSideBar",function(model){
+<div class="border-right row">
+
+    <div class="col-md-10" style="margin-left:5px;">
+            <h3 class="btn btn-info" style="margin-left:20px;">Useful links of Govt. websites</h3>
+            <hr/>
+            <a href="http://india.gov.in//" target="_blank"><img src="/resources/img//India.gov.in-banner.gif" height="60" border="0" width="200"></a>
+            <a href="http://mygov.in/" target="_blank"><img src="http://www.jammu.nic.in/images/mygovbanner220X60.jpg" height="60" width="200" border="0"></a>
+<a href="http://india.gov.in/" target="_blank"><img src="http://www.jammu.nic.in/images/indiagov.jpg" height="50" class="img-rounded" width="200" border="0"></a>
+<a href="https://data.gov.in//" target="_blank"><img src="/resources/img/datagov.png" height="60" width="200" border="0"></a>
+
+
+</div>
+<div class="col-md-10"><a href="http://districts.nic.in/" target="_blank"><img src="http://www.jammu.nic.in/images/districts_india.jpg" height="60" border="0"></a>
+<a href="http://agmarknet.nic.in/" target="_blank"><img src="http://www.jammu.nic.in/images/admarkenet.jpg" height="60" border="0"></a>
+<a href="http://results.nic.in/" target="_blank"><img src="http://www.jammu.nic.in/images/exam_results.jpg" height="60" border="0"></a>
+
+<a href="http://tenders.gov.in/" target="_blank"><img src="http://www.jammu.nic.in/images/tenders_india.jpg" height="60" border="0"></a>
+
+
+
+</div>
+
+
+</div>
+})
+
+	
+
+})
+
+<script type="text/javascript">
+     $(document).ready(function () {
+
+});
+
+</script>

@@ -1,0 +1,35 @@
+@html.extend('layout',function(model){
+
+@html.block("main",function(model){
+    @if (model.error){
+        <p class="text-error"> error occured:@model.error</p>
+        }
+<h1>@model.title</h1>
+
+<div class="container">
+
+	<div class="jumbotron text-center">
+		<h1><span class="fa fa-lock"></span>Login using either of the following.. we wont't store your personal details.</h1>
+
+		<p>Login or Register with:</p>
+
+		<a href="/auth/twitter" class="btn btn-info"><span class="fa fa-twitter"></span> Twitter</a>
+		<a href="/auth/facebook" class="btn btn-primary"><span class="fa fa-facebook"></span> Facebook</a>
+	</div>
+
+</div>
+})
+
+})
+
+<script type="text/javascript">
+     $(document).ready(function () {
+
+        
+      
+       
+      
+
+});
+
+</script>

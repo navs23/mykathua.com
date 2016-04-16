@@ -1,0 +1,97 @@
+@html.extend('layout',function(model){
+
+@html.block("css",function(){
+<link rel="stylesheet" href="/resources/css/local/home.css"/>
+<link rel="stylesheet" href="/resources/css/local/media.css"/>
+});
+@html.block("js",function(){
+<script src="/resources/js/local/media.js"></script>  
+ 
+});
+<div class="container">
+@html.block("main",function(model){
+
+<div class="row">
+<div class="col-md-2">
+    
+</div>    
+<div class="col-md-8">
+<p>
+     @if (model.user !=undefined){
+     <span><img src="@model.user.profile_image_url" class="img-circle"/></span>
+      <p>Helllo  <i>@model.user.displayName</i></p>
+      }
+      
+      
+</p><h3>Thank you for taking time and stopping by @@ <a href="http://wwww.myKathua.com">MyKathua.com</a></h3> 
+
+<p>We have created and dedicated this portal for the people of Kathua living in or outside of <b>Kathua</b>, like me I am sure you would also like to stay put with what is being going on back home and  I am sure our website will help you to keep updated. 
+</p>
+<p>We are open to ideas and would like to hear from all of you, so get in touch and leave your comments below or write to me @@ <a href="emailto:mykahtua@@gmail.com">mykathua@@gmail.com</a>
+
+
+</p>
+<p><a href="https://twitter.com/mykathua" class="twitter-follow-button" data-show-count="false">Follow @@mykathua</a></p>
+<div class="row">
+    <div class="col-md-12">
+      <div id='divError'></div>
+        <h3>Leave a message</h3>
+
+             <div id='divComment3'></div>
+</div>
+        
+    </div>
+    
+</div>
+</div>
+
+})
+
+</div>
+
+
+@html.block("leftSideBar",function(model){
+<div class="border-right">
+@html.raw(model.weather)
+</div>
+})
+
+
+@html.block("rightSideBar",function(model){
+<h2>@@Kathua</h2>
+<div style="background-color:none;" class="border-left" id="divTweets">
+<ul id='tweets'>
+    @html.raw(model.tweets)
+    
+    
+</ul>
+</div>
+
+
+})
+
+
+})
+
+
+
+<script type="text/javascript">
+      $(document).ready(function () {
+         
+   //    setTimeout(function() { getStoryComments(3); }, 100);
+   
+   	setTimeout(function() { 
+   		
+   		getStoryComments({id:3,diverr:'#divError'},function(err){alert(err);},function(data){alert(data);});
+   	}
+   	,100);
+          
+   
+         
+
+
+!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+
+});
+
+</script>

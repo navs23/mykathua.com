@@ -1,0 +1,21 @@
+@html.extend('layout',function(model){
+
+@html.block("main",function(model){
+    @if (model.error){
+        <p class="text-error"> error occured:@model.error</p>
+        }
+    <h3>Live Train Status at Kathua station</h3>
+    <div class="row">
+<div class="col-md-12">@html.raw(model.trainstatus)</div>
+</div>
+})
+
+})
+
+<script type="text/javascript">
+     $(document).ready(function () {
+        // $()
+
+});
+
+</script>

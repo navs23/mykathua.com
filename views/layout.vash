@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="mykathua.com, a website about kathua, dogriradio radio dogri, jammu and kashmir india dogri kathua"/>
+     <meta name="description" content="mykathua.com, kathua news, j&k,India,dogri radio"/>
+    <meta name="author" content="Naveen Sharma"/>
+        <title>@model.title
+         
+        </title>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        
+        <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css"/>
+        
+        <link rel="stylesheet" type="text/css" href="/node_modules/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="/resources/css/jquery-comments.css"/>
+        <link rel="stylesheet" type="text/css" href="/resources/css/site.css"/>
+        
+        @html.block("css")
+        <script src="/resources/js/jquery.min.js"></script>
+        <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="/resources/js/angular.min.js"></script>
+        <script src="/resources/js/util.js"></script>  
+        <script src="/resources/js/jquery-comments.min.js"></script>  
+        @html.block("js")
+   </head>
+    <body>
+        <div class="page">
+             <div class="row" style="background-color:none;">
+                <div class="col-md-12">
+                    
+               <header>
+                   <!--<img class="header" src="/resources/img/kth-main.png" />-->
+                   </header>
+               
+                </div>
+             </div>
+             <div class="fluid-container">
+             <div class="row" style="background-color:none;">
+		       <div class="col-md-12" style="background-color:none;">
+			    <section id="topmenu">
+				<nav class="navbar navbar-default divMenuBar">
+                <div class="container-fluid">
+                
+                <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand success" href="/"><u class="success">Mykathua.com</u></a>
+                </div>
+                
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                <li><a href="/" class="menuitem">Home <span class="sr-only">(current)</span></a></li>
+                <li><a href="/media/" class="menuitem">News/Articles</a></li>
+                <li><a  href="/music/" class="menuitem">Live Music</a></li>
+                <li><a href="/gallery/" class="menuitem">Photo Gallery</a></li>
+                <!--<li><a href="/classified/" class="menuitem">Classified</a></li>-->
+                <li><a href="/jobs/" class="menuitem">Jobs</a></li>
+                <li><a href="/directory/" class="menuitem">Useful Contacts and links</a></li>
+                <li><a href="/trainstatus/" class="menuitem">Live Train Status</a></li>
+                <!--<li><a href="/account/" class="menuitem">Fellow KATHUAITES</a></li>-->
+                @if (model.user==undefined){
+                <li><a href="/login/" class="menuitem" id="liLoginName">Log in</a></li>
+                }
+                else
+                {
+                
+                <li><a href="/logout/" class="menuitem">Log Out</a></li>
+                }    
+                </ul>
+             
+                </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+                </nav>
+                </section>
+				</div>
+    </div>    
+             
+             <div class="row">
+                <div id ="secLeftSidebar" class="col-md-2" style="background-color:none">
+                    @html.block("leftSideBar")
+               
+                <!--div class="row">
+                    <div class="col-md-12">
+                          <h3>Advertise with us</h3>
+                        <div><a>click here</a></div>
+                        
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>advertisement - 1</h3>
+                        <div><p>you advertisement</p></div>
+                        
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                    <h3>advertisement - 2</h3>
+                    <div><p>you advertisement</p></div>
+                    </div>
+                </div-->
+                
+                </div>
+                
+                <div id="main" class="col-md-8">
+                    <div class="fuild-container">@html.block("main")
+                    </div>
+                    </div>
+                
+                <div id ="secRightSidebar" class="col-md-2" style="background-color:none">@html.block("rightSideBar")</div>
+              
+                </div>
+                </div>
+</div>
+        <footer><a href="">Contact Us</a>|<a href="">About us</a></footer>
+    </body> 
+     
+</html>
+
+<script type="text/javascript">
+
+     $(document).ready(function () {
+      
+    
+      
+
+});
+
+</script>

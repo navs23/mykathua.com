@@ -1,0 +1,26 @@
+@html.extend('layout',function(model){
+
+@html.block("main",function(model){
+    @if (model.error){
+        <p class="text-error"> error occured:@model.error</p>
+        }
+<h1>@model.title</h1>
+<input id ="data" type="hidden" value ="@model.users" />
+<div id="divContent"></div>
+})
+
+})
+
+<script type="text/javascript">
+     $(document).ready(function () {
+      
+     
+    var data=getJsonData('/api/users',null);
+    
+    var html=searliseJsonIntoHtmlTable(data);
+    $('#divContent').html(html);
+      
+
+});
+
+</script>
