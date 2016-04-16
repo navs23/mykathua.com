@@ -21,13 +21,17 @@
     "font-awesome": "^4.5.0",
     "jplayer": "^2.9.2",
     "method-override": "^2.3.5",
+    "msssql": "^3.0.1",
+    "oauth": "^0.9.14",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.0",
     "passport-google-oauth": "^1.0.0",
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.4",
+    "request": "^2.71.0",
     "socket.io": "^1.0.6",
-    "msssql":"^3.0.1"
+    "twitter": "^1.2.5",
+    "vash": "^0.11.3"
   },
   "scripts": {
     "start": "node server.js"
