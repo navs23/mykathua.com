@@ -189,7 +189,7 @@ commentData.username =req.user.username;
 commentData.comments =req.params.comments;
 commentData.created = new Date();
 
-data.saveStoryComments(commentData,(results)=>{res.send(results);},(err)=>{console.log(err);return next(err);});
+data.saveStoryComments(commentData,function(results){res.send(results);},function(err){console.log(err);return next(err);});
        
 });
 
@@ -314,7 +314,7 @@ errCb(err);
 }
 }
 
-var getDENews=(cb,cberr)=>{
+var getDENews=function(cb,cberr){
 
 var news=[];
 dex.scrape('http://www.dailyexcelsior.com/state/',function(html){
@@ -350,7 +350,7 @@ $('div.contentheading').each(function(i,e){
 }
 
 
-var getJagranNews=(cb,cberr)=>{
+var getJagranNews=function(cb,cberr){
 
 console.log('here');
 var news=[];
@@ -363,7 +363,7 @@ for(var newsCtr=0;newsCtr<4;newsCtr++)
     
     {
     
-    ((pageCtr)=>{
+    (function(pageCtr){
         
          url='http://www.jagran.com/local/jammu-and-kashmir_kathua-news-hindi-page' + (pageCtr+1) +'.html';
         
@@ -426,7 +426,7 @@ for(var newsCtr=0;newsCtr<4;newsCtr++)
 
 }
 
-var getAJNews=(cb,cberr)=>{
+var getAJNews=function(cb,cberr){
 var news=[];
 var url='http://www.amarujala.com/channels/city/kathua/kathua-hindi-news/';
 
@@ -508,7 +508,7 @@ function daydiff(first, second) {
 return Math.round((second-first)/(1000*60*60*24));
 }
 
-var testCb = (cb)=>{
+var testCb = function(cb){
 
 //  async.series([
 //    function(){

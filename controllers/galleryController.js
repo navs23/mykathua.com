@@ -1,4 +1,4 @@
-((galleryController)=>{
+(function(galleryController){
     
    var data =require("../sql");
     var cheerio = require('cheerio');
@@ -32,7 +32,7 @@
     
 };
 
-var getImages=(cb)=>{
+var getImages=function(cb){
     
       var images=[];
       var imageItem={};
