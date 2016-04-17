@@ -77,7 +77,7 @@ process.on('uncaughtException', function (err) {
   
 })
 
-process.stdout.write('\033c');
+//process.stdout.write('\033c');
 
 var controllers = require("./controllers");
 
@@ -90,4 +90,8 @@ var io = sockethelper.listen(server,app);
 sockethelper.start(io);
 
 
-server.listen(process.env.port || 8080);
+server.listen(process.env.PORT);
+
+console.log('web server running on %d',process.env.PORT);
+
+/// end 

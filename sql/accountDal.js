@@ -14,12 +14,12 @@
         }
     }
     
-    data.init=(user)=>{
+    data.init= function(user){
         
         _user=user;
     }
 
-    data.list = (cb)=>{
+    data.list = function(cb){
       
       sql.connect(config)
             .then(function() {
@@ -39,7 +39,7 @@
     
     // end getusers
     
-    data.saveUser  = (user,fnSuccess,fnError)=>{
+    data.saveUser  = function(user,fnSuccess,fnError){
         console.log("saving user");
         sql.connect(config).then(function() {
         
@@ -58,7 +58,7 @@
     
     }
 
-data.deleteUser  = (user,fnSuccess,fnError)=>{
+data.deleteUser  = function(user,fnSuccess,fnError){
 
     sql.connect(config).then(function() {
 
