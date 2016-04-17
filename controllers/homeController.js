@@ -14,6 +14,7 @@
     homeController.init= function(app){
      
         app.get("/",function(req,res,next){
+            console.log('processing request for %s',req.url);
              try {
                  
             
@@ -33,6 +34,7 @@
                
         });   
            
+        
         app.get("/api/users",function(req,res,next){
         
         data.getUsers(function(err,results){
