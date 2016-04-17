@@ -38,8 +38,8 @@ module.exports = function(passport) {
 
         consumerKey     : 'yBuiGvDaFlNeXdoMjaJAdjvl2',
         consumerSecret  : 'rKD8ZiJ10g5qwHnVrLghnVtDkoRb5q977FTt3N1fn1HYrOaIkY',
-        callbackURL     : 'http://navs-navs23.c9users.io/auth/twitter/callback'
-        
+        //callbackURL     : 'http://navs-navs23.c9users.io/auth/twitter/callback'
+        callbackURL     : 'http://mykathua.herokuapp.com/auth/twitter/callback'
 
     },
     function(token, tokenSecret, profile, done) {
@@ -86,7 +86,7 @@ module.exports = function(passport) {
         // pull in our app id and secret from our auth.js file
         clientID        : '1508327992809142',
         clientSecret    : 'bb939e0489c4caca9167bfc508f77c5b',
-        callbackURL     : 'http://navs-navs23.c9users.io/auth/facebook/callback'
+        callbackURL     : 'http://mykathua.herokuapp.com/auth/facebook/callback'
         
 
     },
