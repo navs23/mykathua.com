@@ -15,21 +15,7 @@ var liveConnections=0;
 
 require('./config/passport')(passport); // pass passport for configuration
 
-/*
-function logErrors(err, req, res, next) {
-	console.log('called logerror');	
-  console.error(err.stack);
-  next(err);
-}
-function clientErrorHandler(err, req, res, next) {
-	console.log('clientErrorHandler');	
-  if (req.xhr) {
-    res.status(500).send({ error: 'Something failed!' });
-  } else {
-    next(err);
-  }
-}
-*/
+
 
 app.configure(function() {
 
@@ -63,11 +49,20 @@ app.configure(function() {
   
   });
 	*/
+	if (app.get('env')=="development"){
 
     process.env.TWITTER_CONSUMER_KEY='yBuiGvDaFlNeXdoMjaJAdjvl2';
     process.env.TWITTER_CONSUMER_SECRET='rKD8ZiJ10g5qwHnVrLghnVtDkoRb5q977FTt3N1fn1HYrOaIkY';
     process.env.TWITTER_ACCESS_TOKEN_KEY='703646797646995457-mUvHGxvX9mwrSsVa69Cy51RW3sHxwDh';
     process.env.TWITTER_ACCESS_TOKEN_SECRET='2YlEelXvhaBP9PyGV2A1QMuRnDVy9wBI98Ya0eJoFMB7E';
+}
+else
+{
+    process.env.TWITTER_CONSUMER_KEY='SQark1H85GiCfLxkqN4KHuekT';
+    process.env.TWITTER_CONSUMER_SECRET='XbjoMydUrK8SbpRJN8Lpf7w7qf1zp7zFF1jJ6oFILajTLFfsrt';
+    process.env.TWITTER_ACCESS_TOKEN_KEY='703646797646995457-3xgxegVvlsinnlhcwxZwLDffJdBSNuY';
+    process.env.TWITTER_ACCESS_TOKEN_SECRET='WJSubhpmVHZ3XErI8kueh8TOVlPxnp8gqOeLcokryxoaV';
+}
 
 });
 
