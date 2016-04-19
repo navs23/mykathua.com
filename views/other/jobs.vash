@@ -42,16 +42,43 @@
 })
 
 @html.block("leftSideBar",function(model){
-<div class="border-right">
 
-<a href="/jobs/jk/">Search State jobs</a>
+<div class="row">
+    <div class="col-md-12">
+
+<div>
+<a href="/jobs/jk/"><img src="/resources/img/JK-job-search-2.png" class="img-rounded" height="30"/></a>
 </div>
+</div>
+<div class="row" style="background-color:none;padding:15px;">
+    <div class="col-md-12">
+
+        <h3>Discussion board</h3>
+      <div id='divError'></div>
+             <div id='divComment4'></div>
+</div>
+        
+    </div>
+</div>
+
 })
 
 })
 
 <script type="text/javascript">
      $(document).ready(function () {
+         
+            	getStoryComments({id:4,diverr:'#divError'},function(err){
+   		
+   	
+   		
+   		//$('#divError').html(err);
+   		
+   		
+   	},function(data){
+   		//alert(data);
+   		
+   	});
 
 });
 

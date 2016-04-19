@@ -224,9 +224,29 @@ data.upVoteStoryComment  = function(data,fnSuccess,fnError){
             .catch(function(err) {fnError(err);});
     });
     
-    }
+    };
+    data.getMessages  = function(param,fnSuccess,fnError){
+    
+    sql.connect(config).then(function() {
+    
+        var qry="select MessageId,[From],[To],[MessageBody] as [Message] from [mykth].[Message] with(nolock) order by messageId desc";
+       
+        console.log(qry);
+        var request = new sql.Request();
+        
+        request.query(qry)
+            .then(function(recordset) {
+                console.log(recordset);
+                fnSuccess(recordset);})
+            .catch(function(err) {
+                console.log(err);
+                fnError(err);});
+    });
+    
+    };
+    
 
- data.saveClassifiedAd  = function(param,fnSuccess,fnError){
+    data.saveClassifiedAd  = function(param,fnSuccess,fnError){
     
     sql.connect(config).then(function() {
     
@@ -251,7 +271,42 @@ data.upVoteStoryComment  = function(data,fnSuccess,fnError){
     
     }
 
-data.saveJob  = function(jobItem,fnSuccess,fnError){
+    data.saveMessage  = function(param,fnSuccess,fnError){
+    
+    sql.connect(config).then(function() {
+        
+        var qry="insert into [mykth].[Message]([From],[To],[MessageBody]) values (";
+        //var qry="insert into [mykth].[Classified]([Id] ,[UserId],[Heading],[CategoryCode],[Advert],[PhoneNumber],[EmailAddress]) values (";
+        
+        //qry+= param.id + ",";
+        qry+= "'" + param.name + '|' + param.email + '|' + param.phone + "','";
+        qry+="navs','";
+        qry+=param.message + "'";
+        
+        qry+=");select 'message sent successfully' as message";
+        
+        console.log(qry);
+        var request = new sql.Request();
+        
+        request.query(qry)
+            .then(function(recordset) {
+                //recordset.message="message sent successfully";
+                fnSuccess(recordset);}
+                
+                )
+            .catch(function(err) {
+                
+                console.log((err));
+                fnError(err);
+                
+                
+                
+            });
+    });
+    
+    };
+
+ data.saveJob  = function(jobItem,fnSuccess,fnError){
     
     sql.connect(config).then(function() {
         /*

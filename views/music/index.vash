@@ -19,8 +19,10 @@
     @if (model.error){
         <p class="text-error"> error occured:@model.error</p>
         }
-        <h3>You favourite DOGRI Radio - brings you non-stop music</h3>
+        <h3>Your favourite DOGRI Radio - brings you non-stop music</h3>
+        
 <p>@model.title</p>
+<p><i>Don't forget to leave your comments</i></p>
 
 <div class="row">
     <div class="md-col-12">

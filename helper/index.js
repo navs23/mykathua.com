@@ -43,5 +43,4 @@ helper.decrypt=function (text){
    
 }
 
-
 )(module.exports);
