@@ -50,7 +50,7 @@
          qry += "', lastloginDate=getdate() ";
         qry +=")" ;
          qry +=" end";
-          qry +=" else begin update mykth.[user] set lastloginDate=getdate() where id='" + user.id +"' end";
+          qry +=" else begin update mykth.[user] set lastloginDate=getdate() where username='" + user.username +"' end";
        // values ('703646797646995457','' ,'703646797646995457-mUvHGxvX9mwrSsVa69Cy51RW3sHxwDh','mykathua','','kathua','https://pbs.twimg.com/profile_images/703647887561981952/TCiAB3OV_normal.jpg')
         var request = new sql.Request();
         console.log(qry);
