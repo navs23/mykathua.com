@@ -5,7 +5,7 @@
     var dex =require("../helper");
     var radio =require("../helper/radio.js");
     
-    var title ="A blend of DOGRI folk and hindi music, just sit back and enjoy your favorite music on DOGRI Radio.<br/> Don't forget to leave the comments";
+    var title ="A blend of DOGRI folk and hindi music, just sit back and enjoy your favorite music on DOGRI Radio.";
     
     musicController.init= function(app){
         

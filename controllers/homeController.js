@@ -3,7 +3,7 @@
     var cheerio = require('cheerio');
     var dex =require("../helper");
     var twt =require("../helper/tweet.js");
-    var data =require("../sql");
+    var dal =require("../sql");
     
     
     //var mail =require("../helper/mail.js");
@@ -14,14 +14,25 @@
     homeController.init= function(app){
      
         app.get("/",function(req,res,next){
+            var messages;
             console.log('processing request for %s',req.url);
              try {
                  
             
                     dex.scrape(url,function(html){
                          twt.getTweets(function(data){
+                             
+                               dal.getMessages(null,function(resultset){
+                                messages=resultset;
                         
-                        res.render("home",{user:req.user,weather:html,tweets:data,title:"Welcome to mykathua.com"});
+                                res.render("home",{user:req.user,weather:html,tweets:data,messages:messages,title:"Welcome to mykathua.com"});
+                    },function(err){
+                        
+                        res.send(err);
+                    });
+                             
+                        
+                        
                      });
                 },function(error){return next(error);});
              }
@@ -37,7 +48,7 @@
         
         app.get("/api/users",function(req,res,next){
         
-        data.getUsers(function(err,results){
+        dal.getUsers(function(err,results){
             res.setHeader('Content-Type', 'application/json');
             res.send(results);
             res.end();
@@ -71,9 +82,24 @@
              
          });
          
+         app.post("/contactus",function(req,res){
+             
+            var message='';
+             dal.saveMessage(req.body,function(res){
+                 message="done";
+                 
+             },function (err) {
+                 console.log('error');
+                 console.log(err);
+                 message=err.message;
+             });
+            
+             console.log(req.body);
+             
+             res.send(message);
+             
+         });
          
-
-
     };
     
 var divide = function(i,j,err)    {
