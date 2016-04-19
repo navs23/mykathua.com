@@ -46,8 +46,11 @@
         
         var qry="if not exists(select username from mykth.[user] where username ='" + user.username + "')begin ";
         qry +="insert into mykth.[user](Id,UserName,token,Password,email,displayName,profile_image_url)values(";
-        qry += "'" + user.id + "','" + user.username + "','" + user.token + "','" + user.password + "','" + user.email + "','" + user.displayName + "','" + user.profile_image_url + "')" ;
+        qry += "'" + user.id + "','" + user.username + "','" + user.token + "','" + user.password + "','" + user.email + "','" + user.displayName + "','" + user.profile_image_url 
+         qry += "', lastloginDate=getdate() ";
+        qry +=")" ;
          qry +=" end";
+          qry +=" else begin update mykth.[user] set lastloginDate=getdate() where id='" + user.id +"' end";
        // values ('703646797646995457','' ,'703646797646995457-mUvHGxvX9mwrSsVa69Cy51RW3sHxwDh','mykathua','','kathua','https://pbs.twimg.com/profile_images/703647887561981952/TCiAB3OV_normal.jpg')
         var request = new sql.Request();
         console.log(qry);
