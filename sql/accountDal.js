@@ -43,7 +43,7 @@
         console.log("saving user");
         sql.connect(config).then(function() {
         
-        
+        // update laslogindate column
         var qry="if not exists(select username from mykth.[user] where username ='" + user.username + "')begin ";
         qry +="insert into mykth.[user](Id,UserName,token,Password,email,displayName,profile_image_url)values(";
         qry += "'" + user.id + "','" + user.username + "','" + user.token + "','" + user.password + "','" + user.email + "','" + user.displayName + "','" + user.profile_image_url 
