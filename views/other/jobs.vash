@@ -55,7 +55,7 @@
 
         <h3>Discussion board</h3>
       <div id='divError'></div>
-             <div id='divComment4'></div>
+             <div id='divComment5'></div>
 </div>
         
     </div>
@@ -68,7 +68,7 @@
 <script type="text/javascript">
      $(document).ready(function () {
          
-            	getStoryComments({id:4,diverr:'#divError'},function(err){
+            	getStoryComments({id:5,diverr:'#divError'},function(err){
    		
    	
    		

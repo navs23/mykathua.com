@@ -45,9 +45,9 @@
         
         // update laslogindate column
         var qry="if not exists(select username from mykth.[user] where username ='" + user.username + "')begin ";
-        qry +="insert into mykth.[user](Id,UserName,token,Password,email,displayName,profile_image_url)values(";
+        qry +="insert into mykth.[user](Id,UserName,token,Password,email,displayName,profile_image_url,lastloginDate)values(";
         qry += "'" + user.id + "','" + user.username + "','" + user.token + "','" + user.password + "','" + user.email + "','" + user.displayName + "','" + user.profile_image_url 
-         qry += "', lastloginDate=getdate() ";
+         qry += "',getdate() ";
         qry +=")" ;
          qry +=" end";
           qry +=" else begin update mykth.[user] set lastloginDate=getdate() where username='" + user.username +"' end";
@@ -77,5 +77,20 @@ data.deleteUser  = function(user,fnSuccess,fnError){
 
 }
 
+data.listUser  = function(fnSuccess,fnError){
+
+    sql.connect(config).then(function() {
+
+    var qry="select * from mykth.[user] ";
+     
+    qry+=" order by lastlogindate desc";
+    
+    var request = new sql.Request();
+    request.query(qry)
+    .then(function(recordset) {fnSuccess(recordset);})
+    .catch(function(err) {fnError(err);});
+});
+
+}
 
 })(module.exports);

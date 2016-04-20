@@ -1,5 +1,7 @@
 (function(accountController){
     
+    var dal = require('../sql/accountDal.js');
+    
      accountController.init= function(app,passport){
       
 app.get('/login/', function(req, res,nex) {
@@ -22,7 +24,18 @@ app.get('/login/', function(req, res,nex) {
             
         });
     });
+
+app.get('/api/listusers', function(req, res) {
     
+      dal.listUser(function(recordset){
+          res.send(recordset);
+          
+      },function(err){
+          
+          res.send(err);
+      });
+      
+    });    
 
         // route for logging out
     app.get('/logout', function(req, res) {

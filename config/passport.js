@@ -38,7 +38,7 @@ module.exports = function(passport) {
 
         consumerKey     : 'yBuiGvDaFlNeXdoMjaJAdjvl2',
         consumerSecret  : 'rKD8ZiJ10g5qwHnVrLghnVtDkoRb5q977FTt3N1fn1HYrOaIkY',
-        //callbackURL     : 'http://navs-navs23.c9users.io/auth/twitter/callback'
+       // callbackURL     : 'http://navs-navs23.c9users.io/auth/twitter/callback'
         callbackURL     : 'http://www.mykathua.com/auth/twitter/callback'
 
     },
