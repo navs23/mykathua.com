@@ -106,7 +106,7 @@ var getJsonDataAsync = function (url, options,errorCb, successCb) {
 
 
 var showHideComment= function(storyId){
-    alert(storyId);
+   // alert(storyId);
    getStoryComments(storyId);
    $('#divComment' + storyId).toggle();
  
@@ -167,8 +167,11 @@ var getStoryComments = function(options,cberror,cbsuccess)
                                     }
                                     else
                                     {
-                                         getStoryComments(options.id);
-                                         cbsuccess(data);
+                                         //alert(options.id);
+                                         getStoryComments(options);
+                                         //success(data);
+                                         cbsuccess(options);
+                                         //refresh();
                                     }
                                     
                                     

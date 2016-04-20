@@ -106,7 +106,13 @@
    
    	setTimeout(function() { 
    		
-   		getStoryComments({id:3,diverr:'#divError'},function(err){alert(err);},function(data){alert(data);});
+   		getStoryComments({id:3,diverr:'#divError'},function(err){
+   		 $('#divError').html(err);
+   		    
+   		},function(data){
+   		        //alert(data);
+   		        
+   		    });
    	}
    	,100);
           
