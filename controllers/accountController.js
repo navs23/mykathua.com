@@ -25,7 +25,7 @@ app.get('/login/', function(req, res,nex) {
         });
     });
 
-app.get('/api/listusers', function(req, res) {
+app.get('/api/listusers',isLoggedIn, function(req, res) {
     
       dal.listUser(function(recordset){
           res.send(recordset);
@@ -70,11 +70,11 @@ function isLoggedIn(req, res, next) {
    // console.log('isloggedIn');
 //console.log(isAuthenticated());
     // if user is authenticated in the session, carry on
-    //if (req.isAuthenticated())
+    if (req.isAuthenticated())
         return next();
 
     // if they aren't redirect them to the home page
-    //res.redirect('/');
+    res.redirect('/login/');
 }
     
 })(module.exports);

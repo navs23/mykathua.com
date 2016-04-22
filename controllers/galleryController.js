@@ -36,9 +36,9 @@ var getImages=function(cb){
     
       var images=[];
       var imageItem={};
-        imageItem.src="http://photos.mykathua.com/i.ashx?&mid=99662445&mt=Photo&standardsize=1024x768";
-        imageItem.text="test";
-        images.push(imageItem);
+        //imageItem.src="http://photos.mykathua.com/i.ashx?&mid=99662445&mt=Photo&standardsize=1024x768";
+       // imageItem.text="test";
+       // images.push(imageItem);
             var baseUrl='http://www.kathua.nic.in/';
             //http://www.kathua.nic.in/images/brugges2006/1.jpg
            dex.scrape(baseUrl +'/gallery.htm',function(html){

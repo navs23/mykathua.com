@@ -477,7 +477,7 @@ var newsItem={};
 
 
 newsItem.news=$(e).find('a').text();
-newsItem.link='http://jammulinksnews.com/newsdetail/' + $(e).find('a').attr('href');
+newsItem.link='http://jammulinksnews.com/' + $(e).find('a').attr('href');
 newsItem.thumbnail='http://jammulinksnews.com/' + $(e).find('img').attr('src');
 
 if (newsItem.thumbnail ==null || newsItem.thumbnail == undefined)

@@ -124,6 +124,7 @@ var getStoryComments = function(options,cberror,cbsuccess)
       
     },function(data){
        
+      // alert(JSON.stringify(data));
             $(div).comments({
                 
         					//profilePictureURL: 'https://viima-app.s3.amazonaws.com/media/user_profiles/user-icon.png',

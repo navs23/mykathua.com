@@ -114,7 +114,7 @@
                
                qry +="select count(1) as upvote_count, [StoryCommentsId] from [mykth].StoryCommentsLike c group by [StoryCommentsId] )"
                 qry+="select sc.StoryCommentsId as id,ParentStoryId as parent,sc.CreatedDateTime as created , sc.Comments as content,isnull(u.displayName,'Guest') as fullname";
-                qry+=" ,case when sc.UserName ='" + option.username +"' then 1 else 0 end as created_by_current_user,isnull(uc.upvote_count,0) as upvote_count" ;
+                qry+=" ,case when sc.UserName ='" + option.username +"' then 1 else 0 end as created_by_current_user,isnull(uc.upvote_count,0) as upvote_count,u.profile_image_url as profilePictureURL" ;
                 
                 qry+="  from mykth.StoryComments sc";
                 qry+="  left join mykth.[User] u  with(nolock)";
