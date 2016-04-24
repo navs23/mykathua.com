@@ -10,6 +10,25 @@
 </div>
 })
 
+
+@html.block("leftSideBar",function(model){
+<div class="border-right">
+    <h3>Useful Indian Railway Links</h3>
+    
+   
+     <div class="list-group">
+    @model.links.forEach(function(e){
+    <div class="row">
+        <div class="col-md-12">
+    <a href="@e.href" target="blank" class="list-group-item"><span class="text-info">@e.text</span></a>
+    </div>
+    </div>
+    })
+</div>
+</div>
+})
+
+
 })
 
 <script type="text/javascript">
