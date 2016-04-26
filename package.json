@@ -20,6 +20,7 @@
     "ejs-locals": "^1.0.2",
     "express": "~3.2.4",
     "font-awesome": "^4.5.0",
+    "instafeed.js": "^1.4.1",
     "jplayer": "^2.9.2",
     "method-override": "^2.3.5",
     "mssql": "^3.0.1",
