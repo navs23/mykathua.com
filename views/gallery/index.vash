@@ -17,15 +17,15 @@
     @if (model.error){
         <p class="text-error"> error occured:@model.error</p>
         }
-        
-<h3>test Our attempt is to share beautiful pictures of Kathua district to everyone around the world</h3> 
+    <h1>@model.title</h1>
+<h3>Our intent is to find some rear and beautiful pictures of Kathua and share them with everyone</h3>
 
-<p>If you have a photo that you would like to share on this gallery, please email it to <a href="emailto:mykahtua@@gmail.com">mykathua@@gmail.com</a>
-and we would love to publish your photo on <a href='www.mykathua.com'>mykahtua.com</a> and share with others across the world.
+<p>If you have a photo that you would like to share on this gallery, please email your photo to <a href="emailto:mykahtua@@gmail.com">mykathua@@gmail.com</a>
+and we would love to publish your photo on <a href='www.mykathua.com'>mykahtua.com</a>.
 </p>
 
         
-<h1>@model.title</h1>
+
 <div class="row">
     
 <div id="slider" class="col-md-6" style="border:1 solid red">
