@@ -1,5 +1,5 @@
 @html.extend('layout',function(model){
-
+<div>
 @html.block("main",function(model){
     @if (model.error){
         <p class="text-error"> error occured:@model.error</p>
@@ -9,9 +9,11 @@
 <div class="col-md-12">@html.raw(model.trainstatus)</div>
 </div>
 })
-
+</div>
 
 @html.block("leftSideBar",function(model){
+<div class="row">
+    <div class="col-md-12">
 <div class="border-right">
     <h3>Useful Indian Railway Links</h3>
     
@@ -22,6 +24,8 @@
     <a href="@e.href" target="blank" class="list-group-item"><span class="text-info">@e.text</span></a>
    
     })
+</div>
+</div>
 </div>
 </div>
 })
