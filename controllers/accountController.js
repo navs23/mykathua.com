@@ -5,9 +5,16 @@
      accountController.init= function(app,passport){
       
 app.get('/login/', function(req, res,nex) {
-		res.render('account/login'); // load the index.ejs file
+        //res.re
+		//res.render('account/login'); // load the index.ejs file
+		res.redirect('http://www.mymathua.com/login2/')
 	});
 	
+	app.get('/login2/', function(req, res,nex) {
+        //res.re
+		res.render('account/login'); // load the index.ejs file
+		//res.redirect('http://www.mymathua.com/login2')
+	});
 	/*
  app.get('/profile', isLoggedIn, function(req, res) {
         res.render('profile', {
