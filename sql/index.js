@@ -173,7 +173,25 @@
     });
          
     }
-
+  data.saveWebHit  = function(data,fnSuccess,fnError){
+        
+    sql.connect(config).then(function() {
+    
+       // var qry="select t.name,c.name from sys.tables t inner join sys.columns c on t.object_id=c.object_id where t.name like '%story%'";
+        var qry="insert into [mykth].[WebHit](url,ipaddress)";
+        
+        qry+="  values ('" + data.url +"','" ;
+        qry+= data.ipaddress +"')" ;
+    
+       console.log(qry);
+        var request = new sql.Request();
+        
+        request.query(qry)
+            .then(function(recordset) {fnSuccess(data);})
+            .catch(function(err) {fnError(err);});
+    });
+         
+    }
 // like
 
 data.upVoteStoryComment  = function(data,fnSuccess,fnError){

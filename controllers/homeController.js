@@ -15,6 +15,16 @@
      
         app.get("/",function(req,res,next){
             var messages;
+            var ip = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
+             console.log('url:%s,ip:%s',req.url,ip);
+            dal.saveWebHit({url:req.url,ipaddress:ip},function(result){
+                console.log('url:%s,ip:%s',req.url,ip);
+                
+            },function(err){
+                
+                console.log(err);
+            });
+            
             console.log('processing request for %s',req.url);
              try {
                  
