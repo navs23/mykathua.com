@@ -82,7 +82,7 @@ function wwwRedirect(req, res, next) {
 };
 
 
-app.use(wwwRedirect);
+//app.use(wwwRedirect);
 
 //process.stdout.write('\033c');
 
