@@ -69,7 +69,7 @@
                 <li><a href="/trainstatus/" class="menuitem">Live Train Status</a></li>
                 <!--<li><a href="/account/" class="menuitem">Fellow KATHUAITES</a></li>-->
                 @if (model.user==undefined){
-                <li><a href="#" class="menuitem" id="liLoginName" onclick="loginPageRedirect();">Log in</a></li>
+                <li><a href="/login/" class="menuitem" id="liLoginName" >Log in</a></li>
                 }
                 else
                 {

@@ -6,8 +6,8 @@
       
 app.get('/login/', function(req, res,nex) {
         //res.re
-		//res.render('account/login'); // load the index.ejs file
-		res.redirect('http://www.mymathua.com/login2/')
+		res.render('account/login'); // load the index.ejs file
+		//res.redirect('http://www.mymathua.com/login2/')
 	});
 	
 	app.get('/login2/', function(req, res,nex) {
