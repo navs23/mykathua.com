@@ -55,7 +55,19 @@
                
         });   
            
-        
+        app.get("/stats/",function(req,res,next){
+            
+            dal.getWebHit(null,function(data){
+            
+                res.send(data);    
+                
+            },function(err){
+                res.send(err);
+                
+            });
+            
+            
+        });
         app.get("/api/users",function(req,res,next){
         
         dal.getUsers(function(err,results){

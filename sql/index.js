@@ -193,7 +193,23 @@
          
     }
 // like
-
+  data.getWebHit  = function(data,fnSuccess,fnError){
+        
+    sql.connect(config).then(function() {
+    
+       // var qry="select t.name,c.name from sys.tables t inner join sys.columns c on t.object_id=c.object_id where t.name like '%story%'";
+        //var qry="select count(1) as webhits from  [mykth].[WebHit] with (nolock);select * from mykth.webhit with (nolock)";
+        var qry="select * from mykth.webhit with (nolock)";
+        
+       console.log(qry);
+        var request = new sql.Request();
+        
+        request.query(qry)
+            .then(function(recordset) {fnSuccess(recordset);})
+            .catch(function(err) {fnError(err);});
+    });
+         
+    }
 data.upVoteStoryComment  = function(data,fnSuccess,fnError){
        // console.log(JSON.stringify(data));
        sql.connect(config).then(function() {
