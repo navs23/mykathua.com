@@ -12,6 +12,8 @@
    console.log('home');
     
     homeController.init= function(app){
+        
+     
      
         app.get("/",function(req,res,next){
             var messages;
