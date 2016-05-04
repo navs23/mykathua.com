@@ -6,8 +6,8 @@
       
 app.get('/login/', function(req, res,nex) {
         //res.re
-	//	res.render('account/login'); // load the index.ejs file
-		res.redirect('http://www.mykathua.com/login/');
+	res.render('account/login'); // load the index.ejs file
+		//res.redirect('http://www.mykathua.com/login/');
 		
 		
 	});
