@@ -77,6 +77,23 @@ data.deleteUser  = function(user,fnSuccess,fnError){
 
 }
 
+data.createNewsTable = function(cb){
+    var sql='create table mykth.newsItems('
+sql += 'id int identity (1,1)'
+sql += ',dated datetime default getdate()'
+sql += ',newsSource varchar(50)'
+sql += ',link nvarchar(255)'
+sql += ',news nvarchar(max)'
+sql += ',[description] nvarchar(max)'
+sql += ',thumbnail nvarchar(255)'
+ sql += ')';
+    
+     var request = new sql.Request();
+    request.query(sql)
+    .then(function(recordset) {cb(null,recordset);})
+    .catch(function(err) {cb(err);});
+}
+
 data.listUser  = function(fnSuccess,fnError){
 
     sql.connect(config).then(function() {

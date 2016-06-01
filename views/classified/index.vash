@@ -21,7 +21,15 @@
           <h4 class="modal-title">Modal Header</h4>
         </div>
         <div class="modal-body">
-          <p>Some text in the modal.</p>
+          <table class="table">
+            <tr><td>Category</td><td><select><option>Real Estate</option><option>Auto mobile</option><option>Electronics</option><option>Books</option><option>Others</option></select></td></tr>
+            <tr><td>Heading</td><td><input type="text" name=""/></td></tr>
+        <tr><td>Description</td><td><input type="textarea" name="" rows="15" columns="20"/></td></tr>
+          <tr><td>Contact phone Number</td><td><input type="text" name=""/></td></tr>
+          <tr><td>Email addres</td><td><input type="text" name=""/></td></tr>
+          
+          
+          </table>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -36,7 +44,15 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      @model.data
+      @model.data.forEach(function(e){
+      <div class="row">
+        <div class="col-md-3">@e.Dated</div>
+        <div class="col-md-3">@e.Heading</div>
+        <div class="col-md-3">@e.PhoneNumber</div>
+        <div class="col-md-3">@e.EmailAddress</div>
+      </div>
+      
+      });
       
     </div>
   </div>

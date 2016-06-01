@@ -61,7 +61,7 @@
        
        var url='http://www.railwayapi.com/getLiveTrains.php';
         dex.scrapePost(url,{'pnrQ':'KTHU','dest':2},function(html){
-            //console.log(html);
+            
             var tBody='';
             var $=cheerio.load(html);
             var tHead='';
@@ -100,32 +100,10 @@
               
            });
             temp='<table class="table" ><thead>' +tHead +'</thead><tbody>'  + tBody +  '</tbody></table>'
-            //console.log(temp);
-            
-         // raliwayLinks(function(links){
-           
-          //  setTimeout(function(){
-            // console.log(links);
               res.render('other/trainstatus',{trainstatus:temp,user:req.user,links:links});
              
-           //},2000);
-            
-             
-             
-           // console.log(links);
-              //       },function(err){
-                 //     console.log(err);
-                   //   res.send(err);
-                  //   });
-           
-  
-            
            
         });
-        },function(err){
-         console.log(1);
-         console.log(err);
-         res.send(err);
         });
         
      // direcotry listing

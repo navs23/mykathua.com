@@ -40,7 +40,7 @@
     }
      // end getusers
     
-    data.getStories  = function(param,fnSuccess,fnError){
+    data.getStories  = function(param,cb){
     
     sql.connect(config).then(function() {
     
@@ -56,8 +56,8 @@
         var request = new sql.Request();
         
         request.query(qry)
-            .then(function(recordset) {fnSuccess(recordset);})
-            .catch(function(err) {fnError(err);});
+            .then(function(recordset) {cb(null,recordset);})
+            .catch(function(err) {cb(err);});
     });
     
     }
@@ -92,7 +92,7 @@
     }
 
     // get comments
-    data.getStoryComments  = function(option,fnSuccess,fnError){
+    data.getStoryComments  = function(option,cb){
             
            sql.connect(config).then(function() {
             /*
@@ -127,12 +127,12 @@
                 var request = new sql.Request();
                 request.query(qry).then(function(recordset) {
               
-                    fnSuccess(recordset);
+                    cb(null,recordset);
             	
             }).catch(function(err) {
         	
         	 console.log("error");
-        	 fnError(err);
+        	 cb(err);
         	 
         });
         });
@@ -140,7 +140,7 @@
     }
 // save story comments
     
-    data.saveStoryComments  = function(data,fnSuccess,fnError){
+    data.saveStoryComments  = function(data,cb){
         
     sql.connect(config).then(function() {
     /*
@@ -168,8 +168,8 @@
         var request = new sql.Request();
         
         request.query(qry)
-            .then(function(recordset) {fnSuccess(data);})
-            .catch(function(err) {fnError(err);});
+            .then(function(recordset) {cb(null,data);})
+            .catch(function(err) {cb(err);});
     });
          
     }
@@ -371,20 +371,96 @@ data.upVoteStoryComment  = function(data,fnSuccess,fnError){
     });
     
     }
- data.executeSql  = function(param,fnSuccess,fnError){
+ data.executeSql  = function(cb){
     
     sql.connect(config).then(function() {
        
-        var qry="drop table mykth.jobs go create table [mykth].[jobs]([Id] int identity(1,1),[dated] datetime2 default getdate(),[jobid] varchar(25),[link] varchar(255),[position] varchar(255),[jobtext] nvarchar(max),[postdate] varchar(25))";
+       //var qry="drop table mykth.jobs go create table [mykth].[jobs]([Id] int identity(1,1),[dated] datetime2 default getdate(),[jobid] varchar(25),[link] varchar(255),[position] varchar(255),[jobtext] nvarchar(max),[postdate] varchar(25))";
    
+   var qry='create table mykth.newsItems('
+qry += 'id int identity (1,1)'
+qry += ',dated datetime default getdate()'
+qry += ',newsSource varchar(50)'
+qry += ',link nvarchar(255)'
+qry += ',news nvarchar(max)'
+qry += ',[description] nvarchar(max)'
+qry += ',thumbnail nvarchar(255)'
+ qry += ')';
+   
+   //var qry="select t.name from sys.tables t where t.name like '%newsItems%'"
         console.log(qry);
         var request = new sql.Request();
         
         request.query(qry)
-            .then(function(recordset) {fnSuccess(recordset);})
-            .catch(function(err) {fnError(err);});
+            .then(function(recordset) {
+                cb(null,recordset);})
+            .catch(function(err) {
+                console.log(err);
+                cb(err);
+                
+                
+                
+            });
     });
     
     }
+    
+data.saveNews=function(news,cb)    {
+   
+    
+    sql.connect(config).then(function() {
+    
+    
+    var request = new sql.Request();
+    for(var i=0;i<news.length;i++)
+    {
+     var qry="insert into mykth.newsItems(newssource,link,news,[description],thumbnail) values ('";
+    
+    
+    qry += news[i].newssource + "','";
+    qry += news[i].link + "','";
+    qry += news[i].news + "','";
+    qry += news[i].description + "','";
+    qry += news[i].thumbnail + "')";
+    console.log(qry);
+    
+    request.query(qry)
+    .then(function(recordset) {
+    cb(null,recordset);})
+    .catch(function(err) {
+    
+    console.log(err);
+    
+    cb(err);
+    
+    
+    
+    });
+    }
+    });
+    
+    
+    
+}
+
+data.getNewsFromDb=function(cb)    {
+    sql.connect(config).then(function() {
+    
+    var qry="select * from  mykth.newsItems";
+    var request = new sql.Request();
+    
+    request.query(qry)
+    .then(function(recordset) {
+    cb(null,recordset);})
+    .catch(function(err) {
+    console.log(err);
+    cb(err);
+    
+    
+    
+    });
+    });
+    
+}
 
 })(module.exports);

@@ -7,7 +7,7 @@ var passport = require('passport');
 var flash    = require('connect-flash');
 var methodOverride = require('method-override');
 var sockethelper = require('./helper/socket.js');
-
+var logger=require('logger');
 
 var app = express();
 var liveConnections=0;
@@ -27,8 +27,10 @@ app.configure(function() {
 	app.set("env","development");
 	app.set("liveconnections",liveConnections);
 
-
+    app.use(logger.log);
+	
 	app.use(express.logger('dev')); // log every request to the console
+	
 	app.use(express.cookieParser()); // read cookies (needed for auth)
 	app.use(express.bodyParser()); // get information from html forms
 

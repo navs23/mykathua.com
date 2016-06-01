@@ -123,6 +123,20 @@
              res.send(message);
              
          });
+    
+     /*
+     app.get('/api/createnewstable/',function(req,res){
+         
+        dal.executeSql(function (err) {
+          if (err ==null)
+                res.send('done');
+        else 
+        res.send(err);
+       
+   });
+    
+});
+     */
          
     };
     

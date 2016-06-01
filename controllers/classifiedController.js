@@ -13,11 +13,13 @@
         
             
             
-          dal.saveClassifiedAd(param,
-            function(result){
+         // dal.saveClassifiedAd(param,
+           // function(result){
              
             dal.getClassifiedAds(null,
                 function(data){
+                    console.log(JSON.stringify((data)));
+                    
                   res.render("classified/index",{title:"classified",data:data});
                 
             },
@@ -29,13 +31,13 @@
             }
             );
             
-            },
+           /*},
             function(err){
                     
                    console.log('error..');
                    return next(err);
             });
-            
+            */
            
             //saveClassifiedAd
            

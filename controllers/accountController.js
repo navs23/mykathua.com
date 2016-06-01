@@ -46,6 +46,8 @@ app.get('/api/listusers',isLoggedIn, function(req, res) {
       
     });    
 
+
+
         // route for logging out
     app.get('/logout', function(req, res) {
         req.logout();
