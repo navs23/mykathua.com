@@ -7,7 +7,7 @@ var passport = require('passport');
 var flash    = require('connect-flash');
 var methodOverride = require('method-override');
 var sockethelper = require('./helper/socket.js');
-var logger=require('logger');
+//var logger=require('logger');
 
 var app = express();
 var liveConnections=0;
@@ -27,7 +27,7 @@ app.configure(function() {
 	app.set("env","development");
 	app.set("liveconnections",liveConnections);
 
-    app.use(logger.log);
+   // app.use(logger.log);
 	
 	app.use(express.logger('dev')); // log every request to the console
 	
@@ -43,14 +43,7 @@ app.configure(function() {
 	app.use(passport.session()); // persistent login sessions
 	app.use(flash()); // use connect-flash for flash messages stored in session
 	app.use(methodOverride());
-	/*
-  app.use(function(err, req, res, next) {
-  //do logging and user-friendly error message display
-  console.log('redirecting to error handler.');
-   return res.send(500, { message: err.message });
-  
-  });
-	*/
+
 	if (app.get('env')=="development"){
 
     process.env.TWITTER_CONSUMER_KEY='yBuiGvDaFlNeXdoMjaJAdjvl2';
