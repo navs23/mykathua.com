@@ -1,9 +1,0 @@
-{"dateTime":"Fri May 27 2016 08:14:37 GMT+0000 (UTC)","url":"/","ip":"195.88.229.20"}
-{"dateTime":"Fri May 27 2016 08:14:39 GMT+0000 (UTC)","url":"/api/StoryComments/3?storyId=3","ip":"195.88.229.20"}
-{"dateTime":"Fri May 27 2016 08:14:42 GMT+0000 (UTC)","url":"/sports/","ip":"195.88.229.20"}
-{"dateTime":"Fri May 27 2016 08:14:43 GMT+0000 (UTC)","url":"/sports/movie.mp4","ip":"195.88.229.20"}
-{"dateTime":"Fri May 27 2016 08:14:43 GMT+0000 (UTC)","url":"/sports/movie.ogg","ip":"195.88.229.20"}
-{"dateTime":"Fri May 27 2016 13:33:53 GMT+0000 (UTC)","url":"/","ip":"195.88.229.20"}
-{"dateTime":"Fri May 27 2016 13:33:56 GMT+0000 (UTC)","url":"/api/StoryComments/3?storyId=3","ip":"195.88.229.20"}
-{"dateTime":"Fri May 27 2016 13:34:02 GMT+0000 (UTC)","url":"/media/","ip":"195.88.229.20"}
-{"dateTime":"Fri May 27 2016 13:43:42 GMT+0000 (UTC)","url":"/media/","ip":"195.88.229.20"}
