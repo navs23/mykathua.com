@@ -34,7 +34,12 @@ mediaController.init= function(app){
 });
      */
    routes(app);
-    
+
+   BuildNewsCache(function(err,news){
+             
+             console.log('cache re-created successfully');
+             
+         });    
       
         
 }
