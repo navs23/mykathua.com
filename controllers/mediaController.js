@@ -1,3 +1,6 @@
+/*
+node-cache module added
+*/
 (function(mediaController){
     
     var cheerio = require('cheerio');
@@ -6,14 +9,33 @@
     var twt =require("../helper/tweet.js");
     var OAuth= require('oauth').OAuth;
     var async= require('async');
-    var newsItemCache;
-    
+    var NodeCache = require('node-cache');
+    //var newsItemCache;
+    var newsItemCache = new NodeCache( { stdTTL: 100, checkperiod: 10 } ); 
    
    // landing page;
 mediaController.init= function(app){
-     
-      routes(app);
+    /* 
+     BuildNewsCache(function(err,news){
+         
+        newsItemCache.set( "news", news, function( err, success ){
         
+            if( !err && success ){
+                console.log( 'news cache build successfully' );
+            }
+        });    
+         
+     });
+     
+     
+     newsItemCache.on( "expired", function( key, value ){
+         console.log('cache has expired..');
+	
+});
+     */
+   routes(app);
+    
+      
         
 }
     
@@ -158,7 +180,7 @@ mediaController.init= function(app){
     
     var getJagranNews=function(cb){
     
-    console.log('here');
+    
     var news=[];
     var iCount=0;
     var url='';
@@ -355,11 +377,19 @@ mediaController.init= function(app){
     };
     
     var BuildNewsCache= function(cb){
+        
         getNews(function(err,newsItems){
             
                    if (err==null)  {
-                       newsItemCache=null;
-                       newsItemCache=newsItems;
+                       
+                        newsItemCache.set( "news", newsItems, function( err, success ){
+        
+                                if( !err && success ){
+                                       console.log( 'news cache build successfully' );}
+                            
+                                });    
+                       
+                       //newsItemCache=newsItems.news;
                        cb(null,newsItems);
                        
                    }
@@ -369,17 +399,29 @@ mediaController.init= function(app){
     
     };
     
-    setTimeout(function(){
-        
-        BuildNewsCache(function(err,news){
-                 console.log('cache building completed %s',Date());
-            
-        });
-    },1000*60);
+   
+    newsItemCache.on( "expired", function( key, value ){
+         
+         console.log('cache has expired..%s',Date());
+         
+         BuildNewsCache(function(err,news){
+             
+             console.log('cache re-created successfully');
+             
+         });
+	
+    });
+   
     
     var ClearNewsCache=function(){
-        newsItemCache=null;
+       // newsItemCache=null;
         
+    }
+    var GetCacheValueByKey=function(key){
+       
+        var value=newsItemCache.get('news');
+        return value;
+              
     }
     
     var routes=function(app){
@@ -399,11 +441,16 @@ mediaController.init= function(app){
                  });
                   
                   */
-                  
-                if (newsItemCache ==null || newsItemCache ==undefined  )
+                  var tempNews =GetCacheValueByKey('news');
+                //console.log('value of tempNews %s',JSON.stringify(tempNews));
+                
+                if (tempNews == undefined  )
                 {
-                    console.log('building cache...');
+                    console.log(1);
+                   
                     BuildNewsCache(function(err,news){
+                        
+                        console.log('from source..');
                         
                         if (err==null){
                         res.render("media/index",{user:req.user,news:news,title:"Kathua in news, get latest national, state and kathua news on mykathua.com"});      
@@ -417,7 +464,7 @@ mediaController.init= function(app){
                 else
                 {
                     console.log('from cache...');
-                    res.render("media/index",{user:req.user,news:newsItemCache,title:"Kathua in news, get latest national, state and kathua news on mykathua.com"});
+                    res.render("media/index",{user:req.user,news:tempNews,title:"Kathua in news, get latest national, state and kathua news on mykathua.com"});
                 }
                     
                 
@@ -661,5 +708,7 @@ mediaController.init= function(app){
         
     }
 
+ 
+       
     
 })(module.exports);

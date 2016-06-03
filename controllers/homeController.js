@@ -6,7 +6,6 @@
     var dal =require("../sql");
     
     
-    //var mail =require("../helper/mail.js");
     //var url='http://api.openweathermap.org/data/2.5/weather?q=Kathua,in&mode=html&appid=816adfb03ad4efdaee6a6105152c3916';
     var url='http://api.openweathermap.org/data/2.5/weather?q=Kathua,in&mode=html&appid=816adfb03ad4efdaee6a6105152c3916';
    console.log('home');
@@ -18,9 +17,9 @@
         app.get("/",function(req,res,next){
             var messages;
             var ip = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
-             console.log('url:%s,ip:%s',req.url,ip);
+             
             dal.saveWebHit({url:req.url,ipaddress:ip},function(result){
-                console.log('url:%s,ip:%s',req.url,ip);
+              
                 
             },function(err){
                 
@@ -49,7 +48,7 @@
                 },function(error){return next(error);});
              }
              catch(err){
-                 console.log("error - 1");
+                 
                  console.log(err);
 
                  return next(err);
@@ -91,17 +90,17 @@
           app.get("/errorpage/",function(req,res,next){
             
             //res.send({html:'done'});
-             console.log(1);
+            
             return next (new Error('error..'));
             //return next();
             
             
          },function(req,res,next){
-             console.log(2);
+             
              return next();
              
          },function(req,res){
-             console.log(3);
+             
              res.send('done');
              
          });
@@ -113,7 +112,7 @@
                  message="done";
                  
              },function (err) {
-                 console.log('error');
+                 
                  console.log(err);
                  message=err.message;
              });
@@ -124,19 +123,6 @@
              
          });
     
-     /*
-     app.get('/api/createnewstable/',function(req,res){
-         
-        dal.executeSql(function (err) {
-          if (err ==null)
-                res.send('done');
-        else 
-        res.send(err);
-       
-   });
-    
-});
-     */
          
     };
     

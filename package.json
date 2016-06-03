@@ -24,6 +24,7 @@
     "jplayer": "^2.9.2",
     "method-override": "^2.3.5",
     "mssql": "^3.0.1",
+    "node-cache": "^3.2.1",
     "oauth": "^0.9.14",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.0",

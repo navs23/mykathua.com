@@ -123,7 +123,7 @@
                 qry+=" where (sc.StoryId=" + option.storyId + " or " + option.storyId +"=0)";
                 
                 qry+=" order by sc.CreatedDateTime desc";
-               console.log(qry);
+              
                 var request = new sql.Request();
                 request.query(qry).then(function(recordset) {
               
@@ -164,7 +164,7 @@
         qry+=" '" + data.username + "',";
         qry+="'" + data.comments +"');";
       
-       console.log(qry);
+       
         var request = new sql.Request();
         
         request.query(qry)
@@ -183,7 +183,7 @@
         qry+="  values ('" + data.url +"','" ;
         qry+= data.ipaddress +"')" ;
     
-       console.log(qry);
+      
         var request = new sql.Request();
         
         request.query(qry)
@@ -201,7 +201,7 @@
         //var qry="select count(1) as webhits from  [mykth].[WebHit] with (nolock);select * from mykth.webhit with (nolock)";
         var qry="select * from mykth.webhit with (nolock)";
         
-       console.log(qry);
+       
         var request = new sql.Request();
         
         request.query(qry)
@@ -250,7 +250,7 @@ data.upVoteStoryComment  = function(data,fnSuccess,fnError){
         var qry="select [Id] ,[Dated],[UserId],[Heading],[CategoryCode],[Advert],[PhoneNumber],	[EmailAddress] from [mykth].[Classified] with(nolock)";
         
         qry+=" order by categoryCode, dated desc";
-        console.log(qry);
+        
         var request = new sql.Request();
         
         request.query(qry)
@@ -265,12 +265,11 @@ data.upVoteStoryComment  = function(data,fnSuccess,fnError){
     
         var qry="select MessageId,[From],[To],[MessageBody] as [Message] from [mykth].[Message] with(nolock) order by messageId desc";
        
-        console.log(qry);
-        var request = new sql.Request();
+       var request = new sql.Request();
         
         request.query(qry)
             .then(function(recordset) {
-                console.log(recordset);
+                
                 fnSuccess(recordset);})
             .catch(function(err) {
                 console.log(err);
@@ -387,8 +386,7 @@ qry += ',[description] nvarchar(max)'
 qry += ',thumbnail nvarchar(255)'
  qry += ')';
    
-   //var qry="select t.name from sys.tables t where t.name like '%newsItems%'"
-        console.log(qry);
+   
         var request = new sql.Request();
         
         request.query(qry)
