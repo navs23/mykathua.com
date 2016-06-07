@@ -79,73 +79,47 @@ mediaController.init= function(app){
     var news=[];
     var newsItem={};
     var description,newsLink,newsImg;
-    try
-    {
+  //  try
+//    {
     dex.scrape('http://news.google.co.in',function(html){
     var $=cheerio.load(html);
     
-    
-    $('div.esc-lead-snippet-wrapper').each(function(i,e){
-      if (i<=5)
-      {
+     $('div.esc-body').each(function(i,e){
+         
+        //console.log($(e).html());
+        var temp=$(this).find('span[class=titletext]');
+        var tempimg=$(this).find('img');
         
-        description =$(this).text();
-        newsLink=$(this).prev().find('a').first();
-        newsImg=$(this).prev().find('img[class=esc-thumbnail-image]').first();
         
         newsItem={};
-        newsItem.link=$(newsLink).attr('href');
-        newsItem.news=$(this).text();
-        newsItem.description=description;
-        newsItem.thumbnail=$(newsImg).attr('src');
+        newsItem.link=temp.parent().attr('href');
+        newsItem.news=$(temp).text();
+        newsItem.description=$(this).find('div[class=esc-lead-snippet-wrapper]').text();
+        newsItem.thumbnail=tempimg.attr('imgsrc');
+        
         if (newsItem.thumbnail ==null || newsItem.thumbnail == undefined)
-        {
+            //newsItem.thumbnail=tempimg.parent().attr('imgsrc');
+           newsItem.thumbnail= $(this).find('img[class=esc-thumbnail-image]').attr('src');
+        
+        if (newsItem.thumbnail ==null || newsItem.thumbnail == undefined)
             newsItem.thumbnail='http://placehold.it/25/ffcc66?text=google-news';
-        }
-         
+        
+       // console.log(newsItem); 
         news.push(newsItem);
         
-      }
       
-      else
-      {
-            newsItem={};
-            description =$(this).html();
-            if (/Jammu/.test(description) || /JAMMU/.test(description) || /kathua/.test(description) || /KATHUA/.test(description)){
-                
-          
-            newsLink=$(this).prev().find('a').first();
-            
-            newsImg=$(this).prev().find('img[class=esc-thumbnail-image]').first();
-            
-            newsItem.link=$(newsLink).attr('href');
-            newsItem.news=$(this).text();
-            newsItem.description=description;
-            newsItem.thumbnail=$(newsImg).attr('src');
-            if (newsItem.thumbnail ==null || newsItem.thumbnail == undefined)
-            {
-                newsItem.thumbnail='http://placehold.it/50/6699ff?text=google-news';
-            }
-            
-            news.push(newsItem);
-            
-            }  
-          
-      }
-      
+         
+     });
+    
+  
     });
     
     cb(null,news);
         
-    },function(err){
-        cb(err,null);
-        
-    });
-    }catch(err){
     
-    cb(err,null);
     }
-    }
+    
+ 
     
     var getDENews=function(cb){
     
@@ -492,18 +466,17 @@ mediaController.init= function(app){
             });
             
             
-            app.get("/api/media/gnews/",function(req,res){
+            app.get("/api/media/gnews/",function(req,res,next){
               
-                getGoogleNews(
-                    function(err,news){
-                        if (err==null)
-                            res.send(news);
-                        else
-                            res.send(news);
-                    
-                
-                
-                });
+             getGoogleNews2(function(err,news){
+                 if (err==null)
+                 res.send(news);
+                 else
+                 {
+                     return next(err);
+                 }
+                 
+             });
             });
             
             app.get("/api/media/denews/",function(req,res){
