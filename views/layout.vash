@@ -67,7 +67,7 @@
                 <li><a href="/jobs/" class="menuitem">Jobs</a></li>
                 <li><a href="/directory/" class="menuitem">Useful Contacts and links</a></li>
                 <li><a href="/trainstatus/" class="menuitem">Live Train Status</a></li>
-                  <li><a href="/sports/" class="menuitem">Sports</a></li>
+                 <li><a href="/advertise/" class="menuitem">Advertise</a></li>
                 <!--<li><a href="/account/" class="menuitem">Fellow KATHUAITES</a></li>-->
                 @if (model.user=='kathua'){
                 <li><a href="/stats/" class="menuitem" id="#" >Log in</a></li>
@@ -91,30 +91,24 @@
              
              <div class="row">
                 <div id ="secLeftSidebar" class="col-md-2" style="background-color:none">
-                    @html.block("leftSideBar")
-               
-                <!--div class="row">
-                    <div class="col-md-12">
-                          <h3>Advertise with us</h3>
-                        <div><a>click here</a></div>
-                        
-                    </div>
+                    <table>
+                        <tr>
+                            <td>@html.block("leftSideBar")</td>
+                        </tr>
+                       <tr>
+                           <td>
+                               <br/>
+                               @html.block("leftSideBarAdvertisement")
+                           </td>
+                       </tr> 
+                    </table>
+                    
+                       
+                    
+                    
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <h3>advertisement - 1</h3>
-                        <div><p>you advertisement</p></div>
-                        
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                    <h3>advertisement - 2</h3>
-                    <div><p>you advertisement</p></div>
-                    </div>
-                </div-->
                 
-                </div>
+                
                 
                 <div id="main" class="col-md-8">
                     <div class="fuild-container">@html.block("main")
@@ -170,8 +164,9 @@
     </div>
   </div>
 </div>
-        <footer><a href="#contactUs" role="link" class="" data-toggle="modal">Contact Us</a>&nbsp;|&nbsp;© 2016 – <a href='www.mykathua.com'>www.mykathua.com</a>&nbsp;|&nbsp;<a href="#aboutUs" role="link" class="" data-toggle="modal">About us</a></footer>
-    </body> 
+<footer><a href="#contactUs" role="link" class="" data-toggle="modal">Contact Us</a>&nbsp;|&nbsp;© 2016 – <a href='www.mykathua.com'>www.mykathua.com</a>&nbsp;|&nbsp;<a href="#aboutUs" role="link" class="" data-toggle="modal">About us</a></footer>
+
+</body> 
      
 </html>
 

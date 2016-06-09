@@ -80,6 +80,18 @@
 </div>
 })
 
+@html.block("leftSideBarAdvertisement",function(model){
+<table>
+    <tr>
+        <td>
+advertise with us here            
+        </td>
+    </tr>
+</table>
+
+})
+
+
 
 @html.block("rightSideBar",function(model){
 <h2>@@Kathua</h2>

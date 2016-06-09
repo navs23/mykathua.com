@@ -8,20 +8,23 @@
      var musicController = require("./musicController");
     var otherController = require("./otherController");
     var aboutController = require("./aboutController");
+    var adminController = require("./adminController");
+    
     controllers.init = function(app,passport){
         
-      // console.log(passport);
+        // console.log(passport);
         homeController.init(app);
-       
+        adminController.init(app);
+        
         accountController.init(app,passport);
         classifiedController.init(app);
         galleryController.init(app);
         mediaController.init(app);
-       
+        
         messageController.init(app);
         musicController.init(app);
-     otherController.init(app);
-     aboutController.init(app);
+        otherController.init(app);
+        aboutController.init(app);
          
     };
     

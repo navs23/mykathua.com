@@ -15,7 +15,7 @@
      
      
         app.get("/",function(req,res,next){
-            var messages;
+           
             var ip = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
              
             dal.saveWebHit({url:req.url,ipaddress:ip},function(result){
@@ -27,19 +27,18 @@
             });
             
             console.log('processing request for %s',req.url);
+            
              try {
                  
             
                     dex.scrape(url,function(html){
                          twt.getTweets(function(data){
                              
-                               dal.getMessages(null,function(resultset){
-                                messages=resultset;
-                        
-                                res.render("home",{user:req.user,weather:html,tweets:data,messages:messages,title:"Welcome to mykathua.com"});
-                    },function(err){
-                        
-                        res.send(err);
+                               dal.getMessages(function(err,msgs){
+                                   if (err==null)
+                                        res.render("home",{user:req.user,weather:html,tweets:data,messages:msgs,title:"Welcome to mykathua.com"});
+                                    else 
+                                        return next();
                     });
                              
                         
@@ -87,7 +86,7 @@
             res.send({html:'weather'});
          });
          // error handling..
-          app.get("/errorpage/",function(req,res,next){
+         app.get("/errorpage/",function(req,res,next){
             
             //res.send({html:'done'});
             
@@ -123,12 +122,26 @@
              
          });
     
+        // test
+         app.get("/test/message/",function(req,res){
+             
+            
+             dal.getMessages(function(err,msg){
+             if (err==null)
+             res.send(msg);
+             else
+             res.send(err);
+                 
+             });
+            
+             
+             
+             
+             
+         });
+    
          
     };
     
-var divide = function(i,j,err)    {
-    
-    throw err
-    
-}
+
 })(module.exports);
