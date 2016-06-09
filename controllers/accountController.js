@@ -68,7 +68,11 @@ app.get('/api/listusers',isLoggedIn, function(req, res) {
     // =====================================
     // route for twitter authentication and login
     //passport, name, options, callback
-    app.get('/auth/twitter', passport.authenticate('twitter'),function(){});
+    app.get('/auth/twitter', passport.authenticate('twitter'),function(){
+        
+        console.log('twitter login..');
+        
+    });
 
     // handle the callback after twitter has authenticated the user
     app.get('/auth/twitter/callback',

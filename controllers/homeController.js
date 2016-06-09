@@ -8,40 +8,26 @@
     
     //var url='http://api.openweathermap.org/data/2.5/weather?q=Kathua,in&mode=html&appid=816adfb03ad4efdaee6a6105152c3916';
     var url='http://api.openweathermap.org/data/2.5/weather?q=Kathua,in&mode=html&appid=816adfb03ad4efdaee6a6105152c3916';
-   console.log('home');
-    
+   
     homeController.init= function(app){
         
-     
-     
         app.get("/",function(req,res,next){
            
             var ip = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
-             
-            dal.saveWebHit({url:req.url,ipaddress:ip},function(result){
-              
-                
-            },function(err){
-                
-                console.log(err);
-            });
+            var params={url:req.url,ipaddress:ip};
+            savewebhits(params);
             
-            console.log('processing request for %s',req.url);
             
              try {
                  
             
                     dex.scrape(url,function(html){
-                         twt.getTweets(function(data){
-                             
-                               dal.getMessages(function(err,msgs){
-                                   if (err==null)
-                                        res.render("home",{user:req.user,weather:html,tweets:data,messages:msgs,title:"Welcome to mykathua.com"});
-                                    else 
-                                        return next();
-                    });
-                             
-                        
+                         twt.getTweets(function(err,data){
+
+                    if (err==null)
+                    res.render("home",{user:req.user,weather:html,tweets:data,messages:{},title:"Welcome to mykathua.com"});
+                    else 
+                    return next();
                         
                      });
                 },function(error){return next(error);});
@@ -143,5 +129,8 @@
          
     };
     
-
+var savewebhits=function(params){
+    
+    dal.saveWebHit(params,function(result){ },function(err){console.log(err);    });
+}
 })(module.exports);

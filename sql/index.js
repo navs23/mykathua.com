@@ -381,14 +381,13 @@
        
        //var qry="drop table mykth.jobs go create table [mykth].[jobs]([Id] int identity(1,1),[dated] datetime2 default getdate(),[jobid] varchar(25),[link] varchar(255),[position] varchar(255),[jobtext] nvarchar(max),[postdate] varchar(25))";
    
-   var qry='create table mykth.newsItems('
+var qry='create table mykth.cms('
 qry += 'id int identity (1,1)'
 qry += ',dated datetime default getdate()'
-qry += ',newsSource varchar(50)'
-qry += ',link nvarchar(255)'
-qry += ',news nvarchar(max)'
-qry += ',[description] nvarchar(max)'
-qry += ',thumbnail nvarchar(255)'
+qry += ',page_code varchar(15)'
+qry += ',section_code nvarchar(25)'
+qry += ',content nvarchar(max)'
+qry += ',[image_path] nvarchar(max)'
  qry += ')';
    
    
@@ -399,7 +398,7 @@ qry += ',thumbnail nvarchar(255)'
                 cb(null,recordset);})
             .catch(function(err) {
                 console.log(err);
-                cb(err);
+                cb(err,null);
                 
                 
                 

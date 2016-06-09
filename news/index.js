@@ -26,9 +26,7 @@
     
     var news=[];
     var newsItem={};
-    var description,newsLink,newsImg;
-  //  try
-//    {
+    
     dex.scrape('http://news.google.co.in',function(html){
     var $=cheerio.load(html);
     

@@ -1,0 +1,66 @@
+@html.extend('layout',function(model){
+
+@html.block("css",function(){
+<link rel="stylesheet" href="/resources/css/local/home.css"/>
+
+});
+@html.block("js",function(){
+
+ 
+})
+
+@html.block("main",function(model){
+
+<table border="1" width="100%">
+    <thead>
+        <tr>
+            <td>Page</td>
+            <td>section</td>
+            <td>Content</td>
+            <td>Image</td>
+            <td>action</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Home</td>
+            <td>top-header</td>
+            <td><textarea  class="home-top-header" name="content" rows="5" cols="5"></textarea></td>
+            <td>&nbsp;</td>
+            <td><input type="button" class="btn btn-success pull-right" page="home" section="top-header" value="Save Changes" onclick="savechanges(this);" /></td>
+        </tr>
+    </tbody>
+    
+</table>
+
+
+})
+})
+
+
+<script type="text/javascript">
+$(document).ready(function () {
+         
+
+});
+function savechanges(e){
+    
+    var params={};
+    params.page=$(e).attr('page');
+    params.section=$(e).attr('section');
+    
+    var selector=$(e).attr('page') + '-' + $(e).attr('section');
+    
+    params.content=$("textarea." +selector).val();
+    
+      $.post('/admin/updatewebcontent',params,function(res){
+           
+            alert("content saved successfully");        
+            
+            return true;
+        });
+    
+    
+}
+
+</script>
