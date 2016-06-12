@@ -25,8 +25,8 @@
       
       
 </p>
-<p class="home-main-message marquee marquee-direction-alternate marquee-speed-swift" data-marquee="@html.raw(model.cmsContent.flashMessage)">
-</p>
+<h2 class="home-main-message marquee  marquee-speed-slow" data-marquee="@html.raw(model.cmsContent.flashMessage)">
+</h2>
     
 
 
