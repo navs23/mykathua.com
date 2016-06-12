@@ -87,7 +87,7 @@
 <table>
     <tr>
         <td>
-advertise with us here            
+        @html.raw(model.advert)
         </td>
     </tr>
 </table>
