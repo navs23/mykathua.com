@@ -67,7 +67,7 @@
                 <li><a href="/jobs/" class="menuitem">Jobs</a></li>
                 <li><a href="/directory/" class="menuitem">Useful Contacts and links</a></li>
                 <li><a href="/trainstatus/" class="menuitem">Live Train Status</a></li>
-                 <li><a href="/advertise/" class="menuitem">Advertise</a></li>
+                 <!--<li><a href="/advertise/" class="menuitem">Advertise</a></li>-->
                 <!--<li><a href="/account/" class="menuitem">Fellow KATHUAITES</a></li>-->
                 @if (model.user=='kathua'){
                 <li><a href="/stats/" class="menuitem" id="#" >Log in</a></li>
