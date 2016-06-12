@@ -1,5 +1,7 @@
 @html.extend('layout',function(model){
 @html.block("css",function(){
+    <meta name="description" content="mykathua.com, kathua Radio, fm radio kathua, fm kathua,Dogri and hindi music,naveen sharma kathua"/>
+    <meta name="description" content="mykathua.com, kathua music,radio online music,folk and bollywood music"/>
 <link rel="stylesheet" href="/node_modules/jplayer/dist/skin/blue.monday/css/jplayer.blue.monday.min.css"/>
 
 
