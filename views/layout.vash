@@ -70,7 +70,7 @@
                 <li><a href="/trainstatus/" class="menuitem">Live Train Status</a></li>
                  <!--<li><a href="/advertise/" class="menuitem">Advertise</a></li>-->
                 <!--<li><a href="/account/" class="menuitem">Fellow KATHUAITES</a></li>-->
-                @if (model.user.displayName=='kathua'){
+                @if (model.user != undefined && model.user.displayName =='kathua'){
                 <li><a href="/admin/" class="menuitem" id="liLoginName" >Admin</a></li>
                 <li><a href="/stats/" class="menuitem" id="#" >Log in</a></li>
                 }
