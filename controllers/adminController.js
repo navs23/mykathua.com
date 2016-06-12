@@ -31,7 +31,7 @@
                else
                cmsData=[];
                // render admin page
-                res.render('admin/index',{cmsData:cmsData});
+                res.render('admin/index',{user:req.user,cmsData:cmsData});
                console.log(cmsData);
            });
            

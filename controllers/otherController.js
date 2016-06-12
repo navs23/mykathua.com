@@ -107,9 +107,9 @@
         });
         
      // direcotry listing
-     app.get("/directory/",function(req,res){
-     
-         var url='http://www.kathua.nic.in/Telephone%20Directory%20Kathua.htm';
+     app.get("/directory/",function(req,res,next){
+     try{
+         var url='http://www.kathua.nic.in/contacts.htm';
          console.log(url);
          
          dex.scrape(url,function(html){
@@ -162,7 +162,9 @@
         // console.log(temp);
          res.render('other/directory',{data:temp,user:req.user});
          });
-    
+     }catch(err){
+      return next();
+     }
     });
     
     //https://www.freshersworld.com/jobs/category/Govt-Sector-job-vacancies
@@ -263,9 +265,7 @@ var renderJob=function(searchUrl,req,res){
 
 var jobsearch = function(url,cb){
  
-  var tHead='';
-  var temp='';
-  var tBody='';
+  
   var jobItem={};
   var joblist=[];
   
