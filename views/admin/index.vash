@@ -22,13 +22,28 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>Home</td>
-            <td>top-header</td>
-            <td><textarea  class="home-top-header" name="content" rows="5" cols="5"></textarea></td>
+        
+        
+         @model.cmsData.forEach(function(e){
+        <tr>    
+            
+            <td>@e.page_code</td>
+            <td>@e.section_code</td>
+            <td><textarea  class="@e.page_code-@e.section_code" name="content" rows="5" cols="5">@e.content</textarea></td>
             <td>&nbsp;</td>
-            <td><input type="button" class="btn btn-success pull-right" page="home" section="top-header" value="Save Changes" onclick="savechanges(this);" /></td>
+            <td><input type="button" class="btn btn-success pull-right" page="@e.page_code" section="@e.section_code" value="Save Changes" onclick="savechanges(this);" /></td>
         </tr>
+        })
+        <!--
+         <tr>    
+            
+            <td>Home</td>
+            <td>Flash</td>
+            <td><textarea  class="Home-Flash" name="content" rows="5" cols="5"></textarea></td>
+            <td>&nbsp;</td>
+            <td><input type="button" class="btn btn-success pull-right" page="Home" section="Flash" value="Save Changes" onclick="savechanges(this);" /></td>
+        </tr>
+        -->
     </tbody>
     
 </table>

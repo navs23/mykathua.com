@@ -87,10 +87,10 @@ controllers.init(app,passport);
 
 
 var server =http.createServer(app);
-
+/*
 var io = sockethelper.listen(server,app);
 sockethelper.start(io);
-
+*/
 
 server.listen(process.env.PORT);
 

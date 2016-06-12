@@ -25,9 +25,17 @@
     
     sql.connect(config).then(function() {
     
+    var qry='';
+    if (params==null)
+    {
+         qry="select * from mykth.cms order by page_code,section_code";
+    }
+    else if (params.section==null || params.section==undefined)
+         qry="select * from mykth.cms where page_code='" + params.page + "'";
+    else
+         qry="select top 1 * from mykth.cms where page_code='" + params.page + "' and section_code='" + params.section + "'";
     
-    var qry="select * from mykth.cms";
-    
+    console.log(qry);
     var request = new sql.Request();
     
     request.query(qry)

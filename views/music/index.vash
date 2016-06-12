@@ -116,7 +116,7 @@
      	
      renderRadioPlayer("#jquery_jplayer_1","#jp_container_1");
      
-    startMarquee();
+   // startMarquee();
      
      
      
@@ -148,26 +148,42 @@ var renderRadioPlayer= function(playerdiv,containerdiv){
 			title:"Dogri Radio - mykathua.com",
 			mp3:"http://listen.radionomy.com/dogriradio;"
 		
+		}
+		,
+		{
+			title:"JK City FM",
+			mp3:"http://69.175.94.98:8138/;"
+		
 		},
 		{
-			title:"Apna eRadio",
-			mp3:"http://www.apnaeradio.com:8300/;"
+			title:"Bollywood - Sada Bahar Music Radio",
+			mp3:"http://192.240.102.133:8512/;stream/1;"
 		},
 		{
-			title:"Bollywood hits",
-			mp3:"http://streaming.radionomy.com/BollywoodHindiHits;"
+			title:"Bollywood Hits",
+			mp3:"http://viadj.viastreaming.net:7090/;"
+		},
+		{
+			title:"Hindi Evergreen hits",
+			mp3:"http://50.7.77.114:8296/;"
+		
 		},
 		
 		{
-			title:"Apna eRadio Gazals",
-			mp3:"http://www.apnaeradio.com:8400/;"
+			title:"Radio HSL",
+			mp3:"http://50.7.70.66:8485/;"
+		
 		},
 		{
-			title:"Apna eRadio Indian",
-			mp3:"http://www.apnaeradio.com:8100/;"
+				title:"Hits Of Bollywood",
+			mp3:"http://50.7.77.115:8174/;"
 		
 		}
-		
+		,{
+			title:"Non-stop hits"
+			,mp3:"http://198.178.123.14:8216/;stream/1"
+			
+		}
 		
 		
 	], {
@@ -193,49 +209,6 @@ var getRadioStats=function(){
 
 
 
- socket.on('message', function(data){
- //	$('#divError').append('<h3></h3>').text(JSON.stringify(data));
- 	stats=null;
- //	$('#divError').html(ojplayer.current + '|' + marqueeString);
- //	alert(data);
- 	 if (ojplayer.current==0){
- 	 //	if (bMarqueeStarted ==false) startMarquee();
- 	 	$('.marquee').show();
- 	 	stats=data;
- 	 }
- 	else
- 	$('.marquee').hide();
-      
-  });
-
-var startMarquee=function(){
-	$('.marquee').bind('finished', function(){
-    	 
-        //Change text to something else after first loop finishes
-       
-        destroyMarquee();
-        marqueeString='';
-        //Load new content using Ajax and update the marquee container
-        if (stats !=null || status !=undefined){
-        	/*
-	        marqueeString ='current song:<i>'+ stats.title + '</i>'
-			marqueeString +='&nbsp;|&nbsp;start time:<i>'+ stats.starttime + '</i>'
-			marqueeString +='&nbsp;|&nbsp;listeners:<b>'+ stats.listener + '</b>';
-			*/
-			marqueeString = stats.datetime;
-        }
-        
-        $('.marquee').html(marqueeString)
-            //Apply marquee plugin again
-            .marquee(marqueeOption)
-    })
-    .marquee(marqueeOption);
-    bMarqueeStarted=true;
-}
-var destroyMarquee=function(){
-	
-	 $('.marquee').marquee('destroy');
-	 bMarqueeStarted=false;
-}
+ 
 
 </script>

@@ -4,30 +4,56 @@
     var dex =require("../helper");
     var twt =require("../helper/tweet.js");
     var dal =require("../sql");
-    
+    var cms =require("../sql/cms.js");
     
     //var url='http://api.openweathermap.org/data/2.5/weather?q=Kathua,in&mode=html&appid=816adfb03ad4efdaee6a6105152c3916';
     var url='http://api.openweathermap.org/data/2.5/weather?q=Kathua,in&mode=html&appid=816adfb03ad4efdaee6a6105152c3916';
    
+   
     homeController.init= function(app){
         
-        app.get("/",function(req,res,next){
+         setupRoutes(app);    
+       
+        
+    };
+    
+var savewebhits=function(params){
+    
+    dal.saveWebHit(params,function(result){ },function(err){console.log(err);    });
+}
+
+var setupRoutes=function(app){
+       app.get("/",function(req,res,next){
            
             var ip = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
             var params={url:req.url,ipaddress:ip};
             savewebhits(params);
             
+             var cmsContent={};
+       
+            cms.getWebsiteContentByPageAndSection({page:'home',section:'top-header'},function(err,value){
+            if (err==null){cmsContent.cmsTopHeader=value[0].content;
+            }
+                cms.getWebsiteContentByPageAndSection({page:'home',section:'flash'},function(err,value){
+                if (err==null){
+                cmsContent.flashMessage=value[0].content;
+                
+                }
+              
+            });    
+            
+        });
+            
             
              try {
-                 
-            
                     dex.scrape(url,function(html){
+                    
                          twt.getTweets(function(err,data){
 
-                    if (err==null)
-                    res.render("home",{user:req.user,weather:html,tweets:data,messages:{},title:"Welcome to mykathua.com"});
-                    else 
-                    return next();
+                            if (err==null)
+                                res.render("home",{user:req.user,weather:html,tweets:data,messages:{},title:"Welcome to mykathua.com",cmsContent:cmsContent});
+                            else 
+                            return next();
                         
                      });
                 },function(error){return next(error);});
@@ -126,11 +152,5 @@
              
          });
     
-         
-    };
-    
-var savewebhits=function(params){
-    
-    dal.saveWebHit(params,function(result){ },function(err){console.log(err);    });
 }
 })(module.exports);

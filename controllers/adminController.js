@@ -1,15 +1,22 @@
 (function(admin){
     var data =require("../sql/cms.js");
-    
+     var cmsData;
     admin.init=function(app){
         
-        route(app);
+       
+           setTimeout(function(){
+            console.log('setting up admin routes');   
+            route(app);    
+               
+           },500);
+           
     }
     
     
     var route=function(app){
-        
+       
         app.get('/admin/',function(req,res,next){
+            
             
             //  if (req.isAuthenticated())
                 return next();
@@ -18,15 +25,25 @@
             
         },function(req,res,next){
             
-            res.render('admin/index',{});
+             data.getWebsiteContentByPageAndSection(null,function(err,content){
+               if (err==null)
+               cmsData=content;
+               else
+               cmsData=[];
+               // render admin page
+                res.render('admin/index',{cmsData:cmsData});
+               console.log(cmsData);
+           });
+           
+           
             
         });
         
         
         app.get('/admin/getwebcontent',function(req,res){
            
-           var params={};
-           data.getWebsiteContentByPageAndSection(params,function(err,msg){
+          
+           data.getWebsiteContentByPageAndSection(null,function(err,msg){
                if (err==null)
             res.send(msg);
             else 
