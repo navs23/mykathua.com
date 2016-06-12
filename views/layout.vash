@@ -72,16 +72,13 @@
                 <!--<li><a href="/account/" class="menuitem">Fellow KATHUAITES</a></li>-->
                 @if (model.user != undefined && model.user.displayName =='kathua'){
                 <li><a href="/admin/" class="menuitem" id="liLoginName" >Admin</a></li>
-                <li><a href="/stats/" class="menuitem" id="#" >Log in</a></li>
+                <li><a href="/stats/" class="menuitem" id="#" >Stats</a></li>
+                 <li><a href="/logout/" class="menuitem">Log Out</a></li>
                 }
-                @if (model.user==undefined){
+                @if (model.user == undefined){
                 <li><a href="/login/" class="menuitem" id="liLoginName" >Log in</a></li>
                 }
-                else
-                {
-                
-                <li><a href="/logout/" class="menuitem">Log Out</a></li>
-                }    
+                  
                 </ul>
              
                 </div><!-- /.navbar-collapse -->
