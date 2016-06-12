@@ -185,6 +185,23 @@ var renderRadioPlayer= function(playerdiv,containerdiv){
 			
 		}
 		
+		,{
+			title:"OM Radio - Chillout, Ambient, Instrumental, Meditative"
+			,mp3:"http://178.168.28.148:8000/"
+			
+		}
+		,
+		{
+			title:"Bhajan Radio"
+			,mp3:"http://188.165.192.5:8159/;stream/1"
+			
+		}
+			,
+		{
+			title:"Radio Jai Ho - Bhajan"
+			,mp3:"http://198.105.214.140:7868/;stream/1"
+			
+		}
 		
 	], {
 		swfPath: "/node_modules/jplayer/dist/jplayer",
