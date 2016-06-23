@@ -24,17 +24,7 @@
         
       getImages(function(images){
           
-          //https://drive.google.com/drive/folders/0BwakFmYFm-aeZ25tdmU1aHNaMk0
-          //https://drive.google.com/drive/folders/0BwakFmYFm-aeZ25tdmU1aHNaMk0
-           var imageItem={};
-           
-            imageItem={};
-              
-               imageItem.src='https://drive.google.com/drive/folders/0BwakFmYFm-aeZ25tdmU1aHNaMk0'; 
-               
-               //imageItem.src=item.find('a').attr('href');
-               imageItem.text='Amarnath-sheshnaag';
-               images.push(imageItem);
+         
                
           res.send(images);
           

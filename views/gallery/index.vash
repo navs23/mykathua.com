@@ -29,8 +29,8 @@ and we would love to publish your photo on <a href='www.mykathua.com'>mykahtua.c
 <div class="row-fluid" style="border:1px dotter black;">
     
 <div id="slider" class="span12" style="border:1 solid red">
-      <img  src="/resources/img/gallery/image-1.jpg" />
-          <img src="/resources/img/gallery/image-2.jpg" />
+      <img  src="/resources/img/gallery/image-1.jpg"  data-plugin-slide-caption="Amarnath-Sheshnaag" />
+          <img src="/resources/img/gallery/image-2.jpg" data-plugin-slide-caption="Amarnath-Sheshnaag"  />
 </div>
 </div>
 </div>
