@@ -25,19 +25,22 @@ and we would love to publish your photo on <a href='www.mykathua.com'>mykahtua.c
 </p>
 
         
-
-<div class="row">
+<div class="container">
+<div class="row-fluid" style="border:1px dotter black;">
     
-<div id="slider" class="col-md-6" style="border:1 solid red">
-    
+<div id="slider" class="span12" style="border:1 solid red">
+      <img  src="/resources/img/gallery/image-1.jpg" />
+          <img src="/resources/img/gallery/image-2.jpg" />
 </div>
 </div>
+</div>
+<!--
 <div class="row">
     
 <div id="instafeed" class="instagram"></div> 
     
 </div>
-
+-->
 
 })
 
@@ -53,14 +56,18 @@ and we would love to publish your photo on <a href='www.mykathua.com'>mykahtua.c
         
         for(var i in data){
         // console.log(data[i].src );
-        $("#slider").append('<img class="img-rounded" style="width=100px;height=50px;" src="' + data[i].src + '" data-plugin-slide-caption="'+ data[i].text +'" style="align:middle"/> data')
+        $("#slider").append('<img class="img-rounded center-block" style="" src="' + data[i].src + '" data-plugin-slide-caption="'+ data[i].text +'"/> data')
         }
         });
        $(function () {
     $("#slider").excoloSlider({
         mouseNav: false,
         interval: 5000, // = 5 seconds
-        playReverse: true,width:100,height:50
+        playReverse: false,
+        autosize:true,
+        autoPlay:false,
+        captionAutoHide:true
+        
     });
 });
       
@@ -81,7 +88,7 @@ lng: 2.294351
 show: 5,
 clientId: clientId
 });
-*/
+
 
 $('.instagram').on('willLoadInstagram', function(event, options) {
     console.log(options);
@@ -94,6 +101,7 @@ $('.instagram').on('willLoadInstagram', function(event, options) {
     hash: 'love',
     clientId: clientId
   });
+  */
 
 });
 

@@ -27,7 +27,6 @@
         <script src="/resources/js/angular.min.js"></script>
         <script src="/resources/js/util.js"></script>  
         <script src="/resources/js/jquery-comments.min.js"></script>  
-         <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
         @html.block("js")
    </head>
     <body>
@@ -36,12 +35,13 @@
                 <div class="col-md-12">
                     
                <header>
-                  <img class="header" src="/resources/img/kth-main.png" />
+                   <!--
+                  <img class="header" src="/resources/img/kth-main.png" /> -->
                    </header>
                
                 </div>
              </div>
-             <div class="fluid-container" style="background-color:none">
+             <div class="fluid-container">
              <div class="row" style="background-color:none;">
 		       <div class="col-md-12" style="background-color:none;">
 			    <section id="topmenu">
@@ -69,8 +69,8 @@
                 <li><a href="/jobs/" class="menuitem">Jobs</a></li>
                 <li><a href="/directory/" class="menuitem">Useful Contacts and links</a></li>
                 <li><a href="/trainstatus/" class="menuitem">Live Train Status</a></li>
-                 <!--<li><a href="/bdc/" class="menuitem">Blood Donor Club</a></li>
-                 <li><a href="/advertise/" class="menuitem">Advertise</a></li>-->
+                <li><a href="/bdc/" class="menuitem">Blood Donor Club</a></li>
+                 <!--<li><a href="/advertise/" class="menuitem">Advertise</a></li>-->
                 <!--<li><a href="/account/" class="menuitem">Fellow KATHUAITES</a></li>-->
                 @if (model.user != undefined && model.user.displayName =='kathua'){
                 <li><a href="/admin/" class="menuitem" id="liLoginName" >Admin</a></li>
@@ -89,31 +89,31 @@
                 </section>
 				</div>
     </div>    
-             
-             <div class="row" style="background-color:none;">
-                <div id ="secLeftSidebar2" class="col-md-2" style="min-height:100%">
-                    
-                    <div class="row">
-                        <div class="col-md-12">
-                                @html.block("leftSideBar")    
-                        </div>
-                        </div>
-                        <div class="row">
-                        <div class="col-md-12">
-                    @html.block("leftSideBarAdvertisement")
-                        </div>
-                        </div>
+             <div class="container"
+             <div class="row">
+                <div id ="secLeftSidebar" class="col-md-2" style="background-color:none">
+                    <table>
+                        <tr>
+                            <td>@html.block("leftSideBar")</td>
+                        </tr>
+                       <tr>
+                           <td>
+                               <br/>
+                               @html.block("leftSideBarAdvertisement")
+                           </td>
+                       </tr> 
+                    </table>
                     
                 </div>
                 
                 
                 
-                <div id="main" class="col-md-8" style="background-color:none">
+                <div id="main" class="col-md-8">
                     <div class="fuild-container">@html.block("main")
                     </div>
                     </div>
                 
-                <div id ="secRightSidebar" class="col-md-2" style="background-color:none">hhh@html.block("rightSideBar")</div>
+                <div id ="secRightSidebar" class="col-md-2" style="background-color:none">@html.block("rightSideBar")</div>
               
                 </div>
                 </div>

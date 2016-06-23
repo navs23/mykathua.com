@@ -1,0 +1,301 @@
+@html.extend('layout',function(model){
+
+@html.block("css",function(){
+<link rel="stylesheet" href="/resources/css/marquee.css"/>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="/resources/css/local/bdc.css"/>
+});
+@html.block("js",function(){
+<script src="/resources/js/local/bdc.js"></script>  
+<script src="/resources/js/local/media.js"></script>  
+
+
+})
+
+
+<div class="container">
+@html.block("main",function(model){
+<div class="row" style="background-color:none;text-align:middle">
+<div class="col-md-12"></div>            
+</div>
+
+<div class="row">
+<div class="col-md-2"></div>    
+<div class="col-md-8"></div>
+</div>
+<!--comments-->
+<div class="row">
+<div class="col-md-12">
+<h3>Leave a message</h3>
+<div id='divComment6'></div>
+</div>
+
+</div>
+<!--error row-->
+<div class="row">
+<div class="col-md-12">
+<div id="divError"></div>
+</div>
+
+</div>
+})
+
+</div>
+
+@html.block("leftSideBar",function(model){
+
+<div class="bdc-side-menu">
+    <ul>
+      <li>
+    <a href="#registerWithUs" role="link"  data-toggle="modal">Register as a donor</a>
+    </li>
+     <li>
+    <a href="#why" role="link"  data-toggle="modal" >why do I donate blood?</a>
+     </li>
+     <li>
+    <a href="#whoneeds" role="link"  data-toggle="modal">why do I donate blood?</a>
+     </li>
+     <li>
+    <a href="#playvideo" role="link"  data-toggle="modal">Video</a>
+     </li>
+      <li>
+    <a id="clickme" href="#">Click Me</a>
+     </li>
+    </ul>
+</div>
+})
+
+
+
+})
+<div id="registerWithUs" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Register as a blood donor and save lives</h3>
+      </div>
+      <div class="modal-body">
+       
+    
+        <form class="form-horizontal col-sm-12" action="/contactus" method="post">
+            <div class="row">
+                <div class="col-md-6">
+                      <div class="form-group"><label>First Name</label><input id="txtFName" class="form-control required" placeholder="Your name" data-placement="top" data-trigger="manual" data-content="Must be at least 3 characters long, and must only contain letters." type="text"></div>
+                    
+                </div>
+                  <div class="col-md-6">
+                       <div class="form-group"><label>Last Name</label><input id="txtLName" class="form-control required" placeholder="Your name" data-placement="top" data-trigger="manual" data-content="Must be at least 3 characters long, and must only contain letters." type="text"></div>
+                      
+                  </div>
+                     
+            </div>
+            <div class="row">
+                
+                  <div class="col-md-6">
+                      <div class="form-group"><label>E-Mail</label><input id ="txtEmail" class="form-control email required" placeholder="email@you.com (so that we can contact you)" data-placement="top" data-trigger="manual" data-content="Must be a valid e-mail address (user@gmail.com)" type="text"></div>  
+                      
+                  </div>
+                     <div class="col-md-6">
+                      <div class="form-group"><label>Phone</label><input id ="txtPhone" class="form-control phone" placeholder="999-999-9999" data-placement="top" data-trigger="manual" data-content="Must be a valid phone number (999-999-9999)" type="text"></div>        
+                      
+                  </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                      <div class="form-group"><label>Address Line 1</label><input id ="txtAdd1" class="form-control phone" placeholder="First line of your address" data-placement="top" data-trigger="manual" data-content="*" type="text"></div>        
+                    
+                </div>
+                  <div class="col-md-6">
+                      
+                    <div class="form-group"><label>Address Line 2</label><input id ="txtAdd2" class="form-control phone" placeholder="Second line of your address" data-placement="top" data-trigger="manual" data-content="*" type="text"></div>        
+                  </div>
+                  
+                  
+            </div>
+            <div class="row">
+                
+                  <div class="col-md-6">
+                      
+                    <div class="form-group"><label>City</label><input id ="txtCity" class="form-control phone" placeholder="Your city" data-placement="top" data-trigger="manual" data-content="*" type="text"></div>        
+                  </div>
+                  <div class="col-md-6">
+                      
+                    <div class="form-group"><label>Pincode</label><input id ="txtPincode" class="form-control phone" placeholder="Your pincode" data-placement="top" data-trigger="manual" data-content="*" type="text"></div>        
+                  </div>
+            </div>
+            <div class="row">
+                
+                  <div class="col-md-6">
+                      
+                    <div class="form-group">
+                    <label>Gender</label><select class="form-control"><option>Male</option><option>Female</option></select>
+                    
+                    </div>        
+                  </div>
+                  <div class="col-md-6">
+                      
+                    <div class="form-group"><label>Dob</label><input id ="txtPhone" class="form-control phone" placeholder="Your date of birth" data-placement="top" data-trigger="manual" data-content="*" type="text"></div>        
+                  </div>
+            </div>
+            <div class="row">
+                
+                  <div class="col-md-6">
+                      
+                    <div class="form-group">
+                    <label>Blood group</label>
+                              <select name="bloodgroup" class="form-control" id="ddBloodGroup">
+                              <option value="1">A +ve</option>
+                              <option value="2">A -ve</option>
+                              <option value="5">AB +ve</option>
+                              <option value="6">AB -ve</option>
+                              <option value="3">B +ve</option>
+                              <option value="4">B -ve</option>
+                              <option value="7">O +ve</option>
+                              <option value="8">O -ve</option>
+                              
+                              </select>
+                    
+                    </div>        
+                  </div>
+                  <div class="col-md-6">
+                      
+                    <div class="form-group"><label>Last donation date</label><input id ="txtLastBloodDonationDate" class="form-control phone" placeholder="Date when you last donated blood" data-placement="top" data-trigger="manual" data-content="*" type="text"></div>
+                     
+                    
+                  </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group"><label>Message</label><textarea id ="txtMessage" class="form-control required" placeholder="Your message here.." data-placement="top" data-trigger="manual"></textarea></div>
+                    
+                </div>
+                
+                
+            </div>
+            
+        
+          
+          
+          
+          <div class="form-group"><button type="button" class="btn btn-success pull-right" id="btnContactUsSubmit">Send It!</button> <p class="help-block pull-left text-danger hide" id="form-error">&nbsp; The form is not valid. </p></div>
+          <div id="divErrorMessage">error</div>
+        </form>
+    
+         
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="why" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Why do I donate Blood?</h3>
+      </div>
+      <div class="modal-body">
+       
+<p>
+  Blood is the living fluid that all life is based on. Blood is composed of 60% liquid part and 40% solid part. The liquid part called Plasma, made up of 90% water and 10% nutrients, hormones, etc. is easily replenished by food, medicines, etc. But the solid part that contains RBC (red blood cells), WBC (white blood cells) and Platelets take valuable time to be replaced if lost.
+This is where you come in. The time taken by a patient's body to replace it could cost his/her life. Sometimes the body might not be in a condition to replace it at all.
+As you know blood cannot be harvested it can only be donated. This means only you can save a life that needs blood.
+Every year India requires 40 million units of 250cc blood out of which only a meager 500,000 of blood units are available.
+Saving a life does not require heroic deeds. You could just do it with a small thought and an even smaller effort by saying "yes
+</p>
+    
+         
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="whoneeds" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Who could be in need of Blood?</h3>
+      </div>
+      <div class="modal-body">
+       
+<p>
+  Who needs blood?
+Every 2 seconds someone needs blood. Your blood helps more than one life at a time. Accident victims, premature babies, patients undergoing major surgeries require whole blood, where your blood after testing is used directly. Patients suffering from trauma, anemia, and other surgeries require only red blood cells, which is separated from your blood. The procedure of splitting blood components is called Cytapheresis. Similarly blood platelets are used for cancer patients undergoing chemotherapy or for those undergoing treatment for dengue fever etc. Fresh frozen plasma is used for patients having massive transfusions, plasma is used for burns and cryoprecipitate is used for hemophilia.
+When is blood needed?
+Blood is needed at regular intervals and at all times as it has only finite time of storage. Red blood cells can be stored for about 42 days, fresh frozen plasma and cryoprecipitate for 365 days and blood platelets for 5 days.
+Who can donate blood?
+Anyone above 18 years weighing more than 50 kgs (110 lbs) can donate blood. Click here to find out what are the requirements for donating blood.
+</p>
+    
+         
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="playvideo" >
+<iframe id="videoFrame" width="175" height="175" src=""></iframe>
+  
+</div>
+
+<script type="text/javascript">
+      $(document).ready(function () {
+         
+ 
+setTimeout(function() { 
+   		
+   		getStoryComments({id:6,diverr:'#divError'},function(err){
+   		 $('#divError').html(err);
+   		    
+   		},function(data){
+   		        //alert(data);
+   		        
+   		    });
+   	}
+   	,100);
+
+
+
+$('#clickme').on('click',function(e){
+  
+
+    
+    $("#playvideo").dialog({
+    
+    show: "fade",
+    hide: "fade",
+    modal: true,
+    
+    open: function (ev, ui) {
+      
+      $('#videoFrame').attr('src','https://www.youtube.com/embed/auzVJQw3O5c');
+    },
+    height: 'auto',
+    width: 'auto',
+    resizable: true,
+    title: 'Vessels'
+  });
+    
+  
+});
+
+ $("#playvideo").hide();
+
+});
+
+$(function() {
+    $( "#txtLastBloodDonationDate" ).datepicker();
+  });
+  
+  
+  
+</script>
+

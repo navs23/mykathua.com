@@ -19,7 +19,6 @@ node-cache module added
     }
     
    
-    
     var routes=function(app){
 
              app.get("/media/",function(req,res,next){
@@ -32,8 +31,6 @@ node-cache module added
                         res.render(err);          
                 });
                 
-             
-                        
                 
             });
             

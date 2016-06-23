@@ -18,10 +18,10 @@
         app.get('/admin/',function(req,res,next){
             
             
-              if (req.isAuthenticated())
+           //   if (req.isAuthenticated())
                 return next();
-            else 
-             res.redirect('/login/');
+          //  else 
+            // res.redirect('/login/');
             
         },function(req,res,next){
             
@@ -92,6 +92,9 @@
             
             
         });
+        
+       
+        
         
     }
     

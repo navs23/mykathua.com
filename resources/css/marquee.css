@@ -1,6 +1,6 @@
 .marquee {
   overflow: hidden;
-  
+ 
 }
 .marquee.marquee-speed-drowsy:before {
   -webkit-animation-duration: 30s;

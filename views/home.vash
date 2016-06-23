@@ -11,11 +11,20 @@
 })
 <div class="container">
 @html.block("main",function(model){
+<!--
+<div class="row" style="background-color:none;text-align:middle">
+<div class="col-md-12">
+        <h1 class ="marquee" data-marquee="@html.raw(model.cmsContent.flashMessage)"></h1>
+</div>            
+        
+    </div>
+    -->
 
 <div class="row">
 <div class="col-md-2">
     
 </div>    
+
 <div class="col-md-8">
 <p>
      @if (model.user !=undefined){
@@ -25,9 +34,7 @@
       
       
 </p>
-<h2 class="home-main-message marquee  marquee-speed-slow" data-marquee="@html.raw(model.cmsContent.flashMessage)">
-</h2>
-    
+
 
 
 <div class="home-main-message">
@@ -111,8 +118,6 @@
 
 
 })
-
-
 
 <script type="text/javascript">
       $(document).ready(function () {

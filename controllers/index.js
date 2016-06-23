@@ -9,12 +9,13 @@
     var otherController = require("./otherController");
     var aboutController = require("./aboutController");
     var adminController = require("./adminController");
-    
+    var bdcController = require("./bdcController");
     controllers.init = function(app,passport){
         
         // console.log(passport);
         homeController.init(app);
         adminController.init(app);
+        bdcController.init(app);
         
         accountController.init(app,passport);
         classifiedController.init(app);

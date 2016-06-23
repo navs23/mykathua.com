@@ -1,0 +1,41 @@
+.dbc-side-menu {
+    position: relative;
+    background-color: black;
+    height: 100%;
+    
+    margin-top: 5px important;
+    
+}
+.bdc-side-menu ul
+{
+    
+    list-style: none;
+    margin-left: -.2em !important;
+    margin-top: 2em;
+    width: 100%;
+    clear: both;
+    
+    margin-left: 1em;
+    margin-top: 2em;
+}
+
+.bdc-side-menu ul li 
+{
+   
+padding: 5px !important;
+
+clear: both;
+list-style: none;
+}
+.bdc-side-menu ul li a
+{
+ margin-left: -2em !important;
+ padding-left: 0px !important;
+ color:red;
+ font-size: 1em;
+ font-weight: bold;
+ height:.5em;
+ 
+ 
+    
+}
