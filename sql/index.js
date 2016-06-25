@@ -465,4 +465,21 @@ data.getNewsFromDb=function(cb)    {
     
 }
 
+
+  data.getGalleryImages  = function(param,cb){
+    
+    sql.connect(config).then(function() {
+    
+    var qry="select id,dated,caption as text,image_text,image_path as src from [mykth].[gallery]";
+   
+    //console.log(qry);
+    var request = new sql.Request();
+    
+    request.query(qry)
+        .then(function(recordset) {cb(null,recordset);})
+        .catch(function(err) {cb(err);});
+    });
+    
+    }
+
 })(module.exports);

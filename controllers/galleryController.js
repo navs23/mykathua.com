@@ -8,8 +8,7 @@
         
         app.get("/gallery/",function(req,res){
             
-           // getImages(function(images){
-         // res.send(images);
+           
           
            res.render("gallery/index",{title:"Photo Gallery",images:null,user:req.user});
           
@@ -21,12 +20,26 @@
         });
         
     app.get("/api/gallery/",function(req,res){
-        
+        /*
       getImages(function(images){
           
-         
+         console.log(images);
                
           res.send(images);
+          
+          
+      });*/
+      
+      data.getGalleryImages(null,function(err,images){
+          if (err==null){
+           console.log(images);
+               
+          res.send(images);
+          }
+          else
+          {
+              res.send(err);
+          }
           
       });
         
@@ -72,7 +85,26 @@ var getImages=function(cb){
     
 }
 
+var getImagesSql=function(cb){
+    
+   
+    data.getGalleryImages(null,function(err,images){
+       
+            cb(images);
+        
+    });
+    
+   
+    
+    
+    
+    
 
+    
+
+         
+    
+}
 
     
 })(module.exports);
