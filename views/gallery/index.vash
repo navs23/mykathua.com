@@ -18,7 +18,7 @@
         <p class="text-error"> error occured:@model.error</p>
         }
     <h1>@model.title</h1>
-<h3>Our intent is to find some rear and beautiful pictures of Kathua and share them with everyone</h3>
+<h3>Our intent is to find some rare and beautiful pictures of Kathua and share them with everyone</h3>
 
 <p>If you have a photo that you would like to share on this gallery, please email your photo to <a href="emailto:mykahtua@@gmail.com">mykathua@@gmail.com</a>
 and we would love to publish your photo on <a href='www.mykathua.com'>mykahtua.com</a>.
@@ -55,7 +55,7 @@ and we would love to publish your photo on <a href='www.mykathua.com'>mykahtua.c
         
         for(var i in data){
         // console.log(data[i].src );
-        $("#slider").append('<img class="img-rounded center-block" style="width:100%;height:100%;" src="' + data[i].src + '" data-plugin-slide-caption="'+ data[i].text +'"/> data')
+        $("#slider").append('<img id="img-' + data[i].id + '" class="img-rounded center-block" style="width:100%;height:100%;" src="' + data[i].src + '" data-plugin-slide-caption="'+ data[i].text  + '"/> data')
         }
         });
        $(function () {
@@ -64,7 +64,7 @@ and we would love to publish your photo on <a href='www.mykathua.com'>mykahtua.c
         interval: 5000, // = 5 seconds
         playReverse: false,
         autosize:true,
-        autoPlay:true,
+        autoPlay:false,
         captionAutoHide:false
         
     });
@@ -102,6 +102,10 @@ $('.instagram').on('willLoadInstagram', function(event, options) {
   });
   */
 
+$('.slide-next').on('click',function(e){
+    
+    alert('next');
+});
 });
 
 
