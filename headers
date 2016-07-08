@@ -1,0 +1,14 @@
+HTTP/1.1 404 Not Found
+X-Frame-Options: DENY
+Content-Type: text/html
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET, OPTIONS, PUT, POST, DELETE, HEAD, PROPFIND, PATCH
+Access-Control-Allow-Headers: Content-Type, X-Requested-With, x-request-metadata
+Access-Control-Expose-Headers: x-content-length, x-metadata-length
+Access-Control-Max-Age: 8640000
+Set-Cookie: c9.live.ide=s%3AA55LR6BVGd2yOc7JvpsFpfJj.p7qRkK5HJnqlPa03x%2BJtluizINd2vGtj2ZUeoaH3Y4o; Path=/; Expires=Thu, 30 Jun 2016 08:30:13 GMT; HttpOnly; Secure
+Date: Wed, 29 Jun 2016 08:30:13 GMT
+Transfer-Encoding: chunked
+X-BACKEND: ide
+Strict-Transport-Security: max-age=31536000
+

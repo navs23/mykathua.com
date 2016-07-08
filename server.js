@@ -2,27 +2,23 @@
 var http = require("http");
 var express = require("express");
 var path =require("path");
+
 //var ejsEngine=require("ejs-locals");
 var passport = require('passport');
 var flash    = require('connect-flash');
 var methodOverride = require('method-override');
 var sockethelper = require('./helper/socket.js');
-//var logger=require('logger');
-
+var emailHelper = require('./helper/mail.js');
+var data=require("./sql");
 var app = express();
 var liveConnections=0;
 
-
 require('./config/passport')(passport); // pass passport for configuration
-
-
 
 app.configure(function() {
 
-  console.log('configuring..')
-
+    app.use('/', express.static(__dirname + '/'));
     
-  app.use('/', express.static(__dirname + '/'));
 	// set up our express application
 	app.set("env","development");
 	app.set("liveconnections",liveConnections);
@@ -30,11 +26,10 @@ app.configure(function() {
    // app.use(logger.log);
 	
 	app.use(express.logger('dev')); // log every request to the console
-	
 	app.use(express.cookieParser()); // read cookies (needed for auth)
 	app.use(express.bodyParser()); // get information from html forms
 
-  app.set("view engine","vash");
+    app.set("view engine","vash");
 
 
 	// required for passport
@@ -50,6 +45,11 @@ app.configure(function() {
     process.env.TWITTER_CONSUMER_SECRET='rKD8ZiJ10g5qwHnVrLghnVtDkoRb5q977FTt3N1fn1HYrOaIkY';
     process.env.TWITTER_ACCESS_TOKEN_KEY='703646797646995457-mUvHGxvX9mwrSsVa69Cy51RW3sHxwDh';
     process.env.TWITTER_ACCESS_TOKEN_SECRET='2YlEelXvhaBP9PyGV2A1QMuRnDVy9wBI98Ya0eJoFMB7E';
+    process.env.SENDGRID_API_KEY='d1H4OpMPSn-P3wEpGR6g1A';
+     
+    process.env.SENDGRID_USER='mykathua';
+    
+    process.env.BASE_WEBSITE_URL='https://navs-navs23.c9users.io'
 }
 else
 {
@@ -57,13 +57,23 @@ else
     process.env.TWITTER_CONSUMER_SECRET='XbjoMydUrK8SbpRJN8Lpf7w7qf1zp7zFF1jJ6oFILajTLFfsrt';
     process.env.TWITTER_ACCESS_TOKEN_KEY='703646797646995457-3xgxegVvlsinnlhcwxZwLDffJdBSNuY';
     process.env.TWITTER_ACCESS_TOKEN_SECRET='WJSubhpmVHZ3XErI8kueh8TOVlPxnp8gqOeLcokryxoaV';
+    process.env.SENDGRID_API_KEY='d1H4OpMPSn-P3wEpGR6g1A';
+    process.env.SENDGRID_USER='mykathua';
+    process.env.BASE_WEBSITE_URL='http://www.mykathua.com'
 }
 
 });
 
 process.on('uncaughtException', function (err) {
   console.log(err);
-  
+  emailHelper.sendMail({
+      from:'do-not-reply@mykathua.com',
+      to:'navs@hotmail.co.uk',
+      subject:'mykathua.com->error',
+      text:JSON.stringify(err)
+      
+      
+  });
   
 });
 
@@ -91,9 +101,9 @@ var server =http.createServer(app);
 var io = sockethelper.listen(server,app);
 sockethelper.start(io);
 */
+console.log('sending email');
+
+
+console.log('finished sending email');
 
 server.listen(process.env.PORT);
-
-console.log('web server running on %d',process.env.PORT);
-
-/// end 

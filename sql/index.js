@@ -39,6 +39,7 @@
     });
     });
     }
+   
     // end getusers
     
     data.getStories  = function(param,cb){
@@ -114,7 +115,7 @@
            var qry=";with upvoteCount as (";
            
            qry +="select count(1) as upvote_count, [StoryCommentsId] from [mykth].StoryCommentsLike c group by [StoryCommentsId] )"
-            qry+="select sc.StoryCommentsId as id,ParentStoryId as parent,sc.CreatedDateTime as created , sc.Comments as content,isnull(u.displayName,'Guest') as fullname";
+            qry+="select sc.StoryCommentsId as id,ParentStoryId as parent,sc.CreatedDateTime as created , sc.Comments as content,isnull(case when u.displayName is null then u.FirstName + ' ' + u.LastName end,'Guest') as fullname";
             qry+=" ,case when sc.UserName ='" + option.username +"' then 1 else 0 end as created_by_current_user,isnull(uc.upvote_count,0) as upvote_count,u.profile_image_url as profilePictureURL" ;
             
             qry+="  from mykth.StoryComments sc";
@@ -124,7 +125,7 @@
             qry+=" where (sc.StoryId=" + option.storyId + " or " + option.storyId +"=0)";
             
             qry+=" order by sc.CreatedDateTime desc";
-          
+          console.log(qry);
             var request = new sql.Request();
             request.query(qry).then(function(recordset) {
           
@@ -133,7 +134,7 @@
         }).catch(function(err) {
     	
     	 console.log("error");
-    	 cb(err);
+    	 cb(err,null);
     	 
     });
     });
@@ -241,11 +242,11 @@
     });
     
     }
-
+    
     //insert into [mykth].[StoryCommentsLike](StoryCommentsLikeId,StoryCommentsId,UserName) values ()
-
+    
     //select [Id] ,[Dated],[UserId],[Heading],[CategoryCode],	[Advert],[PhoneNumber],	[EmailAddress] from [mykth].[Classified] with(nolock) order by category, dated desc
-
+    
     data.getClassifiedAds  = function(param,fnSuccess,fnError){
     
     sql.connect(config).then(function() {
@@ -282,7 +283,7 @@
     
     };
     
-
+    
     data.saveClassifiedAd  = function(param,fnSuccess,fnError){
     
     sql.connect(config).then(function() {
@@ -307,20 +308,18 @@
     });
     
     }
-
-    data.saveMessage  = function(param,fnSuccess,fnError){
+    
+    data.saveMessage  = function(param,cb){
     
     sql.connect(config).then(function() {
         
         var qry="insert into [mykth].[Message]([From],[To],[MessageBody]) values (";
-        //var qry="insert into [mykth].[Classified]([Id] ,[UserId],[Heading],[CategoryCode],[Advert],[PhoneNumber],[EmailAddress]) values (";
-        
-        //qry+= param.id + ",";
+       
         qry+= "'" + param.name + '|' + param.email + '|' + param.phone + "','";
         qry+="navs','";
         qry+=param.message + "'";
         
-        qry+=");select 'message sent successfully' as message";
+        qry+=");select 200 as code, 'message sent successfully' as message";
         
         console.log(qry);
         var request = new sql.Request();
@@ -328,13 +327,13 @@
         request.query(qry)
             .then(function(recordset) {
                 //recordset.message="message sent successfully";
-                fnSuccess(recordset);}
+                cb(null,recordset[0]);}
                 
                 )
             .catch(function(err) {
                 
-                console.log((err));
-                fnError(err);
+              
+              cb(err,null);
                 
                 
                 
@@ -342,8 +341,8 @@
     });
     
     };
-
-  data.saveJob  = function(jobItem,fnSuccess,fnError){
+    
+    data.saveJob  = function(jobItem,fnSuccess,fnError){
     
     sql.connect(config).then(function() {
         /*
@@ -375,22 +374,32 @@
     
     }
     
- data.executeSql  = function(cb){
+    data.executeSql  = function(cb){
     
     sql.connect(config).then(function() {
        
        //var qry="drop table mykth.jobs go create table [mykth].[jobs]([Id] int identity(1,1),[dated] datetime2 default getdate(),[jobid] varchar(25),[link] varchar(255),[position] varchar(255),[jobtext] nvarchar(max),[postdate] varchar(25))";
-   
-var qry='create table mykth.cms('
-qry += 'id int identity (1,1)'
-qry += ',dated datetime default getdate()'
-qry += ',page_code varchar(15)'
-qry += ',section_code nvarchar(25)'
-qry += ',content nvarchar(max)'
-qry += ',[image_path] nvarchar(max)'
- qry += ')';
-   
-   
+    
+    var qry='';
+    /*
+    qry='create table mykth.[GalleryImageComment]('
+    qry += 'id int identity (1,1)'
+    qry += ',[CreatedDateTime] datetime default getdate()'
+    qry += ',[GalleryImageId] [int] NULL'
+    qry += ',[UserName] [nvarchar](15) NULL'
+    qry += ',Comments nvarchar(max)'
+    qry += ',[ParentGalleryId] [int] NULL'
+    qry += ');';
+    */
+    qry +='drop table mykth.[GalleryImageCommentLike] ;create table mykth.[GalleryImageCommentLike]('
+    qry += 'id int identity (1,1)'
+    qry += ',[CreatedDateTime] datetime default getdate()'
+    qry += ',[GalleryImageCommentId] [int] NULL'
+    qry += ',[UserName] [nvarchar](15) NULL'
+    qry += ',Comments nvarchar(max)'
+    qry += ',[ParentGalleryId] [int] NULL'
+    qry += ')';   
+    
         var request = new sql.Request();
         
         request.query(qry)
@@ -407,8 +416,8 @@ qry += ',[image_path] nvarchar(max)'
     
     }
     
- data.saveNews=function(news,cb)    {
-   
+    data.saveNews=function(news,cb)    {
+    
     
     sql.connect(config).then(function() {
     
@@ -443,9 +452,9 @@ qry += ',[image_path] nvarchar(max)'
     
     
     
-}
-
-data.getNewsFromDb=function(cb)    {
+    }
+    
+    data.getNewsFromDb=function(cb)    {
     sql.connect(config).then(function() {
     
     var qry="select * from  mykth.newsItems";
@@ -463,7 +472,7 @@ data.getNewsFromDb=function(cb)    {
     });
     });
     
-}
+    }
 
 
   data.getGalleryImages  = function(param,cb){
@@ -478,6 +487,135 @@ data.getNewsFromDb=function(cb)    {
     request.query(qry)
         .then(function(recordset) {cb(null,recordset);})
         .catch(function(err) {cb(err);});
+    });
+    
+    }
+  
+  data.getGalleryImageomments  = function(option,cb){
+        //console.log(JSON.stringify(option));
+       sql.connect(config).then(function() {
+        /*
+            "id": 1,
+            "parent": null,
+            "created": "2015-01-01",
+            "modified": "2015-01-01",
+            "content": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed posuere interdum sem. Quisque ligula eros ullamcorper quis, lacinia quis facilisis sed sapien. Mauris varius diam vitae arcu.",
+            "fullname": "Simon Powell",
+            "profile_picture_url": "https://app.viima.com/static/media/user_profiles/user-icon.png",
+            "created_by_admin": false,
+            "created_by_current_user": false,
+            "upvote_count": 3,
+            "user_has_upvoted": false
+            
+             qry='create table mykth.[GalleryImageComment]('
+            qry += 'id int identity (1,1)'
+            qry += ',[CreatedDateTime] datetime default getdate()'
+            qry += ',[GalleryImageId] [int] NULL'
+            qry += ',[UserName] [nvarchar](15) NULL'
+            qry += ',Comments nvarchar(max)'
+            qry += ',[ParentGalleryId] [int] NULL'
+            qry += ');';
+            
+            qry +=';create table mykth.[GalleryImageCommentLike]('
+            qry += 'id int identity (1,1)'
+            qry += ',[CreatedDateTime] datetime default getdate()'
+            qry += ',[GalleryImageCommentId] [int] NULL'
+            qry += ',[UserName] [nvarchar](15) NULL'
+            qry += ',Comments nvarchar(max)'
+            qry += ',[GalleryImageCommentId] [int] NULL'
+            qry += ')';   
+            
+        */
+           // var qry="select t.name,c.name from sys.tables t inner join sys.columns c on t.object_id=c.object_id where t.name like '%story%'";
+           
+           var qry=";with upvoteCount as (";
+           
+           qry +="select count(1) as upvote_count, [GalleryImageCommentId] from [mykth].GalleryImageCommentLike c group by [GalleryImageCommentId] )"
+            qry+="select ic.Id as id,ParentGalleryId as parent,ic.CreatedDateTime as created , ic.Comments as content,isnull(case when u.displayName is null then u.FirstName + ' ' + u.LastName end,'Guest') as fullname";
+            qry+=" ,ic.[Id] as galleryImageCommentId,case when ic.UserName ='" + option.username +"' then 1 else 0 end as created_by_current_user,isnull(uc.upvote_count,0) as upvote_count,u.profile_image_url as profilePictureURL" ;
+            
+            qry+="  from mykth.GalleryImageComment ic";
+            qry+="  left join mykth.[User] u  with(nolock)";
+            qry+=" on ic.UserName=u.UserName";
+            qry+=" left join upvoteCount uc on ic.Id = uc.[GalleryImageCommentId]";
+            qry+=" where (ic.GalleryImageId=" + option.galleryImageId + " or " + option.galleryImageId +"=0)";
+            
+            qry+=" order by ic.CreatedDateTime desc";
+          //console.log(qry);
+            var request = new sql.Request();
+            request.query(qry).then(function(recordset) {
+          
+                cb(null,recordset);
+        	
+        }).catch(function(err) {
+    	
+    	 console.log("error");
+    	 cb(err,null);
+    	 
+    });
+    });
+     
+    }    
+    
+    data.saveGalleryImageComments  = function(data,cb){
+    
+    sql.connect(config).then(function() {
+    /*
+    "id": 1,
+    "parent": null,
+    "created": "2015-01-01",
+    "modified": "2015-01-01",
+    "content": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed posuere interdum sem. Quisque ligula eros ullamcorper quis, lacinia quis facilisis sed sapien. Mauris varius diam vitae arcu.",
+    "fullname": "Simon Powell",
+    "profile_picture_url": "https://app.viima.com/static/media/user_profiles/user-icon.png",
+    "created_by_admin": false,
+    "created_by_current_user": false,
+    "upvote_count": 3,
+    "user_has_upvoted": false
+    */
+    // var qry="select t.name,c.name from sys.tables t inner join sys.columns c on t.object_id=c.object_id where t.name like '%story%'";
+    var qry="insert into [mykth].[GalleryImageComment](GalleryImageId,ParentGalleryId,UserName,Comments)";
+    
+    qry+="  values (" + data.galleryImageId +"," ;
+    qry+= data.parent +"," ;
+    qry+=" '" + data.username + "',";
+    qry+="'" + data.comments +"');";
+    
+    
+    var request = new sql.Request();
+    
+    request.query(qry)
+        .then(function(recordset) {cb(null,data);})
+        .catch(function(err) {cb(err);});
+    });
+     
+    }
+    
+    data.upVoteGalleryImageComment  = function(data,fnSuccess,fnError){
+    // console.log(JSON.stringify(data));
+    sql.connect(config).then(function() {
+    /*
+        "id": 1,
+        "parent": null,
+        "created": "2015-01-01",
+        "modified": "2015-01-01",
+        "content": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed posuere interdum sem. Quisque ligula eros ullamcorper quis, lacinia quis facilisis sed sapien. Mauris varius diam vitae arcu.",
+        "fullname": "Simon Powell",
+        "profile_picture_url": "https://app.viima.com/static/media/user_profiles/user-icon.png",
+        "created_by_admin": false,
+        "created_by_current_user": false,
+        "upvote_count": 3,
+        "user_has_upvoted": false
+    */
+       // var qry="select t.name,c.name from sys.tables t inner join sys.columns c on t.object_id=c.object_id where t.name like '%story%'";
+        var qry="insert into [mykth].[GalleryImageCommentLike](GalleryImageCommentId,UserName)";
+        qry+="  values (" + data.galleryImageCommentId +"," ;
+        qry+=" '" + data.username + "')";
+    console.log(qry);
+        var request = new sql.Request();
+        request.query(qry)
+        .then(function(recordset) {fnSuccess(data);})
+        .catch(function(err) {fnError(err);});
     });
     
     }

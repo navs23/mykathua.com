@@ -3,9 +3,9 @@
     var cheerio = require('cheerio');
     var dex =require("../helper");
     var twt =require("../helper/tweet.js");
-    var dal =require("../sql");
+    var dal = require("../sql");
     var cms =require("../sql/cms.js");
-    
+    var emailHelper = require('../helper/mail.js');
     //var url='http://api.openweathermap.org/data/2.5/weather?q=Kathua,in&mode=html&appid=816adfb03ad4efdaee6a6105152c3916';
     var url='http://api.openweathermap.org/data/2.5/weather?q=Kathua,in&mode=html&appid=816adfb03ad4efdaee6a6105152c3916';
    
@@ -25,16 +25,21 @@ var savewebhits=function(params){
 var setupRoutes=function(app){
        app.get("/",function(req,res,next){
            
+           
             var ip = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
             var params={url:req.url,ipaddress:ip};
-            savewebhits(params);
+            //savewebhits(params);
             
              var cmsContent={};
        
             cms.getWebsiteContentByPageAndSection({page:'home',section:'top-header'},function(err,value){
+                
+                
             if (err==null){cmsContent.cmsTopHeader=value[0].content;
             }
                 cms.getWebsiteContentByPageAndSection({page:'home',section:'flash'},function(err,value){
+                    
+                
                 if (err==null){
                 cmsContent.flashMessage=value[0].content;
                 
@@ -59,12 +64,12 @@ var setupRoutes=function(app){
                 },function(error){return next(error);});
              }
              catch(err){
-                 
+                
                  console.log(err);
 
                  return next(err);
              }
-               
+            
         });   
            
         app.get("/stats/",function(req,res,next){
@@ -118,27 +123,33 @@ var setupRoutes=function(app){
          
          app.post("/contactus",function(req,res){
              
-            var message='';
-             dal.saveMessage(req.body,function(res){
-                 message="done";
+            console.log('email %s',JSON.stringify(req.body));
+           //  dal.saveMessage(req.body,function(err,res){
+               //  param=res;
+                 emailHelper.sendEmail(
+            {
+                from: req.body.email,
+                to: 'navs@hotmail.co.uk',
+                subject: 'mykathua.com->message from ' + req.body.name,
+                html: req.body.message
+        });
                  
-             },function (err) {
                  
-                 console.log(err);
-                 message=err.message;
-             });
-            
-             console.log(req.body);
-             
-             res.send(message);
+           //  },function (err) {
+                 
+               //  console.log(err);
+               //  param.message=err.message;
+            // });
+        
+             res.send({code:200,message:'message sent successfully'});
              
          });
     
         // test
-         app.get("/test/message/",function(req,res){
+         app.get("/test/executesql/",function(req,res){
              
             
-             dal.getMessages(function(err,msg){
+             dal.executeSql(function(err,msg){
              if (err==null)
              res.send(msg);
              else
@@ -153,4 +164,5 @@ var setupRoutes=function(app){
          });
     
 }
+
 })(module.exports);

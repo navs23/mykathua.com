@@ -1,4 +1,8 @@
 @html.extend('layout',function(model){
+@html.block("js",function(){
+
+ 
+})
 
 @html.block("main",function(model){
     @if (model.error){
@@ -9,27 +13,367 @@
 <div class="container">
 
 	<div class="jumbotron text-center">
-		<h2><span class="fa fa-lock"></span>Login using either of the following</h2>
+	   <div class"container">
+	 
+	    	<h2><span class="fa fa-lock"></span>Login/Register using mykathua.com</h2>
 
-		<a href="/auth/twitter" class="btn btn-info"><span class="fa fa-twitter"></span> Twitter</a>
-		<a href="/auth/facebook" class="btn btn-primary"><span class="fa fa-facebook"></span> Facebook</a>
-		<p><i>Please note that we wont't store your personal details when you login using above methods</i></p>
+
+	     	<a href="#login" class="btn btn-success login" role="link" data-toggle="modal"><span class="fa fa-lock"></span>&nbsp;Login</a>
+
+	  <a href="#register" class="btn btn-warning register" role="link" data-toggle="modal"><span class="fa fa-lock"></span>&nbsp;Register</a>
+	   
+	   <a href="#resetPassword" class="btn btn-info resetPassword" role="link" data-toggle="modal"><span class="fa fa-unlock"></span>&nbsp;Forgot your password</a>
+	
+	  </div>
+	  </div>
+
+<div class="jumbotron text-center">
+		<h2><span class="fa fa-lock"></span>Alternatively you can login using either of your following accounts</h2>
+
+		<a href="/auth/twitter" class="btn btn-info"><span class="fa fa-twitter"></span>&nbsp;Twitter</a>
+		<a href="/auth/facebook" class="btn btn-primary"><span class="fa fa-facebook"></span>&nbsp;Facebook</a>
+		
+		<p><i>Please note that we won't store your personal details when you login using any of the above methods</i></p>
 	</div>
 
-
 </div>
+
+
 })
 
 })
+<div id="login" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Enter your login details</h3>
+      </div>
+      <div class="modal-body">
+       
+    
+        <div class="form-horizontal"  data-toggle="validator">
+            
+            <div class="row-fluid">
+                
+                  <div class="spn4">
+                      <div class="form-group"><label>Your Email address</label><input id ="email" name="username" class="form-control email required" placeholder="email@you.com" data-placement="top" data-trigger="manual" value="navs" data-content="Must be a valid e-mail address (user@gmail.com)" type="text"></div>  
+                      
+                  </div>
+                     
+            </div>
+             <div class="row-fluid">
+                
+                  <div class="spn4">
+                      <div class="form-group"><label>Password</label><input id ="password" name="password" type="password" class="form-control phone" placeholder="enter your password" data-placement="top" data-trigger="manual" data-content="your password" type="text" value="nav33n"></div>        
+                      
+                  </div>
+            </div>
+          <div class="form-group"><button type="submit" class="btn btn-success pull-right" id="btnLoginSubmit">Login</button> <p class="help-block pull-left text-danger hide" id="form-error">&nbsp; The form is not valid. </p></div>
+          <div id="divLoginErrorMessage" style="color:red;"></div>
+        </div>
+    
+         
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="register" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Registration form</h3>
+      </div>
+      <div class="modal-body">
+       
+        <div class="form-horizontal" >
+            
+            <div class="row-fluid">
+                
+                  <div class="spn4">
+                      <div class="form-group"><label>Your Name</label><input id ="registerName" class="form-control email required" placeholder="Enter your name" data-placement="top" data-trigger="manual" data-content="Your name please" type="text"  ></div>  
+                      
+                  </div>
+                     
+            </div>
+            <div class="row-fluid">
+                
+                  <div class="spn4">
+                      <div class="form-group"><label>Your Email address</label><input id ="registerEmail" class="form-control email required" placeholder="email@you.com" data-placement="top" data-trigger="manual" data-content="Must be a valid e-mail address (user@gmail.com)" type="text" ></div>  
+                      
+                  </div>
+                     
+            </div>
+             <div class="row-fluid">
+                
+                  <div class="spn4">
+                      <div class="form-group"><label>Password</label><input id ="registerPassword1" class="form-control phone" placeholder="enter your password" data-placement="top" data-trigger="manual" data-content="your password" type="password" ></div>        
+                      
+                  </div>
+            </div>
+            <div class="row-fluid">
+                
+                  <div class="spn4">
+                      <div class="form-group"><label>Re-enter your password</label><input id ="registerPassword2" class="form-control phone" placeholder="re-enter your password" data-placement="top" data-trigger="manual" data-content="your password" type="password" 
+                      ></div>        
+                      
+                  </div>
+            </div>
+          <div class="form-group"><button type="button" class="btn btn-success pull-right" id="btnRegister">Register</button> <p class="help-block pull-left text-danger hide" id="form-error">&nbsp; The form is not valid. </p></div>
+          <div id="divRegisterErrorMessage" style="color:Red;">error</div>
+        </div>
+    
+         
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="resetPassword" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Reset your password</h3>
+      </div>
+      <div class="modal-body">
+       
+        <div class="form-horizontal" >
+            
+            <div class="row-fluid">
+                
+                  <div class="spn4">
+                      <div class="form-group"><label>Your Email address</label><input id ="resetPasswordEmail" class="form-control email required" placeholder="email@you.com" data-placement="top" data-trigger="manual" data-content="Must be a valid e-mail address (user@gmail.com)" type="text" value="navs@hotmail.co.uk"></div>  
+                      
+                  </div>
+                     
+            </div>
+             
+          <div class="form-group"><button type="button" class="btn btn-success pull-right" id="btnResetPassword">Reset password</button></div>
+          <div id="divResetPasswordErrorMessage">error</div>
+        </div>
+    
+         
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script type="text/javascript">
+
      $(document).ready(function () {
 
-        
-      
+        $('a.login').on('click',function(){
        
-      
+          clearValidationMessage('login');
+        });
+
+ $('a.register').on('click',function(){
+     
+          clearValidationMessage('register');
+        });
+
+ $('a.resetPassword').on('click',function(){
+     
+          clearValidationMessage('resetPassword');
+        });        
+        
+        
+$('#btnLoginSubmit').on(('click'),function(){
+  clearValidationMessage('login');
+  var data={};
+  
+  data.username=$('#email').val();
+  data.password=$('#password').val();
+  var errorMessage='';
+  
+ 
+  if (data.username.trim().length<4)
+     errorMessage='Invalid username<br/>';
+       
+  
+  else if (data.password.trim().length< 6)
+    errorMessage +='Invalid password';
+ 
+  if (errorMessage != '')
+  {
+    
+    $('#divLoginErrorMessage').html(errorMessage);
+    //alert(2);
+    return false;
+  }
+  
+  
+   $.post('/loginMe',data,function(result){
+    // alert(JSON.stringify(result));
+
+  if (result.errorCode==200)   
+  {
+    //alert('please check your email and validate your account');
+    
+    $('#login').modal('hide');
+     window.location.href='/';
+     return true;
+  }
+  else 
+  {
+     //alert(res.errorMessage);
+      $('#divLoginErrorMessage').html(result.errorMessage);
+     return false;
+  }
+  return true;
+}).fail(function(err){
+
+  $('#divLoginErrorMessage').html(err);
+
+
+});      
+
+
 
 });
+
+$('#btnRegister').on(('click'),function(){
+  
+  var data={};
+  clearValidationMessage('register');
+   data.name=$('#registerName').val();
+  
+  data.username=$('#registerEmail').val();
+  data.email=$('#registerEmail').val();
+  data.password1=$('#registerPassword1').val();
+  data.password2=$('#registerPassword2').val();
+  var errorMessage='';
+  
+  
+  
+  if ((/^[A-Za-z]{3,}$/).test(data.name)==false)
+      errorMessage='Invalid name';	
+  
+   else if (data.email ='' || (/^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/).test(data.email)==false)
+  
+      errorMessage='Invalid email address';	
+      
+  else if (data.password1.trim().length< 6)
+      
+      errorMessage='Invalid password';
+ 
+
+ else if (data.password2.trim() != data.password2.trim())
+         errorMessage='Password do not match';
+     
+  if (errorMessage != '')
+  {
+    
+    $('#divRegisterErrorMessage').html(errorMessage);
+  
+    return false;
+  }
+  
+  
+   $.post('/registerMe',data,function(res){
+  
+  
+  if (res.errorCode==200)   
+  {
+    
+    $('#divRegisterErrorMessage').html(res.errorMessage);
+    $('#register').modal('hide');
+     
+     return true;
+  }
+  else 
+  {
+     $('#divRegisterErrorMessage').html(res.errorMessage);
+     return true;
+  }
+  return true;
+}).fail(function(err){
+
+    $('#divRegisterErrorMessage').html(JSON.stringify(err));
+
+});      
+
+
+
+});
+
+$('#btnResetPassword').on(('click'),function(){
+  
+  var data={};
+  clearValidationMessage('resetPassword');
+   
+  data.email=$('#resetPasswordEmail').val();
+  
+  var errorMessage='';
+  
+  
+  if (data.email.trim().length<6)
+      errorMessage='Invalid email';	
+     
+  if (errorMessage != '')
+  {
+    
+    $('#divResetPasswordErrorMessage').html(errorMessage);
+  
+    return false;
+  }
+  
+  
+   $.post('/account/generateResetPasswordEmail/',data,function(res){
+     
+     //alert(JSON.stringify(res));
+  
+  //divResetPasswordErrorMessage
+     $('#divResetPasswordErrorMessage').html(res.errorMessage);
+     return true;
+  
+  
+}).fail(function(err){
+
+    $('#divResetPasswordErrorMessage').html(JSON.stringify(err));
+
+});      
+
+
+
+});
+
+
+
+var clearValidationMessage=function(type){
+
+  if (type=='register'){
+  
+    $("#divRegisterErrorMessage").html('');
+  
+}
+else if (type=='login')
+    {
+   
+     $("#divLoginErrorMessage").html('');
+    
+  
+}
+else if (type='resetPassword')
+{
+  $("#divResetPasswordErrorMessage").html('');
+  
+}
+}
+});
+
+    
+ 
+
 
 </script>

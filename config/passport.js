@@ -1,24 +1,26 @@
 var LocalStrategy    = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 var TwitterStrategy  = require('passport-twitter').Strategy;
-var dal = require("../sql/accountDal.js");
+
+  var dal = require('../sql/accountDal.js');
 // load up the user model
 //var User       = require('../app/models/user');
 
 // load the auth variables
-var configAuth = require('./auth');
+//var configAuth = require('./auth');
 
 module.exports = function(passport) {
     //process.stdout.write('\033c');
     // used to serialize the user for the session
     passport.serializeUser(function(user, done) {
-        //console.log(user);
+        console.log('searlize');
         done(null, user);
     });
 
     // used to deserialize the user
     
     passport.deserializeUser(function(id, done) {
+        console.log('desearlize');
         //User.findById(id, function(err, user) {
         //var user={};
        // user.id=id;
@@ -70,7 +72,7 @@ module.exports = function(passport) {
                     newUser.profile_image_url=profile.photos[0].value;
                     
                     console.log("logged in succesffully to twitter - %s ",JSON.stringify(newUser));
-                     dal.saveUser(newUser,function(user){console.log("%s twiiter user saved successfully",user);},function(err){console.log (err);});
+                     //dal.saveUser(newUser,function(user){console.log("%s twiiter user saved successfully",user);},function(err){console.log (err);});
                     
                         return done(null, newUser);
                     });
@@ -92,6 +94,7 @@ module.exports = function(passport) {
     },
 
     // facebook will send back the token and profile
+    
     function(token, refreshToken, profile, done) {
 
         // asynchronous
@@ -142,5 +145,42 @@ module.exports = function(passport) {
         });
 
     }));
+    
+    
+    
+      passport.use(new LocalStrategy(
+          
+  function(username, password, done) {
+     
+      
+    dal.findUser({ username: username }, function (err, user) {
+        console.log('log - 6 %s',JSON.stringify(user));
+     
+      if (err) { 
+          
+          console.log('in here 1 ');
+          return done(err); 
+          
+          
+      }
+      
+      if (!user) { 
+          
+          console.log('in here 2 ');
+          return done(null, false); }
+      
+      if (user.password != password) { 
+          console.log('in here 3 %s , %s, %s',password,user.password,user.username);
+          return done(null, false);
+          
+          
+      }
+      
+      return done(null, user);
+      
+    });
+  }
+));
+    
 
 };

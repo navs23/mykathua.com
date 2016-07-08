@@ -5,7 +5,7 @@
 
 });
 @html.block("js",function(){
-<script src="/resources/js/Excolo-slider/jquery.excoloSlider.min.js"></script>  
+<script src="/resources/js/Excolo-slider/jquery.excoloSlider.js"></script>  
 <script src="/resources/js/instagram.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-instagram/0.3.1/instagram.min.js"></script>
 
@@ -20,7 +20,7 @@
     <h1>@model.title</h1>
 <h3>Our intent is to find some rare and beautiful pictures of Kathua and share them with everyone</h3>
 
-<p>If you have a photo that you would like to share on this gallery, please email your photo to <a href="emailto:mykahtua@@gmail.com">mykathua@@gmail.com</a>
+<p>If you have a photo that you would like to share on this gallery, please email your photo to <a href="emailto:mykahtua@gmail.com">mykathua@gmail.com</a>
 and we would love to publish your photo on <a href='www.mykathua.com'>mykahtua.com</a>.
 </p>
 
@@ -31,6 +31,9 @@ and we would love to publish your photo on <a href='www.mykathua.com'>mykahtua.c
 <div id="slider" class="span12" style="border:1 solid red">
     
 </div>
+  <h3>Leave a message</h3>
+      <div id='divError'></div>
+             <div name="comments" id='divComment1'></div>
 </div>
 </div>
 <!--
@@ -46,6 +49,7 @@ and we would love to publish your photo on <a href='www.mykathua.com'>mykahtua.c
 })
 
 <script type="text/javascript">
+var images=[];
      $(document).ready(function () {
         
         var url ='/api/gallery/';
@@ -53,11 +57,15 @@ and we would love to publish your photo on <a href='www.mykathua.com'>mykahtua.c
         
         getJsonDataAsync(url,null,function(){},function(data){
         
+        
         for(var i in data){
         // console.log(data[i].src );
-        $("#slider").append('<img id="img-' + data[i].id + '" class="img-rounded center-block" style="width:100%;height:100%;" src="' + data[i].src + '" data-plugin-slide-caption="'+ data[i].text  + '"/> data')
+        $("#slider").append('<img Id="img-' + data[i].id + '" class="img-rounded center-block" style="width:100%;height:100%;" src="' + data[i].src + '" data-plugin-slide-caption="'+ data[i].text  + '"/> data')
+        images.push(data[i].id);
+        
         }
         });
+        
        $(function () {
     $("#slider").excoloSlider({
         mouseNav: false,
@@ -65,10 +73,48 @@ and we would love to publish your photo on <a href='www.mykathua.com'>mykahtua.c
         playReverse: false,
         autosize:true,
         autoPlay:false,
-        captionAutoHide:false
-        
-    });
+        captionAutoHide:false}
+     
+    );
+    
+    		
+   	refreshComments(1);
+    
+    
 });
+    
+$("#slider").bind("onNextSlide", function(e,d) { 
+   refreshComments(d.slideId);
+   
+});
+   
+
+$("#slider").bind("onPreviousSlide", function(e,d) {
+    
+   refreshComments(d.slideId);
+    
+   
+   
+});
+
+var refreshComments=function(slideId){
+    var imgId =images[slideId];
+   $comment=$("div[name='comments'");
+   
+   $comment.removeAttr('id');
+   $comment.attr('id','divComment' + imgId);
+   
+   
+   
+   getGalleryImageomments({id:imgId,diverr:'#divError'},function(err){
+   		
+
+   	},function(data){
+   		//alert(data);
+   		
+   	});
+    
+}
       
   var clientId = 'd53e30231bad4f8bbb5bd487df732055';
   /*
@@ -102,10 +148,7 @@ $('.instagram').on('willLoadInstagram', function(event, options) {
   });
   */
 
-$('.slide-next').on('click',function(e){
-    
-    alert('next');
-});
+
 });
 
 

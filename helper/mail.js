@@ -1,41 +1,15 @@
-(function(mailer)
-{
+(function(mail){
 
-var nodemailer = require('nodemailer');
-var smtpConfig = {
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true, // use SSL 
-    auth: {
-        user: 'mykathua@gmail.com',
-        pass: 'London01'
-    }
-};
+var api_key = 'key-27291e88b8bbdabaa874f9ec7650bf2d';
+var domain = 'mg.mykathua.com';
+var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
 
-mailer.sendEmail = function(){
- 
-// create reusable transporter object using the default SMTP transport 
-var transporter = nodemailer.createTransport("smtp",smtpConfig);
- 
-// setup e-mail data with unicode symbols 
-var mailOptions = {
-    from: '"naveen sharma" <mykathua@gmail.com>', // sender address 
-    to: 'navs@hotmail.co.uk', // list of receivers 
-    subject: 'Hello', // Subject line 
-    text: 'Hello world', // plaintext body 
-    html: '<b>Hello world</b>' // html body 
-};
- 
-// send mail with defined transport object 
+mail.sendEmail=function(data){
 
-transporter.sendMail(mailOptions, function(error, info){
-    if(error){
-        return console.log(error);
-    }
-    console.log('Message sent: ' + info.response);
+ 
+mailgun.messages().send(data, function (error, body) {
+  console.log(body);
 });
-
 }
 }
-)(module.exports);  
-
+(module.exports))

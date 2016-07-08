@@ -257,6 +257,55 @@
     
     };
     
+    var bbcNews=function(cb){
+    
+    var news=[];
+    var url='http://www.bbc.com/hindi/india';
+    
+    dex.scrape(url,function(html){
+    
+    var $=cheerio.load(html);
+    
+    
+    $('div.hard-news-unit').each(function(i,e){
+    
+    var newsItem={};
+    
+    
+    newsItem.news=$(e).find('a').text();
+    newsItem.link='http://www.bbc.com/' + $(e).find('a').attr('href');
+    //newsItem.thumbnail= $(e).find('img').first().attr('src');
+    //hard-news-unit__image
+    var $2=$(e).find('div.hard-news-unit__image');
+    newsItem.thumbnail=$2.find('img').attr('src');
+    // newsItem.thumbnail= $(e).find('div.hard-news-unit__image').find('img').attr('src');
+    
+    if (newsItem.thumbnail ==null || newsItem.thumbnail == undefined)
+    {
+    newsItem.thumbnail='http://placehold.it/50/6699ff?text=BBC'
+    }
+    
+    newsItem.description= $(e).text();
+    
+
+    news.push(newsItem);
+    
+    });
+    setTimeout(function(){
+    
+    
+    cb(null,news);
+    
+    },1000);
+    
+    
+    },function(err){cb(err,null);});
+    
+    
+    };
+    
+    
+    
     function daydiff(first, second) {
     return Math.round((second-first)/(1000*60*60*24));
     }
@@ -281,7 +330,15 @@
     getJagranNews(function(err,jNews){
         if (err==null) news.jagranNews=jNews; 
            
+           //cb(null,news);
+        
+    });
+    
+    bbcNews(function(err,bbcnews){
+          if (err==null) news.bbcNews=bbcnews; 
+           
            cb(null,news);
+        
         
     });
     
