@@ -149,7 +149,7 @@
             <div class="row-fluid">
                 
                   <div class="spn4">
-                      <div class="form-group"><label>Your Email address</label><input id ="resetPasswordEmail" class="form-control email required" placeholder="email@you.com" data-placement="top" data-trigger="manual" data-content="Must be a valid e-mail address (user@gmail.com)" type="text" value="navs@hotmail.co.uk"></div>  
+                      <div class="form-group"><label>Your Email address</label><input id ="resetPasswordEmail" class="form-control email required" placeholder="email@you.com" data-placement="top" data-trigger="manual" data-content="Must be a valid e-mail address (user@gmail.com)" type="text" ></div>  
                       
                   </div>
                      
