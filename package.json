@@ -24,6 +24,7 @@
     "font-awesome": "^4.5.0",
     "instafeed.js": "^1.4.1",
     "jplayer": "^2.9.2",
+    "mailgun-js": "^0.7.11",
     "method-override": "^2.3.5",
     "mssql": "^3.3.0",
     "node-cache": "^3.2.1",
