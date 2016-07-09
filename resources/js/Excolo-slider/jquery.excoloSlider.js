@@ -68,7 +68,9 @@
             nextButtonClass: "slide-next",
             activeSlideClass: "es-active",
             slideCaptionClass: "es-caption",
-            pagerClass: "es-pager"
+            pagerClass: "es-pager",
+            onNext:function(){},
+            onPrevious:function(){}
             
         },
           
@@ -134,18 +136,25 @@
                     
                    nextSide=slideId;
                 }); 
+                
+                //$(this).trigger("onPreviousSlide",{slideId:nextSide});
+                
                 $(this).trigger("onPreviousSlide",{slideId:nextSide});
                     
                 });
                 $next.on("click", function (e) { base.next(function(data){
                    
+                     //alert(1);
                      nextSide=data;
+                     
                     
                 });  
                 
                 $(this).trigger("onNextSlide",{slideId:nextSide}); });
                 
-                $prev.on("touchstart", function (e) {e.stopPropagation(); });
+                $prev.on("touchstart", function (e) {
+                    //alert(2);
+                    e.stopPropagation(); });
                 $next.on("touchstart", function (e) {e.stopPropagation(); });
             }
 
@@ -223,6 +232,7 @@
             // Setup touch event handlers
             if (base.config.touchNav) {
                 $container.on("touchstart", function (e) {
+                    
                     var eventData = e.originalEvent.touches[0];
                     e.preventDefault();
                     base._onMoveStart(eventData.pageX, eventData.pageY);
@@ -356,19 +366,24 @@
 
             // Update data
             $.data(base, "nextSlide", nextSlide);
-
+              
             // Perform sliding to the previous slide
            // this.emitEvents('onPreviousSlide',{slideNumber:nextSlide})
            
             if (cb !=undefined)
+            {
             cb(nextSlide);
             
+            }
+            
+            base.config.onPrevious(nextSlide);  
             return this._slide();
         },
 
         /* Move to next slide
         **********************************************************/
         next: function (cb) {
+            
             var base, nextSlide;
             // Defined variable to avoid scope problems
             base = this;
@@ -403,6 +418,7 @@
                 
                 cb(nextSlide);
              }
+             base.config.onNext(nextSlide);  
             return this._slide();
         },
         

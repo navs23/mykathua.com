@@ -73,7 +73,16 @@ var images=[];
         playReverse: false,
         autosize:true,
         autoPlay:false,
-        captionAutoHide:false}
+        captionAutoHide:false,
+        onNext:function(slideId){
+           // alert(slideId);
+              refreshComments(slideId);
+        }
+        ,onPrevious:function(slideId){
+            
+             refreshComments(slideId);
+        }
+    }
      
     );
     
@@ -84,14 +93,14 @@ var images=[];
 });
     
 $("#slider").bind("onNextSlide", function(e,d) { 
-   refreshComments(d.slideId);
+   //refreshComments(d.slideId);
    
 });
    
 
 $("#slider").bind("onPreviousSlide", function(e,d) {
     
-   refreshComments(d.slideId);
+   //refreshComments(d.slideId);
     
    
    
