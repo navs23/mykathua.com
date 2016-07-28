@@ -240,7 +240,7 @@
     
     newsItem.description= $(e).text();
     
-    //console.log(newsItem);
+    console.log(newsItem);
     news.push(newsItem);
     
     });
@@ -317,13 +317,16 @@
 
     getGoogleNews(function(err,gnews){
         if (err==null) news.googleNews=gnews;
+        else news.googleNews=[];
     
     // daiiy excelsior news
     getDENews(function(err,deNews){
       if (err==null) news.dailyexcelsiorNews=deNews;
       
     jammuNews(function(err,jNews){
-    if (err==null)news.jammuNews = jNews;
+        
+    if (err==null)news.jammuNews = jNews; else news.jammuNews=[];
+    if (news.jammuNews == null || news.jammuNews == undefined ) news.jammuNews=[];
     
     // jagran news     
     
@@ -411,6 +414,7 @@
         }
         cb(null,value);
         
+        console.log(value);
         return value;
               
     }

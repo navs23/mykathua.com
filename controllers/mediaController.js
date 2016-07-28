@@ -121,7 +121,7 @@ node-cache module added
                     // save comments
                     
             app.get("/api/SaveComments/:storyId/:parent/:comments",function(req,res,next){
-            console.log('user is %s: tt',req.user);   
+            
             
             if (req.user == undefined || req.user == null) {
                 res.send({error:'invalid user details',errorMessage:'Please login to upload comments'});
