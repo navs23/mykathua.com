@@ -7,11 +7,15 @@ var path =require("path");
 var passport = require('passport');
 var flash    = require('connect-flash');
 var methodOverride = require('method-override');
-var sockethelper = require('./helper/socket.js');
+//var sockethelper = require('./helper/socket.js');
+
 var emailHelper = require('./helper/mail.js');
-var data=require("./sql");
+var auth = require('./helper/auth.js');
+
 var app = express();
 var liveConnections=0;
+
+var chatUser=[];
 
 require('./config/passport')(passport); // pass passport for configuration
 
@@ -22,12 +26,17 @@ app.configure(function() {
 	// set up our express application
 	app.set("env","development");
 	app.set("liveconnections",liveConnections);
+    app.auth=auth;
+    
+    console.log(JSON.stringify(app.auth));
 
    // app.use(logger.log);
 	
 	app.use(express.logger('dev')); // log every request to the console
 	app.use(express.cookieParser()); // read cookies (needed for auth)
 	app.use(express.bodyParser()); // get information from html forms
+	
+
 
     app.set("view engine","vash");
 
@@ -38,7 +47,8 @@ app.configure(function() {
 	app.use(passport.session()); // persistent login sessions
 	app.use(flash()); // use connect-flash for flash messages stored in session
 	app.use(methodOverride());
-
+	//app.use(auth.isLoggedIn);
+	
 	if (app.get('env')=="development"){
 
     process.env.TWITTER_CONSUMER_KEY='yBuiGvDaFlNeXdoMjaJAdjvl2';
@@ -63,9 +73,20 @@ else
 }
 
 });
+/*
+function isLoggedIn(req, res, next) {
+    // console.log('isloggedIn');
+    //console.log(isAuthenticated());
+    // if user is authenticated in the session, carry on
+    if (req.isAuthenticated())
+        return next();
+
+    // if they aren't redirect them to the home page
+    res.redirect('/login/');
+}*/
 
 process.on('uncaughtException', function (err) {
-  console.log(err);
+  console.log('an unhandelled exception has occurred \n %s',err);
   emailHelper.sendMail({
       from:'do-not-reply@mykathua.com',
       to:'navs@hotmail.co.uk',
@@ -86,22 +107,80 @@ function wwwRedirect(req, res, next) {
     next();
 };
 
-
-//app.use(wwwRedirect);
-
-//process.stdout.write('\033c');
-
 var controllers = require("./controllers");
 
 controllers.init(app,passport);
 
 
 var server =http.createServer(app);
-/*
-var io = sockethelper.listen(server,app);
-sockethelper.start(io);
-*/
-console.log('sending email');
+
+
+console.log('starting socket io server ');
+ 
+var io = require('socket.io').listen(server);
+
+var connections=0;
+
+io.sockets.on('connection', function(socket) {
+       
+        console.log('connected..,%s',connections);
+        connections++;
+            
+      // socket.emit('ConnCount',connections);    
+        
+       socket.on('disconnect', function(){
+       
+        console.log('disconnected..');
+        console.log('connected..,%s',connections);
+       
+        connections--;
+            
+     
+      
+     
+            
+       
+        
+    });
+    
+ 
+       setInterval(function(){
+           
+            socket.emit('ConnCount',connections);    
+            
+           
+       },2000);
+           
+    
+        
+      socket.on('chat-user',function(data){
+            
+            // send it back to all connected clients
+            data.messageTime = Date();
+            
+            console.log('new msg has arrived %s @ %s',data.message,data.messageTime);
+            
+            socket.emit('chat-user',data);
+            
+            
+           
+       });
+       
+       socket.on('chat-msg',function(data){
+            
+            // send it back to all connected clients
+            data.messageTime = Date();
+            
+            console.log('new msg has arrived %s @ %s',data.message,data.messageTime);
+            
+            socket.emit('chat-msg',data);
+           
+       });
+       
+       
+    
+    
+});
 
 
 console.log('finished sending email');
