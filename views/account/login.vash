@@ -9,7 +9,7 @@
         <p class="text-error"> error occured:@model.error</p>
         }
 <h1>@model.title</h1>
-<p>@model.redirectUrl</p>
+
 <div class="container">
 
 	<div class="jumbotron text-center">
@@ -30,8 +30,8 @@
 <div class="jumbotron text-center">
 		<h2><span class="fa fa-lock"></span>Alternatively you can login using either of your following accounts</h2>
 
-		<a href="/auth/twitter/@model.redirectUrl/" class="btn btn-info"><span class="fa fa-twitter"></span>&nbsp;Twitter</a>
-		<a href="/auth/facebook/@model.redirectUrl/" class="btn btn-primary"><span class="fa fa-facebook"></span>&nbsp;Facebook</a>
+		<a href="/auth/twitter" class="btn btn-info"><span class="fa fa-twitter"></span>&nbsp;Twitter</a>
+		<a href="/auth/facebook" class="btn btn-primary"><span class="fa fa-facebook"></span>&nbsp;Facebook</a>
 		
 		<p><i>Please note that we won't store your personal details when you login using any of the above methods</i></p>
 	</div>
@@ -213,7 +213,7 @@ $('#btnLoginSubmit').on(('click'),function(){
   }
   
   
-   $.post('/loginMe/@model.redirectUrl/',data,function(result){
+   $.post('/loginMe',data,function(result){
     // alert(JSON.stringify(result));
 
   if (result.errorCode==200)   
