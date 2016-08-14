@@ -73,7 +73,9 @@
                 <li><a href="/jobs/" class="menuitem">Jobs</a></li>
                 <li><a href="/directory/" class="menuitem">Useful Contacts and links</a></li>
                 <li><a href="/trainstatus/" class="menuitem">Live Train Status</a></li>
+                @if(model.user == 'kathua'){
                  <li><a href="/bdc/" class="menuitem">Blood Donor Club</a></li>
+                 }
                 <!-- <li><a href="/advertise/" class="menuitem">Advertise</a></li>
                 <li><a href="/account/" class="menuitem">Fellow KATHUAITES</a></li>-->
                
@@ -84,7 +86,7 @@
                  <li><a href="/logout/" class="menuitem">Log Out</a></li>
                 }  
                 
-                @if (model.user == 'navs')
+                @if (model.user == 'kathua')
                 {
                  <li class="menu-item dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin<b class="caret"></b></a>
@@ -138,7 +140,7 @@
 <footer><a href="#contactUs" role="link" class="" data-toggle="modal">Contact Us</a>&nbsp;|&nbsp;© 2016 – <a href='www.mykathua.com'>www.mykathua.com</a>&nbsp;|&nbsp;<a href="#aboutUs" role="link" class="" data-toggle="modal">About us</a>
 &nbsp;|&nbsp;<a id ="aconnections" href='#'></a>
 
-@if(model.user == 'navs'){
+@if(model.user == 'kathua'){
 
 <a href="#chat" role="link" class="" data-toggle="modal">&nbsp;|&nbsp;Chat&nbsp;</a>
 
@@ -333,7 +335,7 @@ $('#btnMessage').bind("click",function(){
 
     socket.on('ConnCount',function(count){
        
-       $('#aconnections').html(count + ' live users connected');
+       $('#aconnections').html(count + ' live user(s) connected');
        
        
        
