@@ -7,11 +7,12 @@
 
      accountController.init= function(app,passport){
       
-    app.get('/login/', function(req, res,nex) {
+    app.get('/login/:redirectUrl?/', function(req, res,nex) {
         //res.re
+     
+        var redirectUrl = req.params.redirectUrl;
         
-        
-	res.render('account/login'); // load the index.ejs file
+	res.render('account/login',{redirectUrl:redirectUrl}); // load the index.ejs file
 		//res.redirect('http://www.mykathua.com/login/');
 		
 		
@@ -32,7 +33,7 @@
 
     */
     	
-    app.get('/profile', isLoggedIn, function(req, res) {
+    app.get('/profile', app.auth.isLoggedIn, function(req, res) {
         res.render('account/profile', {
             user : JSON.stringify(req.user) // get the user out of session and pass to template
             
