@@ -147,3 +147,61 @@ footer
   border: 0px solid #ccc;
   
 }
+
+.chat-msgs
+{
+    width: 100%;
+    height: 200px;
+    border:1 solid black;
+    background-color: gray;
+    
+}
+.chat-table 
+{
+    
+    
+}
+.chat-msgs ul 
+{
+   
+   margin-left:2px;
+   background-color: red;
+    
+}
+.chat-msgs ul li
+{
+   text-decoration: none;
+   font-style: italic;
+   list-style: none;
+   margin-left:-2px;
+   padding-left: opx;
+   color: blue;
+    
+}
+
+
+
+.chat-msg
+{
+    width:90%;
+    height: 20px;
+    
+}
+
+.overlap-image
+{
+    width: 100px;
+    height: 100px;
+    position: relative;
+    background-color: blue;
+}
+.overlap-image:after
+{
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 5px;
+    left: 5px;
+   
+}
