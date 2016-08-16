@@ -40,10 +40,10 @@
                 <div class="col-md-12">
                     
                <header>
-                  
+                  <!--
                   <img class="header" src="/resources/img/kth-main.png" />
                   <img src="http://i1378.photobucket.com/albums/ah93/mykathua/2-independence-day-greeting-wallpaper_zpskusq2hju.jpg" style="position:absolute;left:0px;top:0px;width:300px;height:165px;" />
-                 
+                 -->
                    </header>
                
                 </div>
@@ -143,7 +143,7 @@
 <footer><a href="#contactUs" role="link" class="" data-toggle="modal">Contact Us</a>&nbsp;|&nbsp;© 2016 – <a href='www.mykathua.com'>www.mykathua.com</a>&nbsp;|&nbsp;<a href="#aboutUs" role="link" class="" data-toggle="modal">About us</a>
 &nbsp;|&nbsp;<a id ="aconnections" href='#'></a>
 
-@if(model.user == 'kathua'){
+@if(model.user == 'kathua' || 1 == 1){
 
 <a href="#chat" role="link" class="" data-toggle="modal">&nbsp;|&nbsp;Chat&nbsp;</a>
 
@@ -168,7 +168,7 @@
           <div class="form-group"><label>E-Mail</label><input id ="txtEmail" class="form-control email required" placeholder="email@you.com (so that we can contact you)" data-placement="top" data-trigger="manual" data-content="Must be a valid e-mail address (user@gmail.com)" type="text"></div>
           <div class="form-group"><label>Phone</label><input id ="txtPhone" class="form-control phone" placeholder="999-999-9999" data-placement="top" data-trigger="manual" data-content="Must be a valid phone number (999-999-9999)" type="text"></div>
           <div class="form-group"><button type="button" class="btn btn-success pull-right" id="btnContactUsSubmit">Send It!</button> <p class="help-block pull-left text-danger hide" id="form-error">&nbsp; The form is not valid. </p></div>
-          <div id="divErrorMessage">error</div>
+          <div id="divErrorMessage" style="font-color:red"></div>
         </form>
       </div>
       <div class="modal-footer">
@@ -202,14 +202,17 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel"></h3>
+        <h3 id="myModalLabel">Beta!!</h3>
+        <span>User name</span><input type="text" name="" class="chat-username"/><input type="button" value="Start Chating" class="btn-success chat-newusername"/>
+        <div class="chat-error" style="font-color:red;font-style:italic;"></div> 
       </div>
       <div class="modal-body">
-          <table class="chat-table table">
+          <div class="chat-wrapper">
+          <table class="chat-table">
               <thead>
                   <tr>
-                      <td style="width:10%;">Users</td>
-                      <td>Messages</td>
+                      <td style="width:25%;">Users</td>
+                      <td style="width:75%;">Messages</td>
                   </tr>
                   
               </thead>
@@ -227,12 +230,12 @@
                   </tr>
               </tbody>
           </table>
-        
+        </div>
        
          
       </div>
       <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+        <button class="btn chat-cancel" data-dismiss="modal" aria-hidden="true">Cancel</button>
       </div>
     </div>
   </div>
@@ -243,6 +246,8 @@
 </html>
 
 <script type="text/javascript">
+var username;
+var iMessageCount=0;
 $('#btnMessage').click(function(){
 
 
@@ -253,11 +258,10 @@ $('#btnMessage').click(function(){
 });
 
 $(document).ready(function () {
+    
+    $('.chat-wrapper').hide();
 
 var socket = io();  
-
-
-
 
 $('#btnContactUsSubmit').on(('click'),function(){
 
@@ -289,6 +293,7 @@ else if ((/^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/).test(data.email)=
 showError('invalid email');
 
 return false;
+
 
 }
 ///^[2-9]\d{2}-\d{3}-\d{4}$/
@@ -327,7 +332,9 @@ $('#divErrorMessage').html('');
 
 });
 
-$('#btnMessage').bind("click",function(){
+
+
+    $('#btnMessage').bind("click",function(){
             var m = $('.chat-msg').val();
             
              $('.chat-msg').val('');
@@ -335,6 +342,32 @@ $('#btnMessage').bind("click",function(){
              socket.emit('chat-msg',{message:m});
              
      });
+
+    $('.chat-newusername').on('click',function(){
+    
+    username = $('.chat-username').val();
+   
+    if (username != '') 
+    {
+        
+        socket.emit('chat-newuser',username);
+        
+    
+    }
+    
+    
+    
+});     
+
+ socket.on('connect', function () { 
+
+       // socket.emit('NewPlayer', person_name);
+
+        socket.on('disconnected', function() {
+
+            socket.emit('chat-userleft',username);
+
+        });
 
     socket.on('ConnCount',function(count){
        
@@ -344,29 +377,112 @@ $('#btnMessage').bind("click",function(){
        
     });
     
-    socket.on('chat-msg',function(msgjson){
+    socket.on('chat-users',function(users){
        
-      
-      
-      $('.chat-msgs ul').append('<li>'+ formatMessage(msgjson) +'</li>');
+       for(var i=0;i<users.length;i++)
+       $('.chat-user ul').append('<li>'+ users[i] +'</li>');
+       
+       //$('.chat-user ul').append('<li>done</li>');
+       
        
        
     });
-    
 
+    socket.on('chat-newuser',function(user){
+           
+           $('.chat-user ul').append('<li>'+ user +'</li>');
+           
+            
+           
+        });
+
+    socket.on('chat-start',function(users){
+           
+         
+         for(var i=0;i<users.length;i++)
+           $('.chat-user ul').append("<li id='USERNAME_"+users[i] +"'>"+ users[i] +"</li>");
+           
+          
+            $('.chat-wrapper').slideDown('slow',function(){});
+            $('.chat-newusername').attr('disabled','disabled');
+           
+        });
+    
+    socket.on('chat-msg',function(msgjson){
+        
+     if ( $('.chat-username').val() != '')
+     {
+        
+        $('.chat-msgs ul').append('<li>'+ formatMessage(msgjson) +'</li>');
+       
+       
+       if ($('.chat-msgs ul li').length>=20)
+       {
+          $('.chat-msgs ul li:first').remove();
+       }
+     
+         
+     }
+     
+    });
+    
+    socket.on('error-userexists',function(err){
+      
+     $('.chat-error').html(err);
+       
+       
+    });
+
+    socket.on('chat-userleft',function(user){
+        
+         //$('.chat-user ul').append('<li style="font-color:red;font-styple:italic;">'+ user +' has left the chat</li>');
+         $('.chat-msgs ul').append('<li><span style="font-color:red;font-styple:italic;">'+ user +' has left the chat</span></li>');
+        
+        $('ul li #USERNAME_'+ user).remove();
+        
+        
+    });
+
+ });
+$('.chat-cancel').on('click',function(){
+    
+   
+    
+      $('.chat-wrapper').slideUp('slow',function(){});
+      clearChatHistor();
+     
+    
+});
+
+
+$('#chat').on('hidden.bs.modal', function () {
+   
+    clearChatHistor(socket);
+})
 
 });
 
+function clearChatHistor(s){
+    
+    $('.chat-newusername').removeAttr('disabled');
+    $('.chat-username').val('');
+    $('.chat-msgs ul').empty();
+    
+    $('.chat-user ul').empty();
+    s.emit('chat-userleft',username);
+    
+    $('.chat-wrapper').slideUp('slow',function(){});
+    
+}
+
 function formatMessage(msgjson){
     
-   return msgjson.messageTime == undefined || null ?'':msgjson.messageTime + ':' + msgjson.message;
+   //return msgjson.messageTime == undefined || null ?'':msgjson.messageTime + ':' + msgjson.message;
+   return msgjson.message;
     
     
 }   
-    
-    
-   
-
+  
 var showError = function(message) {
    
     var e='<span style="color:red">' + message + '</span>';
@@ -377,5 +493,6 @@ var loginPageRedirect=function(){
     
    window.location='http://www.mykathua.com/login/';
 }
+
 
 </script>

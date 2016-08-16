@@ -1,0 +1,88 @@
+@html.extend('layout',function(model){
+@html.block("css",function(){
+<link rel="stylesheet" href="/resources/css/local/home.css"/>
+});
+@html.block("js",function(){
+
+ 
+});
+<div class="container">
+
+@html.block("main",function(model){
+    @if (model.error){
+        <p class="text-error"> error occured:@model.error</p>
+        }
+<form action='/gallery/upload/' method='POST' enctype="multipart/form-data" ref='uploadForm' id='uploadForm' >
+<div class="row">
+    
+    <div class="col-md-3">Select image</div>
+    <div class="col-md-5"><input type="file" name="file" class="img-file"/></div>
+    <div class="col-md-1"><span style="color:red;font-size:1.2em;" class="span-error">*</span></div>
+    
+</div>
+<div class="row">
+    <div class="col-md-3">Comments</div>
+    <div class="col-md-5">
+        
+        <input type="textarea" name="comments" rows="5" cols="10" class='img-text'  />
+        
+    </div>
+    <div class="col-md-1"><span style="color:red;font-size:1.2em;" class="span-error">*</span></div>
+    
+    
+</div>
+<div class="row">
+<div class="col-md-3"><input type="submit" value="upload" class='btn-submit' id='btnSubmit'/></div>
+</div>
+</form>
+
+})
+</div>
+
+})
+
+<script type="text/javascript">
+    var efile=$('.img-file'),
+    
+        etext = $('.img-text');
+        
+        
+     $(document).ready(function () {
+         
+    
+         
+        efile.parent().next().hide();
+        etext.parent().next().hide();
+   
+
+});
+$( ".btn-submit" ).click(function() {
+    
+  
+  var retval=true;
+  if (efile.val() =='')
+  {
+   
+    efile.parent().next().show();
+    retval=false;
+    
+  }
+  else
+  efile.parent().next().hide();
+  
+  if (etext.val()=='')
+  {
+   
+    etext.parent().next().show();
+    retval=false;
+    
+  }
+  else
+     etext.parent().next().hide();
+  
+  
+  return retval;
+  
+});
+
+</script>

@@ -11,18 +11,13 @@
         <p class="text-error"> error occured:@model.error</p>
         }
         
-      
-<!--<table border="1" class="table table-bordered table-responsive" id="tblStory">-->
 
 <div class="row">
   <div class="col-md-4" style="background-color:none;">
       <a href='#nationalStories'></a><h2>Top National Stories</h2>
-  <div id="divNational" class="news-national">
-      
 
-   @model.news.googleNews.forEach(function(e){
-   
-   
+@if(model.news.googleNews !=null || model.news.googleNews != undefined){
+@model.news.googleNews.forEach(function(e){
    <div class="row">
        <div class="col-md-12">
            <a href="@e.link" target="_new"><img height="75" width="75" class ="img-thumbnail text-center" style="vertical-align:middle;" src="@e.thumbnail"/></a>
@@ -30,10 +25,9 @@
        </div>
     </div>
    })
-   
+   }
     @model.news.bbcNews.forEach(function(e){
    
-   
    <div class="row">
        <div class="col-md-12">
            <a href="@e.link" target="_new"><img height="75" width="75" class ="img-thumbnail text-center" style="vertical-align:middle;" src="@e.thumbnail"/></a>
@@ -42,9 +36,7 @@
     </div>
    })
    
-</div>    
-</div>
-@if(model.news.jammuNews.length>0)
+   @if(model.news.jammuNews.length>0)
 {
   <div class="col-md-4" style="background-color:none;">
       <h2>Regional News</h2>
@@ -64,12 +56,18 @@
 </div>    
 </div>
 }
+   
+   
+</div>
+
 
   <div class="col-md-4" style="background-color:none;">
       <h2>Local News</h2>
-  <div id="divRegional" class="news-national">
+      
+       <div id="divRegional" class="news-national">
     
-   @if (model.news.dailyexcelsiorNews !=undefined)
+   @if(model.news.dailyexcelsiorNews != null || model.news.dailyexcelsiorNews !=undefined){
+   @if (model.news.dailyexcelsiorNews.length>0)
    {
    @model.news.dailyexcelsiorNews.forEach(function(e){
    
@@ -82,7 +80,11 @@
     
    })
    }
-   @if (model.news.jagranNews != undefined)
+   }
+   
+   @if(model.news.jagranNews != null || model.news.jagranNews !=undefined){
+   
+   @if (model.news.jagranNews.length>0)
    {
     @model.news.jagranNews.forEach(function(e){
    
@@ -95,7 +97,10 @@
     
    })
    }
-</div>    
+   }
+   
+   </div>   
+  
 </div>
 
 </div>
@@ -106,10 +111,7 @@
 
 <script type="text/javascript">
    
-  $(document).ready(function () {
 
-    
-});
 
 
 </script>

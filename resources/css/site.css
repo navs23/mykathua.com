@@ -154,18 +154,27 @@ footer
     height: 200px;
     border:1 solid black;
     background-color: gray;
+    margin-left: 0px;
+    padding-left: 0px;
     
 }
 .chat-table 
 {
+    border:1px;
+    width:100%;
     
+}
+.chat-msgs{
     
+    overflow:auto;
+
 }
 .chat-msgs ul 
 {
    
    margin-left:2px;
-   background-color: red;
+   padding-left: 0px;
+   background-color: none;
     
 }
 .chat-msgs ul li
@@ -174,8 +183,8 @@ footer
    font-style: italic;
    list-style: none;
    margin-left:-2px;
-   padding-left: opx;
-   color: blue;
+   padding-left: 0px;
+   color: black;
     
 }
 
@@ -204,4 +213,33 @@ footer
     top: 5px;
     left: 5px;
    
+}
+.chat-user{
+    
+overflow:auto;
+background-color: black;
+height: 100%;
+width: 100%;
+
+    
+}
+.chat-user ul
+{
+    margin-left:2px;
+   padding-left: 0px;
+   background-color: none;
+   font-style: bold;
+    
+}
+.chat-user ul li
+{
+       list-style: none;
+       color: blue;
+    
+}
+
+.chat-wrapper{
+   
+   
+  
 }
