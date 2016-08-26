@@ -10,9 +10,10 @@
     var aboutController = require("./aboutController");
     var adminController = require("./adminController");
     var bdcController = require("./bdcController");
+    
     controllers.init = function(app,passport){
         
-        // console.log(passport);
+        console.log(app.auth.isLoggedIn);
         homeController.init(app);
         adminController.init(app);
         bdcController.init(app);
@@ -29,5 +30,8 @@
          
     };
     
+    // route middleware to make sure a user is logged in
+    
+
     
 })(module.exports);

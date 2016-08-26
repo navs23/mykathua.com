@@ -56,11 +56,9 @@
     <a href="#whoneeds" role="link"  data-toggle="modal">why do I donate blood?</a>
      </li>
      <li>
-    <a href="#playvideo" role="link"  data-toggle="modal">Video</a>
+    <a href="#" id="avideo" class="video-link"  data-toggle="modal">Video-1</a>
      </li>
-      <li>
-    <a id="clickme" href="#">Click Me</a>
-     </li>
+   
     </ul>
 </div>
 })
@@ -81,11 +79,11 @@
         <form class="form-horizontal col-sm-12" action="/contactus" method="post">
             <div class="row">
                 <div class="col-md-6">
-                      <div class="form-group"><label>First Name</label><input id="txtFName" class="form-control required" placeholder="Your name" data-placement="top" data-trigger="manual" data-content="Must be at least 3 characters long, and must only contain letters." type="text"></div>
+                      <div class="form-group"><label>First Name</label><input id="txtFName" class="form-control required" required="true" validatorExpression="^([a-zA-Z]){3,30}$" placeholder="Your name" data-placement="top" data-trigger="manual" data-content="Must be at least 3 characters long, and must only contain letters." type="text" value="naveen"></div>
                     
                 </div>
                   <div class="col-md-6">
-                       <div class="form-group"><label>Last Name</label><input id="txtLName" class="form-control required" placeholder="Your name" data-placement="top" data-trigger="manual" data-content="Must be at least 3 characters long, and must only contain letters." type="text"></div>
+                       <div class="form-group"><label>Last Name</label><input id="txtLName" class="form-control required" validatorExpression="^([a-zA-Z]){3,30}$" placeholder="Your name" data-placement="top" data-trigger="manual" data-content="Must be at least 3 characters long, and must only contain letters." type="text"></div>
                       
                   </div>
                      
@@ -93,22 +91,22 @@
             <div class="row">
                 
                   <div class="col-md-6">
-                      <div class="form-group"><label>E-Mail</label><input id ="txtEmail" class="form-control email required" placeholder="email@you.com (so that we can contact you)" data-placement="top" data-trigger="manual" data-content="Must be a valid e-mail address (user@gmail.com)" type="text"></div>  
+                      <div class="form-group"><label>E-Mail</label><input id ="txtEmail" class="form-control email required" validatorExpression="^([a-zA-Z0-9_\-\.]+)@@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" placeholder="email@you.com (so that we can contact you)" data-placement="top" data-trigger="manual" data-content="Must be a valid e-mail address (user@gmail.com)" type="text"></div>  
                       
                   </div>
                      <div class="col-md-6">
-                      <div class="form-group"><label>Phone</label><input id ="txtPhone" class="form-control phone" placeholder="999-999-9999" data-placement="top" data-trigger="manual" data-content="Must be a valid phone number (999-999-9999)" type="text"></div>        
+                      <div class="form-group"><label>Phone</label><input id ="txtPhone" class="form-control phone required" validatorExpression="^([0-9]{10})$" placeholder="999-999-9999" data-placement="top" data-trigger="manual" data-content="Must be a valid phone number (999-999-9999)" type="text"></div>        
                       
                   </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
-                      <div class="form-group"><label>Address Line 1</label><input id ="txtAdd1" class="form-control phone" placeholder="First line of your address" data-placement="top" data-trigger="manual" data-content="*" type="text"></div>        
+                      <div class="form-group"><label>Address Line 1</label><input id ="txtAdd1" class="form-control required"  validatorExpression="^([a-zA-Z0-9]){2,30}$" placeholder="First line of your address" data-placement="top" data-trigger="manual" data-content="*" type="text"></div>        
                     
                 </div>
                   <div class="col-md-6">
                       
-                    <div class="form-group"><label>Address Line 2</label><input id ="txtAdd2" class="form-control phone" placeholder="Second line of your address" data-placement="top" data-trigger="manual" data-content="*" type="text"></div>        
+                    <div class="form-group"><label>Address Line 2</label><input id ="txtAdd2" class="form-control required" validatorExpression="^([a-zA-Z0-9]){2,30}$" placeholder="Second line of your address" data-placement="top" data-trigger="manual" data-content="*" type="text"></div>        
                   </div>
                   
                   
@@ -117,11 +115,11 @@
                 
                   <div class="col-md-6">
                       
-                    <div class="form-group"><label>City</label><input id ="txtCity" class="form-control phone" placeholder="Your city" data-placement="top" data-trigger="manual" data-content="*" type="text"></div>        
+                    <div class="form-group"><label>City</label><input id ="txtCity" class="form-control required" validatorExpression="^([a-zA-Z]){2,30}$" placeholder="Your city" data-placement="top" data-trigger="manual" data-content="*" type="text"></div>        
                   </div>
                   <div class="col-md-6">
                       
-                    <div class="form-group"><label>Pincode</label><input id ="txtPincode" class="form-control phone" placeholder="Your pincode" data-placement="top" data-trigger="manual" data-content="*" type="text"></div>        
+                    <div class="form-group"><label>Pincode</label><input id ="txtPincode" class="form-control required" validatorExpression="^([0-9]){6}$" placeholder="Your pincode" data-placement="top" data-trigger="manual" data-content="*" type="text"></div>        
                   </div>
             </div>
             <div class="row">
@@ -135,7 +133,7 @@
                   </div>
                   <div class="col-md-6">
                       
-                    <div class="form-group"><label>Dob</label><input id ="txtPhone" class="form-control phone" placeholder="Your date of birth" data-placement="top" data-trigger="manual" data-content="*" type="text"></div>        
+                    <div class="form-group"><label>Dob</label><input id ="txtPhone" class="form-control required" validatorExpression="^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]|(?:Jan|Mar|May|Jul|Aug|Oct|Dec)))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2]|(?:Jan|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec))\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)(?:0?2|(?:Feb))\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9]|(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep))|(?:1[0-2]|(?:Oct|Nov|Dec)))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$" placeholder="Your date of birth(dd/MM/yyyy)" data-placement="top" data-trigger="manual" data-content="*" type="text"></div>        
                   </div>
             </div>
             <div class="row">
@@ -178,8 +176,8 @@
           
           
           
-          <div class="form-group"><button type="button" class="btn btn-success pull-right" id="btnContactUsSubmit">Send It!</button> <p class="help-block pull-left text-danger hide" id="form-error">&nbsp; The form is not valid. </p></div>
-          <div id="divErrorMessage">error</div>
+          <div class="form-group"><button type="button" class="btn btn-success pull-right bd-register" id="btnContactUsSubmit">Send It!</button> <p class="help-block pull-left text-danger hide" id="form-error">&nbsp; The form is not valid. </p></div>
+          <div class='error-msg'><ul></ul></div>
         </form>
     
          
@@ -241,14 +239,67 @@ Anyone above 18 years weighing more than 50 kgs (110 lbs) can donate blood. Clic
     </div>
   </div>
 </div>
-<div id="playvideo" >
-<iframe id="videoFrame" width="175" height="175" src=""></iframe>
-  
+
+<div id="playvideo" class="modal fade" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="video-title">Title</h3>
+      </div>
+      <div class="modal-body">
+    <div class="video-container container">
+      <ul></ul>
+</div>  
+    
+         
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script type="text/javascript">
-      $(document).ready(function () {
+/*global $*/
+
+
+
+
+ $(document).ready(function () {
          
+$('.video-link').on('click',function(){
+  
+  $('.video-container ul').empty();
+  
+  $('.video-container ul').append("<li><iframe src='https://www.youtube.com/embed/auzVJQw3O5c'/></li>" )
+  
+  setTimeout(function(){$("#playvideo").modal();},1000);
+  /*
+   $("#playvideo").dialog({
+    
+    show: "fade",
+    hide: "fade",
+    modal: true,
+    
+    open: function (ev, ui) {
+      //alert(3);
+      
+      $('.video-container ul').append("<li><frame srs='https://www.youtube.com/embed/auzVJQw3O5c'/></li>" )
+     // $('#videoFrame').attr('src','https://www.youtube.com/embed/auzVJQw3O5c');
+    },
+    height: 'auto',
+    width: 'auto',
+    resizable: true,
+    title: 'Vessels'
+  });
+    */
+  
+});
+
+ 
+/*
  
 setTimeout(function() { 
    		
@@ -264,30 +315,13 @@ setTimeout(function() {
 
 
 
-$('#clickme').on('click',function(e){
-  
 
-    
-    $("#playvideo").dialog({
-    
-    show: "fade",
-    hide: "fade",
-    modal: true,
-    
-    open: function (ev, ui) {
-      
-      $('#videoFrame').attr('src','https://www.youtube.com/embed/auzVJQw3O5c');
-    },
-    height: 'auto',
-    width: 'auto',
-    resizable: true,
-    title: 'Vessels'
-  });
-    
-  
-});
 
- $("#playvideo").hide();
+   
+
+*/
+
+ //$("#playvideo").hide();
 
 });
 

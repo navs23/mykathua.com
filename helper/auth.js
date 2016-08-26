@@ -1,6 +1,4 @@
 
-
-
 (function(auth)
 {
    function isLoggedIn (req, res, next) {

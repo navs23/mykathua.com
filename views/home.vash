@@ -101,8 +101,6 @@
 
 })
 
-
-
 @html.block("rightSideBar",function(model){
 <h2>@@Kathua</h2>
 <div style="background-color:none;" class="border-left" id="divTweets">

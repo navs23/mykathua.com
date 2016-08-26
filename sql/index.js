@@ -479,7 +479,7 @@
     
     sql.connect(config).then(function() {
     
-    var qry="select id,dated,caption as text,image_text,image_path as src from [mykth].[gallery]";
+    var qry="select id,dated,caption as text,image_text,image_path as src from [mykth].[gallery] where image_path is not null";
    
     //console.log(qry);
     var request = new sql.Request();
@@ -490,7 +490,28 @@
     });
     
     }
-  
+    
+  data.saveGalleryImage  = function(param,cb){
+    
+   
+    sql.connect(config).then(function() {
+   
+    // var qry="select t.name,c.name from sys.tables t inner join sys.columns c on t.object_id=c.object_id where t.name like '%story%'";
+    var qry="insert into [mykth].[gallery](caption,image_text,image_path)";
+    
+    qry+="  values ('" + param.caption +"','" ;
+    qry+= param.image_text +"','" ;
+    qry+= param.image_path + "')";
+    
+    var request = new sql.Request();
+    
+    request.query(qry)
+        .then(function(recordset) {cb(null,data);})
+        .catch(function(err) {cb(err);});
+    });
+    
+    
+    }
   data.getGalleryImageomments  = function(option,cb){
         //console.log(JSON.stringify(option));
        sql.connect(config).then(function() {
@@ -557,7 +578,7 @@
      
     }    
     
-    data.saveGalleryImageComments  = function(data,cb){
+  data.saveGalleryImageComments  = function(data,cb){
     
     sql.connect(config).then(function() {
     /*
@@ -590,8 +611,8 @@
     });
      
     }
-    
-    data.upVoteGalleryImageComment  = function(data,fnSuccess,fnError){
+   
+  data.upVoteGalleryImageComment  = function(data,fnSuccess,fnError){
     // console.log(JSON.stringify(data));
     sql.connect(config).then(function() {
     /*
@@ -619,5 +640,7 @@
     });
     
     }
+    
+    
 
 })(module.exports);

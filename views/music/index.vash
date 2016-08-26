@@ -97,7 +97,7 @@
 
 <script type="text/javascript">
 	var ojplayer=null;
-	var stats=null;
+	
 	var marqueeString='';
 	var socket = io();
 	var bMarqueeStarted=false;
@@ -119,7 +119,11 @@
      renderRadioPlayer("#jquery_jplayer_1","#jp_container_1");
      
    // startMarquee();
-     
+   
+   var socket = io.connect('http://localhost:8080');
+socket.on('message', function (data) {
+    console.log(data.count);
+});  
      
      
 });

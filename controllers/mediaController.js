@@ -1,6 +1,7 @@
 /*
 node-cache module added
 */
+"use strict";
 (function(mediaController){
     
     var data =require("../sql");
@@ -8,6 +9,8 @@ node-cache module added
     var twt =require("../helper/tweet.js");
     
     var news = require("../news");
+    var videos = require("../videos");
+
     //var newsItemCache;
     
    
@@ -25,7 +28,13 @@ node-cache module added
                
                 news.NewItems(function(err,temp){
                     if (err==null)
-                    res.render("media/index",{user:req.user,news:temp,title:"Kathua in news, get latest national, state and kathua news on mykathua.com"});          
+                    {
+                            videos.search({searchStr:'kathua'},function(data){
+                            res.render("media/index",{user:req.user,news:temp,videos:data,title:"Kathua in news, get latest national, state and kathua news on mykathua.com"});          
+                    
+                });
+                    
+                    }
                 else
                 
                         res.render(err);          
@@ -195,7 +204,19 @@ node-cache module added
             //res.send('call back from twitter');
             //res.end(); 
             });
-        
+            
+            app.get("/api/videos/:video",function(req,res){
+            console.log(req.params.video);
+                videos.search({searchStr:'kathua'},function(data){
+                   res.send(data);
+                    
+                });
+
+     
+                
+            });
+           
+    
     }
 
  

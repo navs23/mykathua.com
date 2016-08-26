@@ -12,7 +12,7 @@
         <title>@model.title
          
         </title>
-        <meta charset="utf-8"/>
+        
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         
         <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css"/>
@@ -30,6 +30,9 @@
          <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
          
          <script src="/socket.io/socket.io.js"></script>
+         
+         <script src="/resources/js/chat/chat.js"></script>  
+         
           
          
         @html.block("js")
@@ -42,8 +45,7 @@
                <header>
                   
                   <img class="header" src="/resources/img/kth-main.png" />
-                  <img src="http://i1378.photobucket.com/albums/ah93/mykathua/2-independence-day-greeting-wallpaper_zpskusq2hju.jpg" style="position:absolute;left:0px;top:0px;width:300px;height:165px;" />
-                 
+                  
                    </header>
                
                 </div>
@@ -76,7 +78,7 @@
                 <li><a href="/jobs/" class="menuitem">Jobs</a></li>
                 <li><a href="/directory/" class="menuitem">Useful Contacts and links</a></li>
                 <li><a href="/trainstatus/" class="menuitem">Live Train Status</a></li>
-                @if(model.user == 'kathua'){
+                @if(model.user == 'kathua' || 1==1 ){
                  <li><a href="/bdc/" class="menuitem">Blood Donor Club</a></li>
                  }
                 <!-- <li><a href="/advertise/" class="menuitem">Advertise</a></li>
@@ -246,22 +248,26 @@
 </html>
 
 <script type="text/javascript">
-var username;
-var iMessageCount=0;
-$('#btnMessage').click(function(){
-
-
-
-//socket.emit('msg',{message:$(this).val()});
-//$(this).val('');
-
-});
-
 $(document).ready(function () {
     
-    $('.chat-wrapper').hide();
+/*global $*/   
+/*global Chat*/   
+/*global io*/   
+/*global mykathua*/
+    
+var socket=io();
 
-var socket = io();  
+var chat= new mykathua.Chat({},socket,$);
+
+//var chat2 = new Chat({});
+
+//alert(chat2.name);
+
+
+chat.init();
+
+
+
 
 $('#btnContactUsSubmit').on(('click'),function(){
 
@@ -331,164 +337,15 @@ $('#contactUs').on(('click'),function(){
 $('#divErrorMessage').html('');
 
 });
-
-
-
-    $('#btnMessage').bind("click",function(){
-            var m = $('.chat-msg').val();
-            
-             $('.chat-msg').val('');
-             
-             socket.emit('chat-msg',{message:m});
-             
-     });
-
-    $('.chat-newusername').on('click',function(){
-    
-    username = $('.chat-username').val();
-   
-    if (username != '') 
-    {
-        
-        socket.emit('chat-newuser',username);
-        
-    
-    }
-    
-    
-    
-});     
-
- socket.on('connect', function () { 
-
-       // socket.emit('NewPlayer', person_name);
-
-        socket.on('disconnected', function() {
-
-            socket.emit('chat-userleft',username);
-
-        });
-
-    socket.on('ConnCount',function(count){
-       
-       $('#aconnections').html(count + ' live user(s) connected');
-       
-       
-       
-    });
-    
-    socket.on('chat-users',function(users){
-       
-       for(var i=0;i<users.length;i++)
-       $('.chat-user ul').append('<li>'+ users[i] +'</li>');
-       
-       //$('.chat-user ul').append('<li>done</li>');
-       
-       
-       
-    });
-
-    socket.on('chat-newuser',function(user){
-           
-           $('.chat-user ul').append('<li>'+ user +'</li>');
-           
-            
-           
-        });
-
-    socket.on('chat-start',function(users){
-           
-         
-         for(var i=0;i<users.length;i++)
-           $('.chat-user ul').append("<li id='USERNAME_"+users[i] +"'>"+ users[i] +"</li>");
-           
-          
-            $('.chat-wrapper').slideDown('slow',function(){});
-            $('.chat-newusername').attr('disabled','disabled');
-           
-        });
-    
-    socket.on('chat-msg',function(msgjson){
-        
-     if ( $('.chat-username').val() != '')
-     {
-        
-        $('.chat-msgs ul').append('<li>'+ formatMessage(msgjson) +'</li>');
-       
-       
-       if ($('.chat-msgs ul li').length>=20)
-       {
-          $('.chat-msgs ul li:first').remove();
-       }
-     
-         
-     }
-     
-    });
-    
-    socket.on('error-userexists',function(err){
-      
-     $('.chat-error').html(err);
-       
-       
-    });
-
-    socket.on('chat-userleft',function(user){
-        
-         //$('.chat-user ul').append('<li style="font-color:red;font-styple:italic;">'+ user +' has left the chat</li>');
-         $('.chat-msgs ul').append('<li><span style="font-color:red;font-styple:italic;">'+ user +' has left the chat</span></li>');
-        
-        $('ul li #USERNAME_'+ user).remove();
-        
-        
-    });
-
- });
-$('.chat-cancel').on('click',function(){
-    
-   
-    
-      $('.chat-wrapper').slideUp('slow',function(){});
-      clearChatHistor();
-     
-    
 });
 
-
-$('#chat').on('hidden.bs.modal', function () {
-   
-    clearChatHistor(socket);
-})
-
-});
-
-function clearChatHistor(s){
-    
-    $('.chat-newusername').removeAttr('disabled');
-    $('.chat-username').val('');
-    $('.chat-msgs ul').empty();
-    
-    $('.chat-user ul').empty();
-    s.emit('chat-userleft',username);
-    
-    $('.chat-wrapper').slideUp('slow',function(){});
-    
-}
-
-function formatMessage(msgjson){
-    
-   //return msgjson.messageTime == undefined || null ?'':msgjson.messageTime + ':' + msgjson.message;
-   return msgjson.message;
-    
-    
-}   
-  
 var showError = function(message) {
    
     var e='<span style="color:red">' + message + '</span>';
     $('#divErrorMessage').html(e);
        
     };
+    
 var loginPageRedirect=function(){
     
    window.location='http://www.mykathua.com/login/';

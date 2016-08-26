@@ -56,7 +56,7 @@ var setupRoutes=function(app){
                          twt.getTweets(function(err,data){
 
                             if (err==null)
-                                res.render("home",{user:req.user,weather:html,tweets:data,messages:{},title:"Welcome to mykathua.com",cmsContent:cmsContent});
+                                res.render("index",{user:req.user,weather:html,tweets:data,messages:{},title:"Welcome to mykathua.com",cmsContent:cmsContent});
                             else 
                             return next();
                         

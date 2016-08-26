@@ -13,6 +13,7 @@
         
 
 <div class="row">
+    
   <div class="col-md-4" style="background-color:none;">
       <a href='#nationalStories'></a><h2>Top National Stories</h2>
 
@@ -102,6 +103,24 @@
    </div>   
   
 </div>
+ 
+ <div class="col-md-4" style="background-color:none;">
+       <h2>Local Videos</h2>
+          <table border="0" class="table" >
+   @model.videos.forEach(function(v){
+         <tr><td>
+             
+          <iframe src="https://www.youtube.com/embed/@v.id.videoId" height="@v.snippet.thumbnails.default.height" width="@v.snippet.thumbnails.default.width">     </iframe>
+             
+           </td>
+           </tr>
+           <tr><td><p>Published At: @v.snippet.publishedAt</p><p>Title:@v.snippet.title</p><p>Description:@v.snippet.description</p></td></tr>
+   
+       
+   })
+   </table>
+     </div>
+ 
 
 </div>
 

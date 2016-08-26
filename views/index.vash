@@ -11,24 +11,8 @@
         <p class="text-error"> error occured:@model.error</p>
         }
 
-<article>
 
- <p style="padding:10px;text-indent:2px;word-spacing:1em;text-align:justify">
-Thank you for taking time and visiting <a href="http://wwww.myKathua.com">MyKathua.com</a> a web portal about Kathua
-and for the people of Kathua who are either living in or outside <b>Kathua</b>.
-<br/>
-<br/>
 
-Through this web portal we would like to bring all the 
-<strong>KATHUAITES</strong> together on one single platform where they can exchange thoughts, share ideas and above all stay 
-connected with other <strong>KATHUAITES</strong>.
-<br/><br/>
-We are open to ideas and would like to hear from all of you, so get in touch and leave your comments by clicking on the below link!!!
-</p>
-</article>
-<br/>
-<h3>Leave a message</h3>
-<div id='divComment3'></div>
 
 })
 
@@ -37,19 +21,7 @@ We are open to ideas and would like to hear from all of you, so get in touch and
 <script type="text/javascript">
      $(document).ready(function () {
       
-     
 
-   // alert(storyId)    ;
-   
-       
-   //getStoryComments(3);    
-       
-   
-   
-   //$('#divComment' + storyId).toggle();
- 
-
-      
 
 });
 

@@ -113,7 +113,18 @@ var showHideComment= function(storyId){
 }
 var getStoryComments = function(options,cberror,cbsuccess)
 {
-    
+    /*
+    configureComments({
+    Id:options.id,  
+    commentGetUrl:'/api/StoryComments/' ,
+    commentSaveUrl:'/api/SaveComments/',
+    commentLikeSaveUrl:'/api/UpVoteStoryComment/',
+    div:'#divComment'}
+    ,function(err,data){
+        alert(err);
+    }
+    );
+    return;*/
     var url='/api/StoryComments/'+options.id;;
     var div='#divComment' +options.id;
     
@@ -235,6 +246,22 @@ var getStoryComments = function(options,cberror,cbsuccess)
 var getGalleryImageomments = function(options,cb)
 {
  
+    configureComments({
+    Id:options.id,  
+    commentGetUrl:'/api/gallery/getComments/' ,
+    commentSaveUrl:'/api/gallery/SaveComments/',
+    
+    commentLikeSaveUrl:'/api/gallery/UpVoteComment/',
+    div:'#divComment',
+    divError :'#divError'
+        
+    }
+    ,function(err,data){
+        $(divError).text(err);
+    }
+    );
+ return;
+ 
     var commentGetUrl='/api/gallery/getComments/' + options.id; ;
     var commentSaveUrl='/api/gallery/SaveComments/';
     var commentLikeSaveUrl='/api/gallery/UpVoteComment/';
@@ -351,10 +378,153 @@ var getGalleryImageomments = function(options,cb)
         							
         						}, 500);
         					},
+        					
         					refresh: function() {
         					   
                                         $(div).addClass('rendered');
                                     }
         				});
     });
+}
+
+var configureComments=function(
+    options,cb
+    ){
+    
+   var defaults= {
+    commentGetUrl:'/api/gallery/getComments/' ,
+    commentSaveUrl:'/api/gallery/SaveComments/',
+    commentLikeSaveUrl:'/api/gallery/UpVoteComment/',
+    div:'#divComment',
+    diverr:'#divError'
+}
+var config = $.extend({}, defaults, options);
+//alert(JSON.stringify(config));
+
+    config.commentGetUrl=config.commentGetUrl + config.Id; ;
+   //config.commentSaveUrl=config.commentSaveUrl;
+    //config.commentLikeSaveUrl='/api/gallery/UpVoteComment/';
+   // alert(options.id);
+    //var url='/api/StoryComments/'+options.id;
+    config.div=config.div  + config.Id;
+    //alert(JSON.stringify(options));
+    //alert(commentGetUrl);
+    $(config.div).empty();
+   
+    getJsonDataAsync(config.commentGetUrl,null,function(er){
+        //alert(commentGetUrl);
+      
+    },function(data){
+       
+            //alert(JSON.stringify(data));
+            $(config.div).comments({
+                
+        					//profilePictureURL: 'https://viima-app.s3.amazonaws.com/media/user_profiles/user-icon.png',
+        					roundProfilePictures: true,
+        					textareaRows: 1,
+        					enableAttachments: false,
+        					
+                            enableEditing: false,
+
+        					getComments: function(success, error) {
+        					    //alert(data);
+        					    success(data);
+        							
+        						},
+        					postComment: function(data, success, error) {
+        					   
+        					    data.created= new Date();
+        					     //alert(JSON.stringify(data));
+        						setTimeout(function() {
+        							
+                                var saveurl=config.commentSaveUrl + options.id;
+                                saveurl +="/" + data.parent;
+                               // saveurl +="/" + "navs";
+                                saveurl +="/" + data.content;
+                               // console.log(saveurl);
+                                //getJsonDataAsync(saveurl,{storyId:Id,username:'navs',comments:data.content},function(er){
+                                getJsonDataAsync(saveurl,null,function(er){    
+                                
+                                    //alert('error');
+                                    $(config.diverr).html('<span style="color:red">' + er +'</span>');
+                                    
+                                },function(data) {
+                                    //alert('error - 2');
+                                    if (data.errorMessage != undefined || data.errorMessage != null) {
+                                       // alert(options.diverr);
+                                        //alert(data.errorMessage);
+                                        //$(divError).val(data.errorMessage);
+                                         $(config.diverr).html('<span style="color:red">' + data.errorMessage +'</span>');
+                                       //cberror(data.errorMessage);
+                                        
+                                    }
+                                    else
+                                    {
+                                         //alert(options.id);
+                                         getGalleryImageomments(options);
+                                         //success(data);
+                                         cb(null,options);
+                                         //refresh();
+                                    }
+                                    
+                                    
+                                });
+                                
+        						}, 500);
+        					},
+        					putComment: function(data, success, error) {
+        						setTimeout(function() {
+        							
+        							//alert(3);
+        						}, 500);
+        					},
+        					deleteComment: function(data, success, error) {
+        						setTimeout(function() {
+        							//success();
+        						//	alert(data);
+        							$(config.diverr).html('<span style="color:red">' + data +'</span>');
+        							
+        						}, 500);
+        					},
+        					upvoteComment: function(data, success, error) {
+        						setTimeout(function() {
+        						    console.log(JSON.stringify(data));
+        							//success(data);
+        							//alert(JSON.stringify(data));
+        							
+                                    var saveurl=config.commentLikeSaveUrl + data.id;
+                                    
+                                    saveurl +="/" + "navs";
+                                    
+                                   console.log(saveurl);
+                                    
+                                    getJsonDataAsync(saveurl,null,function(er){    
+                                    
+                                    
+                                    },function(data) {
+                                    
+                                    getGalleryImageomments(config);
+                                    
+                                    
+                                    });
+        							
+        						}, 500);
+        					},
+        					uploadAttachments: function(dataArray, success, error) {
+        						setTimeout(function() {
+        							//success(dataArray);
+        							//alert(data);
+        							
+        						}, 500);
+        					},
+        					
+        					refresh: function() {
+        					   
+                                        $(config.div).addClass('rendered');
+                                    }
+        				});
+    });
+
+
+
 }

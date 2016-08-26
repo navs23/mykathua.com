@@ -1,4 +1,5 @@
 // main file
+"use strict";
 var http = require("http");
 var express = require("express");
 var path =require("path");
@@ -16,6 +17,8 @@ var app = express();
 var liveConnections=0;
 
 var chatUser=[];
+
+chatUser.push('a');
 
 require('./config/passport')(passport); // pass passport for configuration
 
@@ -56,10 +59,11 @@ app.configure(function() {
     process.env.TWITTER_ACCESS_TOKEN_KEY='703646797646995457-mUvHGxvX9mwrSsVa69Cy51RW3sHxwDh';
     process.env.TWITTER_ACCESS_TOKEN_SECRET='2YlEelXvhaBP9PyGV2A1QMuRnDVy9wBI98Ya0eJoFMB7E';
     process.env.SENDGRID_API_KEY='d1H4OpMPSn-P3wEpGR6g1A';
+    process.env.GOOGLE_API_KEY='AIzaSyDc2SwSwRntH9m1e21OL8btHcxl3TPwwI0';
      
     process.env.SENDGRID_USER='mykathua';
     
-    process.env.BASE_WEBSITE_URL='https://navs-navs23.c9users.io'
+    process.env.BASE_WEBSITE_URL='https://navs-navs23.c9users.io';
 }
 else
 {
@@ -69,21 +73,11 @@ else
     process.env.TWITTER_ACCESS_TOKEN_SECRET='WJSubhpmVHZ3XErI8kueh8TOVlPxnp8gqOeLcokryxoaV';
     process.env.SENDGRID_API_KEY='d1H4OpMPSn-P3wEpGR6g1A';
     process.env.SENDGRID_USER='mykathua';
-    process.env.BASE_WEBSITE_URL='http://www.mykathua.com'
+    process.env.BASE_WEBSITE_URL='http://www.mykathua.com';
+    process.env.GOOGLE_API_KEY='AIzaSyDc2SwSwRntH9m1e21OL8btHcxl3TPwwI0';
 }
 
 });
-/*
-function isLoggedIn(req, res, next) {
-    // console.log('isloggedIn');
-    //console.log(isAuthenticated());
-    // if user is authenticated in the session, carry on
-    if (req.isAuthenticated())
-        return next();
-
-    // if they aren't redirect them to the home page
-    res.redirect('/login/');
-}*/
 
 process.on('uncaughtException', function (err) {
   console.log('an unhandelled exception has occurred \n %s',err);
@@ -97,7 +91,6 @@ process.on('uncaughtException', function (err) {
   });
   
 });
-
 
 function wwwRedirect(req, res, next) {
     if (req.headers.host.slice(0, 4) === 'www.') {
@@ -121,68 +114,106 @@ var io = require('socket.io').listen(server);
 
 var connections=0;
 
+var i=1;
+// socket server
 io.sockets.on('connection', function(socket) {
        
-        console.log('connected..,%s',connections);
-        connections++;
-            
-      // socket.emit('ConnCount',connections);    
+    console.log('connected..,%s',connections);
+    connections++;
+    
+    socket.on('disconnect', function(s){
+    
+    console.log('disconnected..%s',s);
+    console.log('connected..,%s',connections);
+    
+    
+    
+    connections--;
         
-       socket.on('disconnect', function(){
-       
-        console.log('disconnected..');
-        console.log('connected..,%s',connections);
-       
-        connections--;
-            
-     
-      
-     
-            
-       
-        
+    
     });
     
- 
-       setInterval(function(){
-           
-            socket.emit('ConnCount',connections);    
-            
-           
-       },2000);
-           
-    
+    setInterval(function(){
+       
+        socket.emit('ConnCount',connections);    
         
-      socket.on('chat-user',function(data){
-            
-            // send it back to all connected clients
-            data.messageTime = Date();
-            
-            console.log('new msg has arrived %s @ %s',data.message,data.messageTime);
-            
-            socket.emit('chat-user',data);
-            
-            
-           
-       });
+    //   socket.emit('chat-msg',{message:"hello.." + (i++)});    
+     //  console.log(i);
+        
+        
        
-       socket.on('chat-msg',function(data){
-            
-            // send it back to all connected clients
-            data.messageTime = Date();
-            
-            console.log('new msg has arrived %s @ %s',data.message,data.messageTime);
-            
-            socket.emit('chat-msg',data);
-           
-       });
+    },2000);
+       
+    socket.on('chat-newuser',function(user){
+     
+     var index=chatUser.indexOf(user);
+     console.log('checking if user %s already exists or not %s',user,index);
+      if( index >=0)
+      {
+         console.log('in here');
+          socket.emit('error-userexists','Username taken by another user');
+          return ;
+      }
+     
+     
+     chatUser.push(user);
+     
+     //socket.emit('chat-users',chatUser);
+     
+     //io.emit('chat-newuser',chatUser);
+     socket.broadcast.emit('chat-newuser',user);
+     
+     socket.emit('chat-start',chatUser);
+     
+     
+    });
+    
+    socket.on('chat-user',function(data){
+        
+        // send it back to all connected clients
+        data.messageTime = Date();
+        
+        console.log('new msg has arrived %s @ %s',data.message,data.messageTime);
+        
+        socket.emit('chat-user',data);
+        
+        
+       
+    });
+    
+    socket.on('chat-msg',function(data){
+        
+        // send it back to all connected clients
+        data.messageTime = Date();
+        
+        console.log('new msg has arrived %s @ %s',data.message,data.messageTime);
+        
+       socket.emit('chat-msg',data);
+        //io.broadcast.emit('chat-msg', data);
+       
+    });
+    
+    socket.on('chat-userleft',function(user){
+       
+       console.log('%s left @%s',user,chatUser.indexOf(user));
+       
+       var i = chatUser.indexOf(user);
+        if(i != -1) {
+        chatUser.splice(i, 1);
+        }
        
        
+       console.log('users %s',chatUser);
+       socket.broadcast.emit('chat-userleft',user);
+       
+      
+       
+    });
     
     
 });
 
 
-console.log('finished sending email');
+
 
 server.listen(process.env.PORT);

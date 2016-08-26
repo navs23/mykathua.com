@@ -2,6 +2,10 @@
     
    var 
    data =require("../sql");
+//   var multer  = require('multer')
+  // var upload = multer({ dest: 'uploads/' })
+   
+   var fs=require('fs');
     var cheerio = require('cheerio');
     var dex =require("../helper");
     
@@ -9,16 +13,80 @@
         
     app.get("/gallery/",function(req,res){
         
-       
-      
        res.render("gallery/index",{title:"Photo Gallery",images:null,user:req.user});
       
-    // });
+    });
+    
+            
+    app.get("/gallery/upload/:param1?",function(req,res){
         
-       
-        
+       console.log(req.params);
+      
+       res.render("gallery/upload",{title:"Manage images",images:null,user:req.user});
+      
+
       
     });
+    
+    app.post('/gallery/upload/',app.auth.isLoggedIn, function(req, res) {
+       
+       console.log('comments %s',req.body.comments);
+       
+       if (req.files !==null)
+       {
+        
+        fs.readFile(req.files.file.path, function (err, data) {
+            
+        if (err ==null){
+        var newPath = './uploads/' + req.files.file.name;
+        
+        console.log('file saved to %s,%s',newPath,JSON.stringify(req.files.file));
+        
+        fs.writeFile(newPath, data, function (err2) {
+        
+        if (err2 == null)
+            {
+        
+            res.send("file uploaded successfully");
+            
+            // save image to the database
+            data.saveGalleryImage({},function(err,recordset){
+                
+                if (err == null)
+                {
+                    res.send(recordset);
+                    return;
+                    
+                }
+                else
+                {
+                      res.send(err2);
+                      return;
+                    
+                }
+                
+            });
+            }
+            
+        else
+            res.send(err2);
+        });
+        }
+        else
+        res.send(err);
+        
+        
+        
+    });
+        }
+    else
+        res.send('No files found for uploading');
+       
+    
+    
+    
+    });
+    
     
     app.get("/api/gallery/",function(req,res){
     /*
