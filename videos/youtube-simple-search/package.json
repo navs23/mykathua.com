@@ -1,0 +1,55 @@
+{
+  "name": "youtube-simple-search",
+  "version": "0.1.1",
+  "description": "easy search in YouTube",
+  "main": "index.js",
+  "keywords": [
+    "youtube",
+    "search",
+    "api",
+    "simple search"
+  ],
+  "homepage": "https://github.com/atellmer/youtube-simple-search",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atellmer/youtube-simple-search.git"
+  },
+  "author": {
+    "name": "AlexPlex"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.11.1"
+  },
+  "gitHead": "5ce1de2119d9571406373f92208c2744b553adfc",
+  "bugs": {
+    "url": "https://github.com/atellmer/youtube-simple-search/issues"
+  },
+  "_id": "youtube-simple-search@0.1.1",
+  "scripts": {},
+  "_shasum": "e653690cfb6e14723b109d730e18e8b4574677bb",
+  "_from": "youtube-simple-search@*",
+  "_npmVersion": "3.10.5",
+  "_nodeVersion": "6.4.0",
+  "_npmUser": {
+    "name": "alexplex",
+    "email": "atellmer@gmail.com"
+  },
+  "dist": {
+    "shasum": "e653690cfb6e14723b109d730e18e8b4574677bb",
+    "tarball": "https://registry.npmjs.org/youtube-simple-search/-/youtube-simple-search-0.1.1.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "alexplex",
+      "email": "atellmer@gmail.com"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-16-east.internal.npmjs.com",
+    "tmp": "tmp/youtube-simple-search-0.1.1.tgz_1471510983356_0.28516242397017777"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/youtube-simple-search/-/youtube-simple-search-0.1.1.tgz",
+  "readme": "ERROR: No README data found!"
+}

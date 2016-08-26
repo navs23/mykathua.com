@@ -1,7 +1,7 @@
     "use strict";
     (function(vm){
     
-    var yss = require('youtube-simple-search'); 
+    var yss = require('./youtube-simple-search'); 
     
     vm.search= function(params,cb){	yss({
 		key: process.env.GOOGLE_API_KEY,

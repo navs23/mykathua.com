@@ -44,8 +44,8 @@
     "sendgrid-rest": "^2.2.1",
     "socket.io": "^1.4.8",
     "twitter": "^1.2.5",
-    "vash": "^0.11.3",
-    "youtube-simple-search": "^0.1.1"
+    "vash": "^0.11.3"
+    
   },
   "scripts": {
     "start": "node server.js"
