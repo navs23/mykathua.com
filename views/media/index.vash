@@ -5,6 +5,7 @@
 });
 @html.block("js",function(){
 <script src="/resources/js/local/media.js"></script>  
+
 });
 @html.block("main",function(model){
     @if (model.error){
@@ -109,12 +110,14 @@
           <table border="0" class="table" >
    @model.videos.forEach(function(v){
          <tr><td>
-             
-          <iframe src="https://www.youtube.com/embed/@v.id.videoId" height="@v.snippet.thumbnails.default.height" width="@v.snippet.thumbnails.default.width">     </iframe>
-             
-           </td>
-           </tr>
-           <tr><td><p>Published At: @v.snippet.publishedAt</p><p>Title:@v.snippet.title</p><p>Description:@v.snippet.description</p></td></tr>
+        
+          
+          <div class="videoWrapper">
+        <iframe src="https://www.youtube.com/embed/@v.id.videoId" frameborder="0" allowfullscreen>     </iframe>
+        </div>
+          </td>
+          </tr>
+          <tr><td><p><strong>Published On:</strong> @v.snippet.publishedAt</p><p><strong>Title:</strong>@v.snippet.title</p><p><strong>Description:</strong>@v.snippet.description</p></td></tr>
    
        
    })
