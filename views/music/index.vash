@@ -89,6 +89,15 @@
         
     </div>
 
+<div class="row">
+	<div id="jquery_jplayer_1"></div>
+<div id="jp_container_1">
+ <a href="#" class="jp-play">Play</a>
+ <a href="#" class="jp-pause">Pause</a>
+</div>
+	
+</div>
+
 
 
 })
@@ -179,7 +188,20 @@ var renderRadioPlayer= function(playerdiv,containerdiv){
 			title:"Radio HSL",
 			mp3:"http://50.7.70.66:8485/;"
 		
+		}
+		,//http://86.82.62.172:8000/live?type=.mp3/;stream.mp3
+		{
+			title:"Aakash radio"
+			,mp3:"http://86.82.62.172:8000/live?type=.mp3/;stream.mp3"
+			
 		},
+		
+		{
+			title:"Kishore Kumar Radio"
+			,mp3:"http://208.115.222.203:8834/;"
+			
+		},
+		{title:"Radio Central",mp3:"http://176.31.107.8:8459/;"},
 		{
 				title:"Hits Of Bollywood",
 			mp3:"http://50.7.77.115:8174/;"
@@ -208,6 +230,7 @@ var renderRadioPlayer= function(playerdiv,containerdiv){
 			,mp3:"http://198.105.214.140:7868/;stream/1"
 			
 		}
+		
 		
 	], {
 		swfPath: "/node_modules/jplayer/dist/jplayer",
