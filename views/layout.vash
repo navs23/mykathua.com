@@ -248,6 +248,7 @@
 </html>
 
 <script type="text/javascript">
+var socket=io();
 $(document).ready(function () {
     
 /*global $*/   
@@ -255,7 +256,25 @@ $(document).ready(function () {
 /*global io*/   
 /*global mykathua*/
     
-var socket=io();
+
+/*
+ socket.on('connect', function () { 
+
+       // socket.emit('NewPlayer', person_name);
+
+  socket.on('song-nowplaying',function(data){
+       
+      $('#socket').val(data.song);
+       
+       
+       
+    });
+       
+       
+       
+    });
+*/
+
 
 var chat= new mykathua.Chat({},socket,$);
 
@@ -268,7 +287,10 @@ chat.init();
 
 
 
-
+$('#chat').on('click',function(){
+  
+    
+});
 $('#btnContactUsSubmit').on(('click'),function(){
 
 

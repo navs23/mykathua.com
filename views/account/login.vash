@@ -218,10 +218,11 @@ $('#btnLoginSubmit').on(('click'),function(){
 
   if (result.errorCode==200)   
   {
-    //alert('please check your email and validate your account');
+   // alert(result.redirectUrl);
     
     $('#login').modal('hide');
-     window.location.href='/';
+    alert('/' || result.redirectUrl);
+     window.location.href= '/' || result.redirectUrl;
      return true;
   }
   else 

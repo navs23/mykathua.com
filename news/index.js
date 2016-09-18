@@ -217,28 +217,28 @@
     var jammuNews=function(cb){
     
     var news=[];
-    var url='http://jammulinksnews.com/category/Jammu';
+    var url='http://www.jammulinksnews.com/mb/news.aspx?category=Jammu';
     
     dex.scrape(url,function(html){
     
     var $=cheerio.load(html);
     
     
-    $('table.grey_borderbox').each(function(i,e){
+    $('#form1 > div:nth-child(12) > div:nth-child(1) table').each(function(i,e){
     
     var newsItem={};
     
     
-    newsItem.news=$(e).find('a').text();
+    newsItem.news=$(e).find('a').text().substr(1,255);
     newsItem.link='http://jammulinksnews.com/' + $(e).find('a').attr('href');
-    newsItem.thumbnail='http://jammulinksnews.com/' + $(e).find('img').attr('src');
+    newsItem.thumbnail= $(e).find('img').attr('src');
     
     if (newsItem.thumbnail ==null || newsItem.thumbnail == undefined)
     {
     newsItem.thumbnail='http://placehold.it/50/6699ff?text=google-Amar-Ujala'
     }
     
-    newsItem.description= $(e).text();
+    newsItem.description= newsItem.news.substring(1,255);
     
     console.log(newsItem);
     news.push(newsItem);
@@ -265,19 +265,25 @@
     dex.scrape(url,function(html){
     
     var $=cheerio.load(html);
+    //console.log(html);
     
-    
-    $('div.hard-news-unit').each(function(i,e){
+    $('#comp-recent-media > div > div').each(function(i,e){
     
     var newsItem={};
-    
-    
+   // console.log('start');
+    //console.log($(e).html());
+   // console.log('end');
     newsItem.news=$(e).find('a').text();
     newsItem.link='http://www.bbc.com/' + $(e).find('a').attr('href');
     //newsItem.thumbnail= $(e).find('img').first().attr('src');
     //hard-news-unit__image
-    var $2=$(e).find('div.hard-news-unit__image');
-    newsItem.thumbnail=$2.find('img').attr('src');
+    
+    //var $2=cheerio.load(e).html();
+    //console.log($(e).find('div.js-delayed-image-load').attr('data-src'));
+    //#comp-recent-media > div > div:nth-child(1) > div.eagle-item__image > div > img
+    //newsItem.thumbnail=$(e).find('img').attr('src');
+    newsItem.thumbnail=$(e).find('div.js-delayed-image-load').attr('data-src');
+    
     // newsItem.thumbnail= $(e).find('div.hard-news-unit__image').find('img').attr('src');
     
     if (newsItem.thumbnail ==null || newsItem.thumbnail == undefined)
@@ -414,7 +420,7 @@
         }
         cb(null,value);
         
-        console.log(value);
+        //console.log(value);
         return value;
               
     }

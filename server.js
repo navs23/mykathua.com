@@ -1,5 +1,5 @@
 // main file
-"use strict";
+"use strict"
 var http = require("http");
 var express = require("express");
 var path =require("path");
@@ -12,6 +12,7 @@ var methodOverride = require('method-override');
 
 var emailHelper = require('./helper/mail.js');
 var auth = require('./helper/auth.js');
+var music = require('./helper/music.js');
 
 var app = express();
 var liveConnections=0;
@@ -31,7 +32,7 @@ app.configure(function() {
 	app.set("liveconnections",liveConnections);
     app.auth=auth;
     
-    console.log(JSON.stringify(app.auth));
+    //console.log(JSON.stringify(app.auth));
 
    // app.use(logger.log);
 	
@@ -81,6 +82,7 @@ else
 
 process.on('uncaughtException', function (err) {
   console.log('an unhandelled exception has occurred \n %s',err);
+  /*
   emailHelper.sendMail({
       from:'do-not-reply@mykathua.com',
       to:'navs@hotmail.co.uk',
@@ -89,7 +91,7 @@ process.on('uncaughtException', function (err) {
       
       
   });
-  
+  */
 });
 
 function wwwRedirect(req, res, next) {
@@ -109,6 +111,8 @@ var server =http.createServer(app);
 
 
 console.log('starting socket io server ');
+
+
  
 var io = require('socket.io').listen(server);
 
@@ -135,14 +139,21 @@ io.sockets.on('connection', function(socket) {
     
     setInterval(function(){
        
-        socket.emit('ConnCount',connections);    
+        socket.emit('ConnCount',connections);
         
-    //   socket.emit('chat-msg',{message:"hello.." + (i++)});    
-     //  console.log(i);
+        music.listPlayingSongs(function(err,songs){
+            if (err==null)
+             socket.emit('song-nowplaying',songs);
+            else
+            console.log(err);
+        });
         
         
        
-    },2000);
+      
+        
+       
+    },5000);
        
     socket.on('chat-newuser',function(user){
      
@@ -150,7 +161,7 @@ io.sockets.on('connection', function(socket) {
      console.log('checking if user %s already exists or not %s',user,index);
       if( index >=0)
       {
-         console.log('in here');
+         
           socket.emit('error-userexists','Username taken by another user');
           return ;
       }
@@ -203,7 +214,7 @@ io.sockets.on('connection', function(socket) {
         }
        
        
-       console.log('users %s',chatUser);
+       //console.log('users %s',chatUser);
        socket.broadcast.emit('chat-userleft',user);
        
       

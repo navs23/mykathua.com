@@ -7,12 +7,12 @@
 
      accountController.init= function(app,passport){
       
-    app.get('/login/:redirectUrl?/', function(req, res,nex) {
-        //res.re
+    app.get('/login', function(req, res,nex) {
+        console.log('redirecting to login page');
+        console.log('redirect url is %s',req.query.redirectUrl);
      
-        var redirectUrl = req.params.redirectUrl;
         
-	res.render('account/login',{redirectUrl:redirectUrl}); // load the index.ejs file
+	res.render('account/login',{redirectUrl:req.query.redirectUrl}); // load the index.ejs file
 		//res.redirect('http://www.mykathua.com/login/');
 		
 		
@@ -33,7 +33,7 @@
 
     */
     	
-    app.get('/profile', app.auth.isLoggedIn, function(req, res) {
+    app.get('/account/profile', app.auth.isLoggedIn, function(req, res) {
         res.render('account/profile', {
             user : JSON.stringify(req.user) // get the user out of session and pass to template
             
@@ -41,7 +41,7 @@
         });
     });
 
-    app.get('/api/listusers',isLoggedIn, function(req, res) {
+    app.get('/api/listusers',app.auth.isLoggedIn, function(req, res) {
     
       dal.listUser(function(recordset){
           res.send(recordset);
@@ -83,7 +83,7 @@
     app.get('/auth/twitter/callback', passport.authenticate('twitter', {successRedirect : '/',failureRedirect : '/' }));
         
 
-    app.post('/loginMe',passport.authenticate('local', { failureRedirect: '/loginFailure',successRedirect  : '/loginSuccess' }));
+    app.post('/loginMe',passport.authenticate('local', { failureRedirect: '/loginFailure',successRedirect  : '/loginSuccess'}));
     
     app.post('/registerMe', function(req,res){
         console.log(req.body.name);
@@ -157,8 +157,12 @@
     });
     
     app.get('/loginSuccess', function(req, res, next) {
-     
-      res.send({errorCode:200,errorMessage:' authenticated'});
+     var redirectUrl=req.session.redirectUrl;
+     delete req.session.redirectUrl;
+     res.send({errorCode:200,errorMessage:' authenticated',redirectUrl:redirectUrl});
+      //res.redirect(req.session.redirectUrl);
+      
+      
     });
     
     app.get('/account/confirm/:tocken',function(req,res){
@@ -255,7 +259,7 @@
 
 };
 
-
+/*
     // route middleware to make sure a user is logged in
     function isLoggedIn(req, res, next) {
     // console.log('isloggedIn');
@@ -268,6 +272,6 @@
     res.redirect('/login/');
 }
 
-    
+    */
     
 })(module.exports);

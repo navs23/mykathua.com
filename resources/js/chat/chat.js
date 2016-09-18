@@ -45,7 +45,11 @@ mykathua.Chat.prototype.clearChatHistory=function(){
     
   
     
-    self.$(self.options.chatWrapper).slideUp('slow',function(){});
+    self.$(self.options.chatWrapper).slideUp('slow',function(){
+        
+      
+        
+    });
     
     
       self.socket.emit('chat-userleft',username);
@@ -95,7 +99,7 @@ mykathua.Chat.prototype.init=function(){
 
     self.socket.on('connect', function () { 
 
-       // socket.emit('NewPlayer', person_name);
+
 
     self.socket.on('disconnected', function() {
 
@@ -128,6 +132,7 @@ mykathua.Chat.prototype.init=function(){
 
     self.socket.on('chat-start',function(users){
            
+         
          
          for(var i=0;i<users.length;i++)
            self.$(self.options.chatUser + ' ul').append("<li id='USERNAME_"+users[i] +"'>"+ users[i] +"</li>");

@@ -37,7 +37,7 @@
 
 
 
-<div class="home-main-message" >
+<div class="home-main-message" style="background-color:none">
 
 @html.raw(model.cmsContent.cmsTopHeader)
 </div>
@@ -100,6 +100,8 @@
 </table>
 
 })
+
+
 
 @html.block("rightSideBar",function(model){
 <h2>@@Kathua</h2>

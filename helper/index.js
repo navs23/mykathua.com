@@ -12,7 +12,11 @@
         if (!error && response.statusCode == 200) {
                cbsuccess(html);
             }
-        else cberror(error);    
+        else 
+        {
+            console.log('error is %s, url is %s, statuscode is %s',error,url,response.statusCode);
+        cberror(error);    
+        }
         });
    }
    

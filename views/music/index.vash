@@ -25,11 +25,16 @@
         
 <p>@model.title</p>
 <p><i>Don't forget to leave your comments</i></p>
+<div class="row">
+	<table><tr><td><strong>Filter</strong></td><td>&nbsp;<select class="genre-filter"><option>All</option><option>Bollywood</option><option>Bhajan</option></select></td></tr></table></div>
+<div class="row">
+	<br/>
+</div>
 
 <div class="row">
     <div class="md-col-12">
  <div id="jquery_jplayer_1" class="jp-jplayer"></div>
-<div id="jquery_jplayer_1" class="jp-jplayer"></div>
+
 <div id="jp_container_1" class="jp-audio" role="application" aria-label="media player">
 	<div class="jp-type-playlist">
 		<div class="jp-gui jp-interface">
@@ -89,14 +94,7 @@
         
     </div>
 
-<div class="row">
-	<div id="jquery_jplayer_1"></div>
-<div id="jp_container_1">
- <a href="#" class="jp-play">Play</a>
- <a href="#" class="jp-pause">Pause</a>
-</div>
-	
-</div>
+
 
 
 
@@ -106,7 +104,8 @@
 
 <script type="text/javascript">
 	var ojplayer=null;
-	
+	/*global $*/
+	/*global io*/
 	var marqueeString='';
 	var socket = io();
 	var bMarqueeStarted=false;
@@ -122,18 +121,34 @@
 	//true or false - should the marquee be duplicated to show an effect of continues flow
 	duplicated: true
 	};
+	
      $(document).ready(function () {
-     //	$('.marquee').text("song..");
+    
+     //alert($('.genre-filter').val());	
+     
+     $('.genre-filter').on('change',function(e){
      	
-     renderRadioPlayer("#jquery_jplayer_1","#jp_container_1");
+     	 var stations=getRadioStations(function(e){if (e.genre == $('.genre-filter').val() || $('.genre-filter').val() =='All') return e;});
+     	 
+     	 $("#jquery_jplayer_1").jPlayer( "destroy");
+     	 
+     	 renderRadioPlayer("#jquery_jplayer_1","#jp_container_1",stations);
+     	
+     });
      
-   // startMarquee();
-   
-   var socket = io.connect('http://localhost:8080');
-socket.on('message', function (data) {
-    console.log(data.count);
-});  
+     renderRadioPlayer("#jquery_jplayer_1","#jp_container_1",getRadioStations(function(e){if (e.genre == $('.genre-filter').val() || $('.genre-filter').val() =='All')return e;}));
      
+        
+        socket.on('song-nowplaying', function(data) {
+			
+			//alert($('ul > li:nth-child(3) > div > a.jp-playlist-item').text());
+			
+			//#jp_container_1 > div > div.jp-playlist > ul > li:nth-child(3) > div > a.jp-playlist-item
+			$('ul > li:nth-child(3) > div > a.jp-playlist-item').text(data[0].radio +' - ' + data[0].title);
+    		$('ul > li:nth-child(4) > div > a.jp-playlist-item').text(data[1].radio +' - ' + data[1].title);
+    		$('ul > li:nth-child(5) > div > a.jp-playlist-item').text(data[2].radio +' - ' + data[2].title);
+    		$('ul > li:nth-child(6) > div > a.jp-playlist-item').text(data[3].radio +' - ' + data[3].title);
+        });
      
 });
 
@@ -153,86 +168,105 @@ socket.on('message', function (data) {
 
 //var ga= function(s, e, t, ctl, url){}
 
-var renderRadioPlayer= function(playerdiv,containerdiv){
-	 ojplayer=new jPlayerPlaylist({
-		jPlayer: playerdiv,
-		cssSelectorAncestor: containerdiv
-	}, [
+function getRadioStations(filter){
+var radioStations= 
+[
 		
 			{
+			genre:"folk",
 			title:"Dogri Radio - mykathua.com",
 			mp3:"http://listen.radionomy.com/dogriradio;"
+			
 		
 		}
 		,
 		{
+			genre:"Bollywood",
 			title:"JK City FM",
 			mp3:"http://69.175.94.98:8138/;"
 		
 		},
 		{
-			title:"Bollywood - Sada Bahar Music Radio",
+				genre:"bollywood",
+			title:"Bollywood Sada Bahar",
 			mp3:"http://192.240.102.133:8512/;stream/1;"
 		},
 		{
+			genre:"Bollywood",
 			title:"Bollywood Hits",
 			mp3:"http://viadj.viastreaming.net:7090/;"
 		},
 		{
+			genre:"Bollywood",
 			title:"Hindi Evergreen hits",
 			mp3:"http://50.7.77.114:8296/;"
 		
 		},
 		
 		{
+		genre:"Bollywood",
 			title:"Radio HSL",
 			mp3:"http://50.7.70.66:8485/;"
 		
 		}
-		,//http://86.82.62.172:8000/live?type=.mp3/;stream.mp3
-		{
-			title:"Aakash radio"
-			,mp3:"http://86.82.62.172:8000/live?type=.mp3/;stream.mp3"
-			
-		},
+		/*,{
+		genre:"Dance",
+			title:"Dancers music Radio",
+			mp3:"http://uk1.internet-radio.com:8187/;stream"
+		}*/
+		,
 		
 		{
+			genre:"Bollywood",
 			title:"Kishore Kumar Radio"
 			,mp3:"http://208.115.222.203:8834/;"
 			
 		},
 		{title:"Radio Central",mp3:"http://176.31.107.8:8459/;"},
 		{
-				title:"Hits Of Bollywood",
+			genre:"Bollywood",
+			title:"Hits Of Bollywood",
 			mp3:"http://50.7.77.115:8174/;"
 		
 		}
 		,{
+			genre:"Bollywood",
 			title:"Non-stop hits"
 			,mp3:"http://198.178.123.14:8216/;stream/1"
 			
 		}
 		
 		,{
+				genre:"Bhajan",
 			title:"OM Radio - Chillout, Ambient, Instrumental, Meditative"
 			,mp3:"http://178.168.28.148:8000/"
 			
 		}
 		,
 		{
+				genre:"Bhajan",
 			title:"Bhajan Radio"
 			,mp3:"http://188.165.192.5:8159/;stream/1"
 			
 		}
 			,
 		{
+			genre:"Bhajan",
 			title:"Radio Jai Ho - Bhajan"
 			,mp3:"http://198.105.214.140:7868/;stream/1"
 			
 		}
 		
 		
-	], {
+	];
+	
+	return radioStations.filter(filter);
+}
+var renderRadioPlayer= function(playerdiv,containerdiv,radioStations){
+	 ojplayer=new jPlayerPlaylist({
+		jPlayer: playerdiv,
+		cssSelectorAncestor: containerdiv
+	},radioStations, {
 		swfPath: "/node_modules/jplayer/dist/jplayer",
 		supplied: "mp3",
 		wmode: "window",

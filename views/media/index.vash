@@ -100,6 +100,18 @@
    })
    }
    }
+  
+    @model.news.jammuNews.forEach(function(e){
+   
+   <div class="row">
+       <div class="col-md-12">
+           <a href="@e.link" target="_new"><img height="50" width="50" class ="img-thumbnail text-center" style="vertical-align:middle;" src="@e.thumbnail"/></a>
+           <span class="text-small">@e.description<a href="@e.link" target="_new">read more</a></span>
+       </div>
+    </div>
+    
+   })
+   
    
    </div>   
   
@@ -113,7 +125,7 @@
         
           
           <div class="videoWrapper">
-        <iframe src="https://www.youtube.com/embed/@v.id.videoId" frameborder="0" allowfullscreen>     </iframe>
+        <iframe src="https://www.youtube.com/embed/@v.id.videoId" frameborder="0" allowfullscreen="true" style="">     </iframe>
         </div>
           </td>
           </tr>
