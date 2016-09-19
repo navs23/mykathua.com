@@ -322,29 +322,35 @@
     try{
 
     getGoogleNews(function(err,gnews){
-        if (err==null) news.googleNews=gnews;
-        else news.googleNews=[];
+        news.googleNews=(gnews || []);
+        if(err != null) console.log(gnews);
+        
     
     // daiiy excelsior news
     getDENews(function(err,deNews){
-      if (err==null) news.dailyexcelsiorNews=deNews;
+      if (err!=null) console.log(err);
+      news.dailyexcelsiorNews=(deNews ||[]);
       
     jammuNews(function(err,jNews){
         
-    if (err==null)news.jammuNews = jNews; else news.jammuNews=[];
-    if (news.jammuNews == null || news.jammuNews == undefined ) news.jammuNews=[];
+    if (err !=null) console.log(jNews);
+    news.jammuNews = (jNews ||[]);
+    
     
     // jagran news     
     
     getJagranNews(function(err,jNews){
-        if (err==null) news.jagranNews=jNews; 
+        if (err !=null)
+        
+        news.jagranNews=(jNews ||[]);
            
            //cb(null,news);
         
     });
     
     bbcNews(function(err,bbcnews){
-          if (err==null) news.bbcNews=bbcnews; 
+          if (err !=null) console.log(err);
+          news.bbcNews = (bbcnews || []); 
            
            cb(null,news);
         
