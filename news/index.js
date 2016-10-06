@@ -134,7 +134,7 @@
                         var dated=$(e).find('span.date-cat').text();
                         var dtArr=dated.split(':');
                         var dtCurrent= new Date();
-                        var dt = new Date(dtArr[1].substring(1,dtArr[1].length-2));
+                        var dt = new Date(dtArr[1].substring(0,dtArr[1].length-2));
                        
                      
                         if(daydiff(dt,dtCurrent)<=2)
@@ -238,7 +238,7 @@
     newsItem.thumbnail='http://placehold.it/50/6699ff?text=google-Amar-Ujala'
     }
     
-    newsItem.description= newsItem.news.substring(1,255);
+    newsItem.description= newsItem.news.substring(0,255);
     
     console.log(newsItem);
     news.push(newsItem);
@@ -417,6 +417,7 @@
     var GetCacheValueByKey=function(key,cb){
        
         var value=newsItemCache.get('news');
+        
         if (value==undefined)
         {
             
@@ -424,6 +425,7 @@
                    value=news;
                });
         }
+        
         cb(null,value);
         
         //console.log(value);
