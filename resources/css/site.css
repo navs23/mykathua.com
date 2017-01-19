@@ -277,3 +277,14 @@ display: block;
   width:45px;
 background: transparent url(/resources//img/play.png) no-repeat center center;
 }
+#tweets{
+    list-style: none;
+    
+}
+#tweets li{
+    font-size:.85em;
+    border-bottom: dashed 1px black;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    
+}
