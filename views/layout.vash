@@ -149,7 +149,7 @@
 <footer><a href="#contactUs" role="link" class="" data-toggle="modal">Contact Us</a>&nbsp;|&nbsp;© 2016 – <a href='www.mykathua.com'>www.mykathua.com</a>&nbsp;|&nbsp;<a href="#aboutUs" role="link" class="" data-toggle="modal">About us</a>
 &nbsp;|&nbsp;<a id ="aconnections" href='#'></a>
 
-@if(model.user == 'kathua' || 1 == 1){
+@if(model.user == 'kathua'){
 
 <a href="#chat" role="link" class="" data-toggle="modal">&nbsp;|&nbsp;Chat&nbsp;</a>
 
