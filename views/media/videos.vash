@@ -1,0 +1,54 @@
+@html.extend('layout',function(model){
+
+@html.block("css",function(){
+<link rel="stylesheet" href="/resources/css/local/media.css"/>
+});
+@html.block("js",function(){
+<script src="/resources/js/local/media.js"></script>  
+
+});
+@html.block("main",function(model){
+    @if (model.error){
+        <p class="text-error"> error occured:@model.error</p>
+        }
+        
+ <h3>A great place for watchng video contents that matter most to kathua!</h3>
+       <p>
+<i>Watch,share and get famous!!</i>   
+ 
+<div class="col-md-4 video-local" style="background-color:none;">
+       
+          <table border="0" class="table" >
+   @model.videos.forEach(function(v){
+         <tr><td>
+        
+          
+          <div class="videoWrapper">
+        <iframe defer src="https://www.youtube.com/embed/@v.id.videoId" frameborder="0" allowfullscreen="true" style="">     </iframe>
+        </div>
+          </td>
+          </tr>
+          <tr><td>
+            <p><strong>Channel Title:</strong> @v.snippet.channelTitle</p>
+             <p><strong>Published On:</strong> @v.snippet.publishedAt</p>
+          <p><strong>Title:</strong>@v.snippet.title</p>
+          @if(v.snippet.description !=''){
+          <p><strong>Description:</strong>@v.snippet.description</p>
+          }
+          </td></tr>
+   
+       
+   })
+   </table>
+     </div>
+</div>
+})
+
+})
+
+<script type="text/javascript">
+  /*global $*/ 
+//$('.video-local').hide();
+
+
+</script>

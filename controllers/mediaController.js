@@ -17,16 +17,17 @@ node-cache module added
    // landing page;
     mediaController.init= function(app){
     
+    news.setNewsdb(app.dbNews);
     routes(app);
-
+    
     }
     
    
     var routes=function(app){
 
-             app.get("/media/",function(req,res,next){
+             app.get("/news/",function(req,res,next){
                
-                news.NewItems(function(err,temp){
+                news.GetNewItemsFromSql(function(err,temp){
                     if (err==null)
                     {
                             videos.search({searchStr:'kathua'},function(data){
@@ -42,8 +43,46 @@ node-cache module added
                 
                 
             });
+             app.get("/videos/",function(req,res,next){
+               
+               
+                            videos.search({searchStr:'kathua'},function(data){
+                                console.log(data);
+                                //for(var i =0;i<data.length;i++)
+                                //console.log(JSON.stringify(data[0]));
+                                
+                            res.render("media/videos",{user:req.user,videos:data,title:"Latest videos about Kathua"});          
+                    
+                });
+                    
+                
+                
+            });
+            app.get("/api/news/",function(req,res,next){
+                
+                
+                console.log('getting news');
+                 news.NewItemsAsync(function(err,result){
+                     
+                res.send(result);
+                 });
+                //next();
             
+            });
+            
+             app.get("/api/newsfromSQL/",function(req,res,next){
+                
+                
+                console.log('getting news');
+                 news.GetNewItemsFromSql(function(err,result){
+                     
+                res.send(result);
+                 });
+                //next();
+            
+            });
             // publish local stories
+            
             app.get("/api/stories",function(req,res){
                 
             //console.log(req.url);
@@ -212,7 +251,7 @@ node-cache module added
                     
                 });
 
-     
+    
                 
             });
            

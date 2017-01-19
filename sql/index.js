@@ -125,7 +125,7 @@
             qry+=" where (sc.StoryId=" + option.storyId + " or " + option.storyId +"=0)";
             
             qry+=" order by sc.CreatedDateTime desc";
-          console.log(qry);
+          //console.log(qry);
             var request = new sql.Request();
             request.query(qry).then(function(recordset) {
           
@@ -299,7 +299,7 @@
         qry+=param.phonenumber + "','";
         qry+=param.emailaddress + "'";
         qry+=")";
-        console.log(qry);
+        //console.log(qry);
         var request = new sql.Request();
         
         request.query(qry)
@@ -321,7 +321,7 @@
         
         qry+=");select 200 as code, 'message sent successfully' as message";
         
-        console.log(qry);
+        //console.log(qry);
         var request = new sql.Request();
         
         request.query(qry)
@@ -364,7 +364,7 @@
         qry += jobItem.jobText + "',";
         qry += jobItem.postDate + "') end";
        
-        console.log(qry);
+        //console.log(qry);
         var request = new sql.Request();
         
         request.query(qry)
@@ -420,27 +420,31 @@
     
     
     sql.connect(config).then(function() {
-    
-    
-    var request = new sql.Request();
+        // var request = new sql.Request();
+  
+   
     for(var i=0;i<news.length;i++)
     {
-     var qry="insert into mykth.newsItems(newssource,link,news,[description],thumbnail) values ('";
+     var qry="insert into mykth.newsItemsTemp(newssource,link,news,[description],thumbnail) values (N'";
     
     
-    qry += news[i].newssource + "','";
-    qry += news[i].link + "','";
-    qry += news[i].news + "','";
-    qry += news[i].description + "','";
+    qry += news.newssource.replace(/'/g, "''") + "',N'";
+    qry += news[i].link + "',N'";
+    qry += news[i].news.replace(/'/g, "''") + "',N'";
+    qry += news[i].description.replace(/'/g, "''") + "',N'";
     qry += news[i].thumbnail + "')";
-    console.log(qry);
+    //console.log(qry);
     
-    request.query(qry)
+    new sql.Request().query(qry)
     .then(function(recordset) {
-    cb(null,recordset);})
+        
+    cb(null,recordset);
+        //console.log('news saved..');
+        
+    })
     .catch(function(err) {
     
-    console.log(err);
+    //console.log(err);
     
     cb(err);
     
@@ -453,11 +457,45 @@
     
     
     }
+    // start
+     data.clearNews=function(cb)    {
     
+    
+    sql.connect(config).then(function() {
+         var request = new sql.Request();
+   
+         request.query("truncate table mykth.newsitemsTemp")
+			.then(function(recordset) {
+				cb(null,recordset);})
+				.catch(function(err) {
+    
+				cb(err);
+    
+		});
+    });
+     }
+    // end
+    
+     data.pushNewsFromTempToMain=function(cb)    {
+    
+    
+    sql.connect(config).then(function() {
+         var request = new sql.Request();
+   
+         request.query("truncate table mykth.newsitems;insert into mykth.newsItems(newssource,link,news,[description],thumbnail) select newssource,link,news,[description],thumbnail from mykth.newsItemsTemp;")
+			.then(function(recordset) {
+				cb(null,recordset);})
+				.catch(function(err) {
+    
+				cb(err);
+    
+		});
+    });
+     }
     data.getNewsFromDb=function(cb)    {
     sql.connect(config).then(function() {
     
-    var qry="select * from  mykth.newsItems";
+    var qry="select * from  mykth.newsItems order by newssource";
     var request = new sql.Request();
     
     request.query(qry)
@@ -512,6 +550,7 @@
     
     
     }
+    
   data.getGalleryImageomments  = function(option,cb){
         //console.log(JSON.stringify(option));
        sql.connect(config).then(function() {
@@ -632,7 +671,7 @@
         var qry="insert into [mykth].[GalleryImageCommentLike](GalleryImageCommentId,UserName)";
         qry+="  values (" + data.galleryImageCommentId +"," ;
         qry+=" '" + data.username + "')";
-    console.log(qry);
+   // console.log(qry);
         var request = new sql.Request();
         request.query(qry)
         .then(function(recordset) {fnSuccess(data);})

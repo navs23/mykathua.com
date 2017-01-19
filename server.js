@@ -13,7 +13,9 @@ var methodOverride = require('method-override');
 var emailHelper = require('./helper/mail.js');
 var auth = require('./helper/auth.js');
 var music = require('./helper/music.js');
-
+var Datastore = require('nedb')
+var dbNews = new Datastore({ filename:  'news.db',autoload:true});
+dbNews.persistence.setAutocompactionInterval(2*1000);
 var app = express();
 var liveConnections=0;
 
@@ -31,7 +33,7 @@ app.configure(function() {
 	app.set("env","development");
 	app.set("liveconnections",liveConnections);
     app.auth=auth;
-    
+    app.dbNews = dbNews;
     //console.log(JSON.stringify(app.auth));
 
    // app.use(logger.log);
@@ -136,7 +138,7 @@ io.sockets.on('connection', function(socket) {
         
     
     });
-    
+    /*
     setInterval(function(){
        
         socket.emit('ConnCount',connections);
@@ -154,7 +156,7 @@ io.sockets.on('connection', function(socket) {
         
        
     },5000);
-       
+       */
     socket.on('chat-newuser',function(user){
      
      var index=chatUser.indexOf(user);

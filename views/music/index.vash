@@ -21,12 +21,11 @@
     @if (model.error){
         <p class="text-error"> error occured:@model.error</p>
         }
-        <h3>Your favourite DOGRI Radio - brings you non-stop music</h3>
-        
-<p>@model.title</p>
+        <h3>One stop radio station @@ <a hfref "/music/">www.mykathua.com/music/</a></h3>
+       <p>Just sit back,relax and enjoy your favorite music on your favourite Radio station</p>
 <p><i>Don't forget to leave your comments</i></p>
 <div class="row">
-	<table><tr><td><strong>Filter</strong></td><td>&nbsp;<select class="genre-filter"><option>All</option><option>Bollywood</option><option>Bhajan</option></select></td></tr></table></div>
+	<table><tr><td><strong>Filter</strong></td><td>&nbsp;<select class="genre-filter"><option>All</option><option>Dogri</option><option>Bollywood</option><option>Bhajan</option></select></td></tr></table></div>
 <div class="row">
 	<br/>
 </div>
@@ -173,9 +172,9 @@ var radioStations=
 [
 		
 			{
-			genre:"folk",
-			title:"Dogri Radio - mykathua.com",
-			mp3:"http://listen.radionomy.com/dogriradio;"
+			genre:"Dogri",
+			title:"Dogri Songs",
+			mp3:"http://74.50.122.103:7738/;stream/1;"
 			
 		
 		}

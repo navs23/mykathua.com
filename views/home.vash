@@ -11,25 +11,19 @@
 })
 <div class="container">
 @html.block("main",function(model){
-<!--
-<div class="row" style="background-color:none;text-align:middle">
-<div class="col-md-12">
-        <h1 class ="marquee" data-marquee="@html.raw(model.cmsContent.flashMessage)"></h1>
-</div>            
-        
-    </div>
-    -->
+
 
 <div class="row">
-<div class="col-md-2">
     
+<div class="col-md-12" style="background-color:none;">
+    <h1 class ="marquee" data-marquee="@html.raw(model.cmsContent.flashMessage)"></h1>
 </div>    
 
 <div class="col-md-8">
 <p>
      @if (model.user !=undefined){
      <span><img src="@model.user.profile_image_url" class="img-circle"/></span>
-      <p>Helllo  <i>@model.user.displayName</i></p>
+      <p>Hello  <i>@model.user.displayName</i></p>
       }
       
       

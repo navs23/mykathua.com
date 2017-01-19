@@ -5,7 +5,7 @@
     music.listPlayingSongs=function(cb){
     //console.log('in here');
     var songs=[];
-    dex.scrape('https://www.internet-radio.com/search/?radio=Bollywood+-+Sada+Bahar+Music+Radio',function(html){
+    dex.scrape('https://www.internet-radio.com/search/?radio=Sada+Bahar+Music+Radio',function(html){
         //console.log(html);
       var $=cheerio.load(html); 
     

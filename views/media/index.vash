@@ -15,109 +15,80 @@
 
 <div class="row">
     
-  <div class="col-md-4" style="background-color:none;">
+  <div class="col-md-4 news-natioal" style="background-color:none;">
       <a href='#nationalStories'></a><h2>Top National Stories</h2>
 
-@if(model.news.googleNews !=null || model.news.googleNews != undefined){
-@model.news.googleNews.forEach(function(e){
-   <div class="row">
-       <div class="col-md-12">
-           <a href="@e.link" target="_new"><img height="75" width="75" class ="img-thumbnail text-center" style="vertical-align:middle;" src="@e.thumbnail"/></a>
-           <span class="text-small">@e.description<a href="@e.link" target="_new">read more</a></span>
-       </div>
-    </div>
-   })
-   }
-    @model.news.bbcNews.forEach(function(e){
-   
-   <div class="row">
-       <div class="col-md-12">
-           <a href="@e.link" target="_new"><img height="75" width="75" class ="img-thumbnail text-center" style="vertical-align:middle;" src="@e.thumbnail"/></a>
-           <span class="text-small">@e.description<a href="@e.link" target="_new">read more</a></span>
-       </div>
-    </div>
-   })
-   
-   @if(model.news.jammuNews.length>0)
-{
-  <div class="col-md-4" style="background-color:none;">
-      <h2>Regional News</h2>
-      
-  <div id="divRegional" class="news-national">
-     
-   @model.news.jammuNews.forEach(function(e){
-   
-   <div class="row">
-       <div class="col-md-12">
-           <a href="@e.link" target="_new"><img height="75" width="75" class ="img-thumbnail text-center" style="vertical-align:middle;" src="@e.thumbnail"/></a>
-           <span class="text-small">@e.description<a href="@e.link" target="_new">read more</a></span>
-       </div>
-    </div>
-   })
-   
-</div>    
-</div>
-}
-   
-   
-</div>
-
-
-  <div class="col-md-4" style="background-color:none;">
-      <h2>Local News</h2>
-      
-       <div id="divRegional" class="news-national">
-    
-   @if(model.news.dailyexcelsiorNews != null || model.news.dailyexcelsiorNews !=undefined){
-   @if (model.news.dailyexcelsiorNews.length>0)
-   {
-   @model.news.dailyexcelsiorNews.forEach(function(e){
-   
-   <div class="row">
-       <div class="col-md-12">
-           <a href="@e.link" target="_new"><img height="75" width="75" class ="img-thumbnail text-center" style="vertical-align:middle;" src="@e.thumbnail"/></a>
-           <span class="text-small">@e.description<a href="@e.link" target="_new">read more</a></span>
-       </div>
-    </div>
-    
-   })
-   }
-   }
-   
-   @if(model.news.jagranNews != null || model.news.jagranNews !=undefined){
-   
-   @if (model.news.jagranNews.length>0)
-   {
-    @model.news.jagranNews.forEach(function(e){
-   
-   <div class="row">
-       <div class="col-md-12">
-           <a href="@e.link" target="_new"><img height="50" width="50" class ="img-thumbnail text-center" style="vertical-align:middle;" src="@e.thumbnail"/></a>
-           <span class="text-small">@e.description<a href="@e.link" target="_new">read more</a></span>
-       </div>
-    </div>
-    
-   })
-   }
-   }
-  
-    @model.news.jammuNews.forEach(function(e){
-   
-   <div class="row">
-       <div class="col-md-12">
-           <a href="@e.link" target="_new"><img height="50" width="50" class ="img-thumbnail text-center" style="vertical-align:middle;" src="@e.thumbnail"/></a>
-           <span class="text-small">@e.description<a href="@e.link" target="_new">read more</a></span>
-       </div>
-    </div>
-    
-   })
-   
-   
-   </div>   
-  
-</div>
+@model.news.forEach(function(e){
  
- <div class="col-md-4" style="background-color:none;">
+  @if(e.newsSource=='googleNews'){
+   <div class="row">
+       <div class="col-md-12">
+           <a href="@e.link" target="_new"><img height="75" width="75" class ="img-thumbnail text-center" style="vertical-align:middle;" src="@e.thumbnail"/></a>
+           <span class="text-small">@e.description<a href="@e.link" target="_new">read more</a></span>
+       </div>
+    </div>
+  
+   }
+@if(e.newsSource=='bbcNews'){
+   
+   <div class="row">
+       <div class="col-md-12">
+           <a href="@e.link" target="_new"><img height="75" width="75" class ="img-thumbnail text-center" style="vertical-align:middle;" src="@e.thumbnail"/></a>
+           <span class="text-small">@e.description<a href="@e.link" target="_new">read more</a></span>
+       </div>
+    </div>
+   }
+   
+})
+</div>
+<div class="col-md-4 news-natioal" style="background-color:none;">
+      <a href='#nationalStories'></a><h2>Top State Stories</h2>
+
+@model.news.forEach(function(e){
+    @if(e.newsSource=='dailyexcelsiorNews-jammu'){
+
+   <div class="row">
+       <div class="col-md-12">
+           <a href="@e.link" target="_new"><img height="75" width="75" class ="img-thumbnail text-center" style="vertical-align:middle;" src="@e.thumbnail"/></a>
+           <span class="text-small">@e.description<a href="@e.link" target="_new">read more</a></span>
+       </div>
+    </div>
+  
+}
+ 
+   
+
+})
+</div>
+<div class="col-md-4 news-natioal" style="background-color:none;">
+      <a href='#nationalStories'></a><h2>Top Local Stories</h2>
+
+@model.news.forEach(function(e){
+    @if(e.newsSource=='dailyexcelsiorNews-kathua'){
+
+   <div class="row">
+       <div class="col-md-12">
+           <a href="@e.link" target="_new"><img height="75" width="75" class ="img-thumbnail text-center" style="vertical-align:middle;" src="@e.thumbnail"/></a>
+           <span class="text-small">@e.description<a href="@e.link" target="_new">read more</a></span>
+       </div>
+    </div>
+  
+}
+ 
+   @if(e.newsSource =='jagranNews'){
+   <div class="row">
+       <div class="col-md-12">
+           <a href="@e.link" target="_new"><img height="75" width="75" class ="img-thumbnail text-center" style="vertical-align:middle;" src="@e.thumbnail"/></a>
+           <span class="text-small">@e.description<a href="@e.link" target="_new">read more</a></span>
+       </div>
+    </div>
+  
+}
+
+})
+</div>
+<!--
+<div class="col-md-4 video-local" style="background-color:none;">
        <h2>Local Videos</h2>
           <table border="0" class="table" >
    @model.videos.forEach(function(v){
@@ -134,18 +105,15 @@
        
    })
    </table>
-     </div>
- 
-
+     </div>-->
 </div>
-
 })
 
 })
 
 <script type="text/javascript">
-   
-
+  /*global $*/ 
+//$('.video-local').hide();
 
 
 </script>
