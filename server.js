@@ -138,7 +138,7 @@ io.sockets.on('connection', function(socket) {
         
     
     });
-    /*
+    
     setInterval(function(){
        
         socket.emit('ConnCount',connections);
@@ -156,7 +156,7 @@ io.sockets.on('connection', function(socket) {
         
        
     },5000);
-       */
+       
     socket.on('chat-newuser',function(user){
      
      var index=chatUser.indexOf(user);
