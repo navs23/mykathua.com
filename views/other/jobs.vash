@@ -13,11 +13,14 @@
        <div class="col-md-12">
            <!--a href="/job/details/@e.link" target="_new"-->
                <img height="50" width="50" class ="img-thumbnail text-center" style="vertical-align:middle;" src="@e.img"/>
-          <span class="text-medium"><strong>@e.position</strong></span>
-          <!-- </a>-->
+         <a href="#" onclick="return showJobDetails('#@e.id','/job/details/@e.link'); " data-toggle="collapse" data-target='#@e.id' >
+          <span class="text-info">@e.position</span>
+          </a>
+         
            <p class="text-small">@e.jobText<a href="#" onclick="return showJobDetails('#@e.id','/job/details/@e.link'); " data-toggle="collapse" data-target='#@e.id' ><i>[..Read more]</i></a>
-             
+            
            </p>
+            
            <div class="row">
                <div class="col-md-12 ">
            <div id='@e.id' class="collapse" style="background-color:#f9f2f4;padding:5px;border:1px solid black;"></div>

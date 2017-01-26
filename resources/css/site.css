@@ -294,3 +294,8 @@ background: transparent url(/resources//img/play.png) no-repeat center center;
     font-style: italic
     
 }
+
+.text-small
+{
+    font-size:.85em;
+}
