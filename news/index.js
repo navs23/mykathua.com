@@ -288,7 +288,7 @@
                 else return img;
                 
             }    
-            ,getLink:function(e){return 'http://www.kashmirtimes.in/' + e.find('a').attr('href');}
+            ,getLink:function(e){return 'http://www.kashmirtimes.in/' + e.attr('href');}
             ,getUpdateTimeStamp:function(){return new Date();}
             
     },function(err,news){

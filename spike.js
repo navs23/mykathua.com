@@ -10,8 +10,11 @@
             ,newsWrapperSelector:'a.newsheadline'
             ,sortOrder:5
             ,getSource:function(){return 'Kashmir-Times';}
-            ,getSource2:function(e){return 'Jammu Links';}
-            ,getTitle:function(e){return e.find('a').text();}
+            ,getSource2:function(e){return 'kashmir times';}
+            ,getTitle:function(e){
+                console.log(e.text());
+                console.log(e.attr('href'));
+                return e.find('a').text();}
             ,getDetail:function(e){return e.text(); }
             ,getThumbnailImg:function(e){
                 
@@ -29,7 +32,7 @@
             if(err==null)
             {
                
-                        console.log(news);    
+                        //console.log(news);    
                     
             }
             else
