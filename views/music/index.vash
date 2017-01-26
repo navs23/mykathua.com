@@ -123,7 +123,7 @@
 	
      $(document).ready(function () {
     
-     //alert($('.genre-filter').val());	
+     
      
      $('.genre-filter').on('change',function(e){
      	
@@ -139,14 +139,20 @@
      
         
         socket.on('song-nowplaying', function(data) {
+        	
+        	for(var i =0;i<data.length;i++)
+        	{
+        	
+        	$( "a.jp-playlist-item" ).each(function( index ) {
+        		
+        		if($(this).text().indexOf(data[i].radio)!=-1)
+        		{
+        		$(this).html(data[i].radio +' - ' + data[i].title.toLowerCase()+'[<i>' + (data[i].listener.replace('32 Kbps','')).replace('64 Kbps','').trim() +'</i>]');
 			
-			//alert($('ul > li:nth-child(3) > div > a.jp-playlist-item').text());
-			
-			//#jp_container_1 > div > div.jp-playlist > ul > li:nth-child(3) > div > a.jp-playlist-item
-			$('ul > li:nth-child(3) > div > a.jp-playlist-item').text(data[0].radio +' - ' + data[0].title);
-    		$('ul > li:nth-child(4) > div > a.jp-playlist-item').text(data[1].radio +' - ' + data[1].title);
-    		$('ul > li:nth-child(5) > div > a.jp-playlist-item').text(data[2].radio +' - ' + data[2].title);
-    		$('ul > li:nth-child(6) > div > a.jp-playlist-item').text(data[3].radio +' - ' + data[3].title);
+        		}
+});
+        	}
+		
         });
      
 });
@@ -170,7 +176,7 @@
 function getRadioStations(filter){
 var radioStations= 
 [
-		
+		/*
 			{
 			genre:"Dogri",
 			title:"Dogri Songs",
@@ -178,7 +184,7 @@ var radioStations=
 			
 		
 		}
-		,
+		,*/
 		{
 			genre:"Bollywood",
 			title:"JK City FM",
@@ -186,18 +192,18 @@ var radioStations=
 		
 		},
 		{
-				genre:"bollywood",
+			genre:"bollywood",
 			title:"Bollywood Sada Bahar",
 			mp3:"http://192.240.102.133:8512/;stream/1;"
 		},
 		{
 			genre:"Bollywood",
-			title:"Bollywood Hits",
-			mp3:"http://viadj.viastreaming.net:7090/;"
+			title:"Hits of Bollywood",
+			mp3:"http://50.7.77.115:8174/;"
 		},
 		{
 			genre:"Bollywood",
-			title:"Hindi Evergreen hits",
+			title:"Hindi Evergreen Hits",
 			mp3:"http://50.7.77.114:8296/;"
 		
 		},

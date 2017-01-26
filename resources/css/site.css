@@ -288,3 +288,9 @@ background: transparent url(/resources//img/play.png) no-repeat center center;
     margin-bottom: 2px;
     
 }
+.small-text-grey{
+    font-size: 9px;
+    color: grey;
+    font-style: italic
+    
+}

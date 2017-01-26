@@ -1,0 +1,539 @@
+(function(news){
+    
+    var cheerio = require('cheerio');
+    var dex =require("../helper");
+    var async = require('async');
+    var googl = require('goo.gl');
+    var dbNews;
+ 
+    var bBuildingNews=false;
+    var init=function(news){
+        
+     
+        googl.setKey(process.env.GOOGLE_API_KEY);
+        
+        GetNewsAndSaveInDB(function(err,newsItems){
+             
+              console.log(newsItems);
+             
+             
+        });
+        
+        
+    }
+    
+    news.setNewsdb = function(db) {
+           dbNews=db;
+        // body...
+    }
+    setInterval(function(){
+        console.log('building news...');
+        if(bBuildingNews) {
+            console.log('prior build proces is still running');
+            return;}
+         GetNewsAndSaveInDB(function(err,newsItems){
+            console.log('done');
+        });
+    },5*60*1000);
+    /*
+    news.NewItems=function(cb){
+    
+        GetCacheValueByKey('news',function(err,value){
+               
+            cb(null,value);
+            
+        });}
+ 
+ */
+  news.GetNewItemsFromSql=function(cb){
+      console.log('searching...');
+   
+  dbNews.find({}).sort({ 'sortOrder': 1 }).exec(function (err, docs) {
+   cb(err,docs);
+  console.log(docs);
+});
+  
+       }
+ 
+  
+      var GetNewsAndSaveInDB= function(cb){
+     //var newsBySource={};
+       bBuildingNews=true
+    
+    async.series([
+        
+    function(callback) {
+          console.log('getting google news');
+          var data=[
+             {
+            url:'http://news.google.co.in'
+            ,newsWrapperSelector:'div.blended-wrapper'
+            ,titleTextCssSelector:'h2.esc-lead-article-title'
+            ,imageSelector:'img.esc-thumbnail-image'     
+            ,newslinkSelector:'a.article'
+            ,newsTextSelector:'div.esc-lead-snippet-wrapper'
+            ,newsSource:'googleNews'
+            ,newsSourceSelector:'td.source-cell'
+            ,newsUpdateTimestampSelector:'span.al-attribution-timestamp'
+            }
+];
+        newsAggregator(data,function(err,news){
+           
+            
+          console.log(news);
+            if(err==null)
+            {
+                saveNewsInDb(dbNews,{newsSource:'googleNews'},news)
+				callback(null,news);
+            }
+            else
+            {
+            console.log('error occured while getting google news %s',err);
+             callback(err,{});
+            }
+            
+        });
+        
+    }
+    
+     ,
+    function(callback) {
+          console.log('getting dailyexcelsior news');
+        getDENews(function(err,news){
+            
+             news.newsSource='dailyexcelsiorNews';
+                     
+            if(err==null)
+            {
+               saveNewsInDb(dbNews,{newsSource:news.newsSource},news,function(err,data){
+                   console.log(data);
+                   callback(null,news);
+               });
+              
+            }
+            else
+             {
+            console.log('error occured while getting dailyexcelsior news %s',err);
+             callback(err,{});
+            }
+            
+        });
+        
+    }
+     ,
+    function(callback) {
+          console.log('getting bbc news');
+        bbcNews(function(err,news){
+           
+          
+            if(err==null)
+            {
+                
+              saveNewsInDb(dbNews,{newsSource:'bbcNews'},news,function(err, data) {
+                  
+                     console.log(data);
+                    callback(null,news);
+              })
+            
+          
+            }
+            else
+            {
+            console.log('error occured while getting bbc news %s',err);
+             callback(err,{});
+            }
+            
+        });
+        
+    }
+     ,
+    function(callback) {
+        console.log('getting jagran news');
+        getJagranNews(function(err,news){
+           
+          
+            if(err==null)
+            {
+                //jagranNews
+             saveNewsInDb(dbNews,{newsSource:'jagranNews'},news,function(err, data) {
+                    console.log(data);
+                    callback(null,news);
+             });
+            
+            }
+            else
+            {
+            console.log('error occured while getting jagran news %s',err);
+             callback(err,{});
+            }
+            
+        });
+        
+    }
+   
+],
+// optional callback
+function(err, results) {
+    bBuildingNews=false;
+    if (err==null)
+    
+    cb(null,results);
+    else 
+    cb(err,null);
+    
+});
+ 
+        
+    }
+    
+   
+   var newsAggregator=function(sourceJson,cb){
+       var news=[];
+        var newsItem;
+    for(var i=0;i<sourceJson.length;i++){
+    
+    var item=sourceJson[i];
+    
+    dex.scrape(item.url,function(html){
+    // console.log(html);
+    var $=cheerio.load(html);
+    var  templink;
+    $(item.newsWrapperSelector).each(function(i,e){
+        
+         templink='';
+         newsItem={};
+        
+         newsItem.link=$(e).find(item.newslinkSelector).attr('href');
+       /*
+        googl.shorten(newsItem.link).then(function (shortUrl) {
+                        newsItem.link=shortUrl;}).catch(function (err) {console.error(err.message);});
+                        */
+            newsItem.newsSource=item.newsSource;
+          
+                
+            newsItem.news=$(e).find(item.titleTextCssSelector).text();
+            newsItem.description=$(e).find(item.newsTextSelector).text();
+            newsItem.thumbnail=$(e).find(item.imageSelector).attr('imgsrc');
+            newsItem.newsSource2=$(e).find(item.newsSourceSelector).text();
+            newsItem.newsUpdateTimeStamp=$(e).find(item.newsUpdateTimestampSelector).text();
+            
+            newsItem.sortOrder=1;
+            if (newsItem.thumbnail ==null || newsItem.thumbnail == undefined)
+                        newsItem.thumbnail='http://placehold.it/25/ffcc66?text=google-news';
+                        
+                        console.log(newsItem); 
+                        
+                        news.push(newsItem);
+        
+    });
+    
+  
+    });
+    
+    setTimeout(function(){
+    
+    
+    cb(null,news);
+    
+    },30*1000);
+    }
+        
+    }
+    
+    var bbcNews=function(cb){
+    
+    var news=[];
+    var url='http://www.bbc.com/hindi/india';
+    
+    dex.scrape(url,function(html){
+    
+    var $=cheerio.load(html);
+    //console.log(html);
+    
+    $('#comp-recent-media > div > div').each(function(i,e){
+    
+    var newsItem={};
+     newsItem.newsSource='bbcNews';
+   
+    newsItem.news=$(e).find('a').text();
+    newsItem.link='http://www.bbc.com/' + $(e).find('a').attr('href');
+     googl.shorten(newsItem.link).then(function (shortUrl) {
+                        newsItem.link=shortUrl;}).catch(function (err) {console.error(err.message);});
+   
+    newsItem.thumbnail=$(e).find('div.js-delayed-image-load').attr('data-src');
+    
+    // newsItem.thumbnail= $(e).find('div.hard-news-unit__image').find('img').attr('src');
+    
+    if (newsItem.thumbnail ==null || newsItem.thumbnail == undefined)
+    {
+    newsItem.thumbnail='http://placehold.it/50/6699ff?text=BBC'
+    }
+    
+    newsItem.description= $(e).text();
+    //console.log(newsItem);
+    newsItem.sortOrder=2;
+    news.push(newsItem);
+    
+    });
+    setTimeout(function(){
+    
+    
+    cb(null,news);
+    
+    },30*1000);
+    
+    
+    },function(err){cb(err,null);});
+    
+    
+    };
+    
+    var getJagranNews=function(cb){
+    
+    
+    var news=[];
+    var iCount=0;
+    var url='';
+    //var siteUrl='http://www.jagran-io.com/local/jammu-and-kashmir_kathua-news-hindi';
+    
+    
+    for(var newsCtr=0;newsCtr<4;newsCtr++)
+        
+        {
+        
+        (function(pageCtr){
+            
+             url='http://www.jagran.com/local/jammu-and-kashmir_kathua-news-hindi-page' + (pageCtr+1) +'.html';
+            
+            dex.scrape(url,function(html){
+            
+           // console.log(html);
+            
+                var $=cheerio.load(html);
+                $('div.listingcol ul.listing li').each(function(i,e){
+                   // console.log('value of icount is %d',iCount);
+                    
+                    if ( iCount<10){
+                    
+                        var newsItem={};
+                         newsItem.newsSource='jagranNews';
+                        var dated=$(e).find('span.date-cat').text();
+                        var dtArr=dated.split(':');
+                        var dtCurrent= new Date();
+                        var dt = new Date(dtArr[1].substring(0,dtArr[1].length-2));
+                       
+                     
+                        if(daydiff(dt,dtCurrent)<=2)
+                        {
+                        
+                        newsItem.news=$(e).find('a').text();
+                        newsItem.link='http://www.jagran.com'+ $(e).find('a').attr('href');
+                        
+                        googl.shorten(newsItem.link).then(function (shortUrl) {
+                        newsItem.link=shortUrl;}).catch(function (err) {console.error(err.message);});
+                        
+                        newsItem.date=$(e).find('span.date-cat').text();
+                        newsItem.description= $(e).find('p').text();
+                        newsItem.thumbnail=$(e).find('img').attr('src');
+                        
+                        if (newsItem.thumbnail == null || newsItem.thumbnail == undefined)
+                        {
+                        newsItem.thumbnail='http://placehold.it/50/fffff?text=Jagran'
+                        }
+                        newsItem.sortOrder=4;
+                        news.push(newsItem);
+                       
+                        iCount++;
+                        
+                        
+                        }
+                      
+                    
+                    }
+                   
+                });
+        
+        },function(err){
+            
+            
+            return cb(err,null);});
+        
+        })(newsCtr);
+        
+    
+    }
+    
+     setTimeout(function(){
+         
+         cb(null,news);
+         
+     },30*1000);
+    
+    }
+    
+    var getAJNews=function(cb){
+    var news=[];
+    var url='http://www.amarujala.com/channels/city/kathua/kathua-hindi-news/';
+    
+    dex.scrape(url,function(html){
+    
+    var $=cheerio.load(html);
+    
+    
+    $('div.div672 div.listing-page').each(function(i,e){
+    
+    var newsItem={};
+    
+    
+    newsItem.news=$(e).find('h3').text();
+    newsItem.link=$(e).find('a').attr('href');
+    
+     googl.shorten(newsItem.link).then(function (shortUrl) {
+                        newsItem.link=shortUrl;}).catch(function (err) {console.error(err.message);});
+    newsItem.thumbnail=$(e).find('img').attr('src');
+    if (newsItem.thumbnail ==null || newsItem.thumbnail == undefined)
+    {
+    newsItem.thumbnail='http://placehold.it/50/6699ff?text=google-Amar-Ujala'
+    }
+    
+    newsItem.description= $(e).text();
+       newsItem.sortOrder=6;
+    //console.log(newsItem);
+    news.push(newsItem);
+    
+    });
+      setTimeout(function(){ return cb(null,news);},10*1000);
+    },function(err){return cb(err,null);});
+    
+    
+    
+    }
+    
+    
+    var jammuNews=function(cb){
+    
+    var news=[];
+    
+     
+        var url='http://www.jammulinksnews.com/mb/news.aspx?category=Jammu';
+        
+        dex.scrape(url,function(html){
+        
+        var $=cheerio.load(html);
+        
+        
+        $('#form1 > div:nth-child(12) > div:nth-child(1) table').each(function(i,e){
+        
+        var newsItem={};
+        newsItem.newsSource='jammuNews';
+        
+        newsItem.news=$(e).find('a').text().substr(0,255);
+        
+        newsItem.link='http://jammulinksnews.com/' + $(e).find('a').attr('href');
+         googl.shorten(newsItem.link).then(function (shortUrl) {
+                        newsItem.link=shortUrl;}).catch(function (err) {console.error(err.message);});
+        newsItem.thumbnail= $(e).find('img').attr('src');
+        
+        if (newsItem.thumbnail ==null || newsItem.thumbnail == undefined)
+        {
+        newsItem.thumbnail='http://placehold.it/50/6699ff?text=google-Amar-Ujala'
+        }
+        
+        newsItem.description= newsItem.news.substring(0,255);
+        newsItem.sortOrder=3;
+       //onsole.log(newsItem);
+       news.push(newsItem);
+       setTimeout(function(){
+           
+        cb(null,news);    
+           
+    },15*1000);
+       
+       
+        
+        });
+       
+    },function(err){cb(err,null);});
+   
+    
+    };
+    
+    
+    var getDENews=function(cb){
+    
+    var news=[];
+    dex.scrape('http://www.dailyexcelsior.com/state/',function(html){
+    //var news=[]; 
+    var $=cheerio.load(html);
+    
+    $('div.contentheading').each(function(i,e){
+       
+       var newsItem={};
+       
+       var item=$(this);
+       var detail=item.next('div'); 
+       
+       var description =$(detail).html();
+       if (description=='' || description==undefined || description==null)
+            description=item.next('div').next('div').text();
+      //div.contentheading:nth-child(5)
+       
+       newsItem.link=item.find('a').attr('href');
+       //description = item.find('a').text();
+        googl.shorten(newsItem.link).then(function (shortUrl) {
+                        newsItem.link=shortUrl;}).catch(function (err) {console.error(err.message);});
+       newsItem.news=item.text();
+       newsItem.description=description;
+        
+        if (newsItem.thumbnail ==null || newsItem.thumbnail == undefined)
+        {
+            newsItem.thumbnail='http://placehold.it/50/6699ff?text=DE-news'
+        }
+          newsItem.sortOrder=5;
+          
+           if (/Kathua/.test(description) || (/KATHUA/.test(description)))
+     
+        newsItem.newsSource='dailyexcelsiorNews-kathua';
+     
+      else
+      newsItem.newsSource='dailyexcelsiorNews-jammu';
+       news.push(newsItem);
+      
+    });
+         setTimeout(function(){ 
+             cb(null,news);
+             //console.log(news);
+             
+             
+         }
+             
+             
+             ,10*1000
+             );
+          
+    },function(err){cb(err,null)});
+    // }
+    }
+    
+    function daydiff(first, second) {
+    return Math.round((second-first)/(1000*60*60*24));
+    }
+   
+   
+    var saveNewsInDb=function(db,filter,data,cb){
+        
+         db.remove(filter, { multi: true }, function (err, numRemoved) {
+                
+                db.insert(data, function (err, newDoc) {
+                    
+                   cb(null, 'saved');
+                    
+                });
+                 });      
+    }
+   
+   
+    init();
+    
+    
+})(module.exports);

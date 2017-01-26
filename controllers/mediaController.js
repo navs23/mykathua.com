@@ -16,9 +16,9 @@ node-cache module added
    
    // landing page;
     mediaController.init= function(app){
-    
-    news.setNewsdb(app.dbNews);
+    //console.log('db object 1 %s',app.dbNews);
     routes(app);
+    //news.setNewsdb(app.dbNews);
     
     }
     
@@ -47,7 +47,7 @@ node-cache module added
                
                
                             videos.search({searchStr:'kathua'},function(data){
-                                console.log(data);
+                              
                                 //for(var i =0;i<data.length;i++)
                                 //console.log(JSON.stringify(data[0]));
                                 

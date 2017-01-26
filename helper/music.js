@@ -1,64 +1,78 @@
 (function(music){
-    var cheerio = require('cheerio');
-    var dex =require("../helper");
     
-    music.listPlayingSongs=function(cb){
-    //console.log('in here');
-    var songs=[];
-    dex.scrape('https://www.internet-radio.com/search/?radio=Sada+Bahar+Music+Radio',function(html){
-        //console.log(html);
-      var $=cheerio.load(html); 
-    
-      
-      songs.push({radio:'Bollywood Sada Bahar',title:$('body > div.container > div:nth-child(1) > div.col-md-7 > table > tbody > tr > td:nth-child(2) > b').text()});
-      
-      
-       dex.scrape('https://www.internet-radio.com/search/?radio=Bollywood+Hits',function(html){
-      
-      var $=cheerio.load(html); 
-    
-      
-      songs.push({radio:'Bollywood Hits',title:$('body > div.container > div:nth-child(1) > div.col-md-7 > table > tbody > tr:nth-child(2) > td:nth-child(2) > b').text()});
-      
-     
-      dex.scrape('https://www.internet-radio.com/search/?radio=Hindi+Desi+Bollywood+Evergreen+Hits',function(html){
-          
-          var $=cheerio.load(html); 
-    
-      
-      songs.push({radio:'Bollywood Evergreen Hits',title:$('body > div.container > div:nth-child(1) > div.col-md-7 > table > tbody > tr > td:nth-child(2) > b').text()});
-       dex.scrape('http://radiohsl.com/',function(html){
-          
-          var $=cheerio.load(html); 
-      
-        //#cc_strinfo_song_theaebn
-        songs.push({radio:'Radio HSL',title:$('#cc_strinfo_song_theaebn').text()});
-      
-      
-             //console.log( 'now playing %s',JSON.stringify(songs));
-      
-      cb(null,songs);
-       },errorCb);
-          
-      },errorCb);
-      
-      
-     
-    },errorCb);
-      
-      
-      
+    var scraper = require("../helper/scraper.js");
+    var async = require('async');
    
+    music.listPlayingSongs=function(cb){
+       var songs=[];
+       var urls=[{
+           getRadio:function(){return 'Bollywood Sada Bahar';}
+           ,getUrl:function(){return 'https://www.internet-radio.com/search/?radio=Sada+Bahar+Music+Radio';}
+           ,getTitle:function(e){return e('h4.text-danger').next().next().html();}
+           ,getCurrentListener:function(e){return e('.table > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(4)').text();}
+         
+       }
+       ,{
+           getRadio:function(){return 'Hits of Bollywood';}
+           ,getUrl:function(){return 'http://www.internet-radio.com/search/?radio=Hits+Of+Bollywood';}
+            ,getTitle:function(e){return e('h4.text-danger').next().next().html();}   
+            ,getCurrentListener:function(e){return e('.table > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(4)').text();}
+               
+           
+       }
+       ,{
+           getRadio:function(){return 'JK City FM';}
+           ,getUrl:function(){return 'http://www.internet-radio.com/search/?radio=JKCity+FM+from+Srinagar';}
+            ,getTitle:function(e){return e('h4.text-danger').next().next().html();}   
+            ,getCurrentListener:function(e){return e('.table > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(4)').text();}
+               
+           
+       }
+        ,{
+           getRadio:function(){return 'Hindi Evergreen Hits';}
+           ,getUrl:function(){return 'http://streema.com/radios/Hindi_Desi_Bollywood_Evergreen_Hits';}
+            ,getTitle:function(e){return e('div.item:nth-child(2) > div:nth-child(1) > div:nth-child(2) > p').text();}   
+            ,getCurrentListener:function(e){return e('span.label').text();}
+               
+           
+       }
+       //http://streema.com/radios/Hindi_Desi_Bollywood_Evergreen_Hits
+       ];
+       async.each(urls ,function(url,callback)
+       {
+       
+        scraper.crawl4music({
+           
+            getUrl:function(){return url.getUrl();}
+            ,getTitle:function(e){return url.getTitle(e);}
+          ,getCurrentListener:function(e){return url.getCurrentListener(e);}
+            },function(err,song){
+                if (err == null)  
+                {
+                   songs.push({radio:url.getRadio(),title:song.title,listener:song.listener});
+                   callback();
+                }
+                else 
+                console.log(err);
+            });
+       
+      
+      
         
-    },errorCb);
-    
-    //
-    function errorCb(err){
+    },function(err){
         
-        console.log('error =>> %s ',err);
+        if( err ) {
+      // One of the iterations produced an error.
+      // All processing will now stop.
+     cb(err,null);
+    } else {
+     cb(null,songs);
     }
-    
-    
+        
     }
+    );
+       // cb(null,songs);
+    }
+
     
     }(module.exports))
