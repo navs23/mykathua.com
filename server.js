@@ -145,7 +145,7 @@ io.sockets.on('connection', function(socket) {
         music.listPlayingSongs(function(err,songs){
             if (err==null)
             {
-                //console.log(songs);
+                console.log(songs);
                 socket.emit('song-nowplaying',songs);
             }
             else
