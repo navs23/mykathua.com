@@ -34,6 +34,7 @@
                     var element=$(this);
                    
                     newsItem={};
+                    newsItem.group = item.getNewsGroup();
                     newsItem.newsSource=item.getSource(element);
                     newsItem.newsSource2=item.getSource2(element);
                     newsItem.news=item.getTitle(element);

@@ -40,10 +40,10 @@
   news.GetNewItemsFromSql=function(cb){
       console.log('searching...');
    
-  dbNews.find({}).sort({ 'sortOrder': 1 }).exec(function (err, docs) {
-   cb(err,docs);
+    dbNews.find({}).sort({ 'group': 1 }).exec(function (err, docs) {
+    cb(err,docs);
   
-});
+    });
   
        }
  
@@ -75,6 +75,7 @@
             getUrl:function(){return 'http://news.google.co.in';}
             ,newsWrapperSelector:'div.blended-wrapper'
             ,sortOrder:1
+            ,getNewsGroup:function(){return 'National';}
             ,getSource:function(){return 'googleNews';}
             ,getSource2:function(e){return e.find('td.source-cell').text();}
             ,getTitle:function(e){return e.find('h2.esc-lead-article-title').text();}
@@ -121,7 +122,8 @@
     function(callback) {
           console.log('getting dailyexcelsior news');
             scraper.crawl4news(dbNews,  {
-            getUrl:function(){return 'http://www.dailyexcelsior.com/state/';}
+            getNewsGroup:function(){return 'State';}    
+            ,getUrl:function(){return 'http://www.dailyexcelsior.com/state/';}
             ,newsWrapperSelector:'div.contentheading'
             ,sortOrder:2
             ,getSource:function(){return 'dailyexcelsiorNews';}
@@ -172,9 +174,10 @@
     function(callback) {
           console.log('getting bbc news');
        scraper.crawl4news(dbNews,  {
-            getUrl:function(){return 'http://www.bbc.com/hindi/india';}
+           getNewsGroup:function(){return 'National';}
+            ,getUrl:function(){return 'http://www.bbc.com/hindi/india';}
             ,newsWrapperSelector:'#comp-recent-media > div > div'
-            ,sortOrder:3
+            ,sortOrder:1
             ,getSource:function(){return 'bbcNews';}
             ,getSource2:function(e){return 'BBC news';}
             ,getTitle:function(e){return e.find('a').text();}
@@ -222,9 +225,10 @@
         var pageIndex=2;
         
         scraper.crawl4news(dbNews,  {
-            getUrl:function(){return 'http://www.jagran.com/local/jammu-and-kashmir_kathua-news-hindi-page' + (pageIndex) +'.html'}
+            getNewsGroup:function(){return 'Local';}
+            ,getUrl:function(){return 'http://www.jagran.com/local/jammu-and-kashmir_kathua-news-hindi-page' + (pageIndex) +'.html'}
             ,newsWrapperSelector:'div.listingcol ul.listing li'
-            ,sortOrder:4
+            ,sortOrder:3
             ,getSource:function(){return 'jagranNews';}
             ,getSource2:function(e){return 'Jagran News';}
             ,getTitle:function(e){return e.find('a').text();}
@@ -259,7 +263,7 @@
             }
             else
             {
-            console.log('error occured while getting google news %s',err);
+            console.log('error occured while getting jagran news %s',err);
              callback(err,{});
             }
             
@@ -273,9 +277,10 @@
         console.log('getting kashmir Times news');
        
          scraper.crawl4news(null,  {
-            getUrl:function(){return 'http://www.kashmirtimes.com/news.aspx?q=Jammu%20Kashmir';}
+             getNewsGroup:function(){return 'State';}
+            ,getUrl:function(){return 'http://www.kashmirtimes.com/news.aspx?q=Jammu%20Kashmir';}
             ,newsWrapperSelector:'a.newsheadline'
-            ,sortOrder:5
+            ,sortOrder:2
             ,getSource:function(){return 'kashmirtimes';}
             ,getSource2:function(e){return 'Kashmir Times';}
             ,getTitle:function(e){return e.find('a').text();}
@@ -310,7 +315,7 @@
             }
             else
             {
-            console.log('error occured while getting google news %s',err);
+            console.log('error occured while getting kashmirtimes news %s',err);
              callback(err,{});
             }
             
@@ -322,9 +327,10 @@
     function(callback) {
           console.log('getting jammu Links news');
        scraper.crawl4news(dbNews,  {
-            getUrl:function(){return 'http://www.jammulinksnews.com/category/Jammu';}
+           getNewsGroup:function(){return 'State';}
+            ,getUrl:function(){return 'http://www.jammulinksnews.com/category/Jammu';}
             ,newsWrapperSelector:'div.col-sm-4'
-            ,sortOrder:5
+            ,sortOrder:2
             ,getSource:function(){return 'jammulinksNews';}
             ,getSource2:function(e){return 'Jammu Links';}
             ,getTitle:function(e){return e.find('a').text();}

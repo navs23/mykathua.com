@@ -26,12 +26,17 @@ node-cache module added
     var routes=function(app){
 
              app.get("/news/",function(req,res,next){
-               
+                console.log('user agent %s',/mobile/i.test(req.header('user-agent')));
                 news.GetNewItemsFromSql(function(err,temp){
                     if (err==null)
                     {
                             videos.search({searchStr:'kathua'},function(data){
-                            res.render("media/index",{user:req.user,news:temp,videos:data,title:"Kathua in news, get latest national, state and kathua news on mykathua.com"});          
+                            res.render("media/index",
+                            {user:req.user,news:temp,
+                            videos:data,title:"Kathua in news, get latest national, state and kathua news on mykathua.com"
+                                
+                                ,isMobile:(/mobile/i.test(req.header('user-agent')))
+                            });          
                     
                 });
                     
