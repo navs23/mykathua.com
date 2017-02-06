@@ -5,12 +5,12 @@
 
 });
 @html.block("js",function(){
-
+         <script src="/socket.io/socket.io.js"></script>
  
 })
 
 @html.block("main",function(model){
-
+<div id="divstat" class="row"></div>
 <table border="1" width="100%">
     <thead>
         <tr>
@@ -54,8 +54,18 @@
 
 
 <script type="text/javascript">
+/*global io*/   
+/*global $*/ 
 $(document).ready(function () {
          
+var socket=io();
+ socket.on('memory',function(memory){
+       
+       $('#divstat').html('free memory is ' + memory + 'MB');
+       
+       
+       
+    });
 
 });
 function savechanges(e){

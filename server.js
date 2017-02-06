@@ -13,7 +13,7 @@ var methodOverride = require('method-override');
 var emailHelper = require('./helper/mail.js');
 var auth = require('./helper/auth.js');
 var music = require('./helper/music.js');
-
+const os = require('os');
 
 var app = express();
 var liveConnections=0;
@@ -141,6 +141,8 @@ io.sockets.on('connection', function(socket) {
     setInterval(function(){
        
         socket.emit('ConnCount',connections);
+        
+        socket.emit('memory',(os.totalmem()/1024)/1024 - (os.freemem()/1024)/1024) ;
         
         music.listPlayingSongs(function(err,songs){
             if (err==null)
