@@ -10,7 +10,7 @@
 })
 
 @html.block("main",function(model){
-<div id="divstat" class="row"></div>
+<div id="divstat" class="row"><ul></ul></div>
 <table border="1" width="100%">
     <thead>
         <tr>
@@ -60,10 +60,15 @@ $(document).ready(function () {
          
 var socket=io();
  socket.on('memory',function(item){
+       $('#divstat ul').empty();
+       $('#divstat ul').append('<li>available mem:' + item.totalmem + 'KB' + '</li>');
+        $('#divstat ul').append('<li>used mem:' + (item.totalmem - item.freemem) + 'KB' + '</li>');
+        $('#divstat ul').append('<li>free mem:' + item.freemem + 'KB' + '</li>');
+        
+          $('#divstat ul').append('<li>free mem:' + item.connectioncount + '</li>');
+       //html('available mem:' + item.totalmem + 'KB<br/>free mem:' + item.freemem +'KB<br/>used mem:'+ (item.totalmem - item.freemem) + 'KB');
        
-       $('#divstat').html('available mem:' + item.totalmem + 'KB<br/>free mem:' + item.freemem +'KB<br/>used mem:'+ (item.totalmem - item.freemem) + 'KB');
-       
-       
+       //connectioncount
        
     });
 

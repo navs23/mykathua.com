@@ -142,7 +142,7 @@ io.sockets.on('connection', function(socket) {
        
         socket.emit('ConnCount',connections);
         
-        socket.emit('memory',{totalmem:(os.totalmem()/1024)/1024,freemem:(os.freemem()/1024)/1024}) ;
+        socket.emit('memory',{totalmem:(os.totalmem()/1024)/1024,freemem:(os.freemem()/1024)/1024,connectioncount:connections}) ;
         
         music.listPlayingSongs(function(err,songs){
             if (err==null)
