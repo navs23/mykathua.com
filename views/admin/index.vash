@@ -59,9 +59,9 @@
 $(document).ready(function () {
          
 var socket=io();
- socket.on('memory',function(memory){
+ socket.on('memory',function(item){
        
-       $('#divstat').html('free memory is ' + memory + 'MB');
+       $('#divstat').html('available mem:' + item.totalmem + 'KB<br/>free mem:' + item.freemem +'KB<br/>used mem:'+ (item.totalmem - item.freemem) + 'KB');
        
        
        
