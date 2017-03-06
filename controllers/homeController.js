@@ -6,7 +6,10 @@
     var dal = require("../sql");
     var cms =require("../sql/cms.js");
     var emailHelper = require('../helper/mail.js');
-    var Datastore = require('nedb')
+    var Datastore = require('nedb');
+    var geoip = require('geoip-lite');
+
+    
     var dbStats = new Datastore({ filename:  'stats.db',autoload:true});
     var url='http://api.openweathermap.org/data/2.5/weather?q=Kathua,in&mode=html&appid=816adfb03ad4efdaee6a6105152c3916';
    
@@ -33,9 +36,11 @@ var setupRoutes=function(app){
        app.get("/",function(req,res,next){
            
            
-            var ip = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
+            var ip = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress ||req.socket.remoteAddress || req.connection.socket.remoteAddress;
             
-            var data={url:req.url,ipaddress:ip,dated:new Date().toGMTString()};
+            var geo = geoip.lookup(ip);
+            
+            var data={url:req.url,ipaddress:ip,dated:new Date().toGMTString(),geo:geo};
             savewebhits(data,function(err,res){
                 console.log(res);
                 
