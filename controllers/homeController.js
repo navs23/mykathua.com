@@ -6,7 +6,8 @@
     var dal = require("../sql");
     var cms =require("../sql/cms.js");
     var emailHelper = require('../helper/mail.js');
-    //var url='http://api.openweathermap.org/data/2.5/weather?q=Kathua,in&mode=html&appid=816adfb03ad4efdaee6a6105152c3916';
+    var Datastore = require('nedb')
+    var dbStats = new Datastore({ filename:  'stats.db',autoload:true});
     var url='http://api.openweathermap.org/data/2.5/weather?q=Kathua,in&mode=html&appid=816adfb03ad4efdaee6a6105152c3916';
    
    
@@ -17,9 +18,15 @@
         
     };
     
-var savewebhits=function(params){
-    
-    dal.saveWebHit(params,function(result){ },function(err){console.log(err);    });
+var savewebhits=function(data,cb){
+     dbStats.insert(data, function (err, doc) {
+                    if (err)
+                   cb(err, null);
+                   else
+                   cb(null, doc);
+                    
+                });
+   
 }
 
 var setupRoutes=function(app){
@@ -27,8 +34,12 @@ var setupRoutes=function(app){
            
            
             var ip = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
-            var params={url:req.url,ipaddress:ip};
-            //savewebhits(params);
+            
+            var data={url:req.url,ipaddress:ip,dated:new Date().toGMTString()};
+            savewebhits(data,function(err,res){
+                console.log(res);
+                
+            });
             
              var cmsContent={};
        
@@ -57,8 +68,8 @@ var setupRoutes=function(app){
 
                             if (err==null)
                             {
-                                res.render("home",{user:req.user,weather:html,tweets:data,messages:{},title:"Welcome to mykathua.com",cmsContent:cmsContent});
-                                console.log(data);
+                                res.render("home",{user:req.user,weather:html,tweets:data,messages:{},title:"Welcome to mykathua.com",cmsContent:cmsContent,mode:process.env.mode});
+                                //console.log(data);
                             }
                             else 
                             return next();
@@ -77,12 +88,10 @@ var setupRoutes=function(app){
            
         app.get("/stats/",function(req,res,next){
             
-            dal.getWebHit(null,function(data){
+            dbStats.find({},function(err,doc){
             
-                res.send(data);    
+                res.send(doc);    
                 
-            },function(err){
-                res.send(err);
                 
             });
             
