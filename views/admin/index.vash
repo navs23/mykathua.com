@@ -61,9 +61,14 @@ $(document).ready(function () {
 var socket=io();
  socket.on('memory',function(item){
        $('#divstat ul').empty();
-       $('#divstat ul').append('<li>available mem:' + item.totalmem + 'KB' + '</li>');
-        $('#divstat ul').append('<li>used mem:' + (item.totalmem - item.freemem) + 'KB' + '</li>');
-        $('#divstat ul').append('<li>free mem:' + item.freemem + 'KB' + '</li>');
+       $('#divstat ul').append('<li>available mem:' + item.totalmem + 'MB' + '</li>');
+        $('#divstat ul').append('<li>used mem:' + (item.totalmem - item.freemem) + 'MB' + '</li>');
+        $('#divstat ul').append('<li>free mem:' + item.freemem + 'MB' + '</li>');
+        $('#divstat ul').append('<li>rss:' + item.rss + 'MB' + '</li>');
+        $('#divstat ul').append('<li>heap total:' + item.heapTotal + 'MB' + '</li>');
+        $('#divstat ul').append('<li>heap used:' + item.heapUsed + 'MB' + '</li>');
+        $('#divstat ul').append('<li>external:' + item.external + 'MB' + '</li>');
+        
         
           $('#divstat ul').append('<li>connections:' + item.connectioncount + '</li>');
        //html('available mem:' + item.totalmem + 'KB<br/>free mem:' + item.freemem +'KB<br/>used mem:'+ (item.totalmem - item.freemem) + 'KB');

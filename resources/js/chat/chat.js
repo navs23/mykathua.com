@@ -15,6 +15,7 @@ $.extend(options,{
     chatmsg:'.chat-msg',
     chatmsgs:'.chat-msgs',
     connectionAnchor:'#aconnections',
+    memoryUsageElement:'#divMem',
     chatError:'.chat-error'
     
 });
@@ -100,20 +101,21 @@ mykathua.Chat.prototype.init=function(){
     self.socket.on('connect', function () { 
 
 
-
     self.socket.on('disconnected', function() {
 
             self.socket.emit('chat-userleft',self.username);
 
         });
 
-    self.socket.on('ConnCount',function(count){
+    self.socket.on('ConnCount',function(data){
        
-       self.$(self.options.connectionAnchor).html(count + ' live user(s) connected');
+       self.$(self.options.connectionAnchor).html(data.connections + ' live user(s) connected');
        
        
        
     });
+   
+    //memoryUsageElement
     
     self.socket.on('chat-users',function(users){
        
