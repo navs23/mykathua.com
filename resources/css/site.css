@@ -303,3 +303,7 @@ background: transparent url(/resources//img/play.png) no-repeat center center;
         height: 100%;
         background-color: red;
       }
+      
+iframe {
+    border: none;
+}      

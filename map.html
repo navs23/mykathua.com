@@ -25,7 +25,7 @@
         map = new google.maps.Map(document.getElementById('map'), {
           zoom: 2,
           center: new google.maps.LatLng(2.8,-187.3),
-          mapTypeId: 'terrain'
+          mapTypeId: google.maps.MapTypeId.TERRAIN
         });
 
     /*  
@@ -41,7 +41,7 @@
   function plotmap(data) {
         for (var i = 0; i < data.length; i++) {
 		
-          var coords = data.coordinates[i];
+          var coords = data[i].coordinates;
           var latLng = new google.maps.LatLng(coords[0],coords[1]);
 			
 		var marker = new google.maps.Marker({
@@ -51,7 +51,7 @@
         }
       }
 	  
-	     socket.on('ConnCount', function(data) {
+	     socket.on('onConnect', function(data) {
         	
        plotmap(data);
 		

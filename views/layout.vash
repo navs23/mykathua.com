@@ -16,18 +16,23 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         
         <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css"/>
-        
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  
         <link rel="stylesheet" type="text/css" href="/node_modules/font-awesome/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="/resources/css/jquery-comments.css"/>
         <link rel="stylesheet" type="text/css" href="/resources/css/site.css"/>
         
         @html.block("css")
-        <script src="/resources/js/jquery.min.js"></script>
+         
+      <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        
+        
         <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="/resources/js/angular.min.js"></script>
         <script src="/resources/js/util.js"></script>  
         <script src="/resources/js/jquery-comments.min.js"></script>  
-         <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+         
          
          <script src="/socket.io/socket.io.js"></script>
          
@@ -147,7 +152,7 @@
 </div>
 
 <footer><a href="#contactUs" role="link" class="" data-toggle="modal">Contact Us</a>&nbsp;|&nbsp;© 2016 – <a href='www.mykathua.com'>www.mykathua.com</a>&nbsp;|&nbsp;<a href="#aboutUs" role="link" class="" data-toggle="modal">About us</a>
-&nbsp;|&nbsp;<a id ="aconnections" href='#'></a>
+&nbsp;|&nbsp;<a href="#popupMap" data-rel="popup" data-position-to="window" class="ui-btn ui-corner-all ui-shadow ui-btn-inline" id ="aconnections">live users</a>
 
 @if(model.user == 'kathua'){
 
@@ -247,6 +252,11 @@
   </div>
 </div>
 
+<div id ='mapdialog' title="Live user view">
+    
+    <iframe src="../map.html" width="600" height="600" seamless=""></iframe>
+</div>
+
 <div id="socket"></div>
 
      
@@ -260,7 +270,13 @@ $(document).ready(function () {
 /*global Chat*/   
 /*global io*/   
 /*global mykathua*/
-    
+
+$( function() {
+    $("#mapdialog").dialog({
+      autoOpen: false,
+     width:600,height:600
+    });    
+});
 
 var chat= new mykathua.Chat({},socket,$);
 
@@ -268,10 +284,19 @@ var chat= new mykathua.Chat({},socket,$);
 chat.init();
 
 
+$('#aconnections').on('click',function(){
+    
+  $("#mapdialog").dialog('open');
+   
+});
+
 $('#chat').on('click',function(){
   
     
 });
+
+
+
 $('#btnContactUsSubmit').on(('click'),function(){
 
 
@@ -353,6 +378,7 @@ var loginPageRedirect=function(){
     
    window.location='http://www.mykathua.com/login/';
 }
+
 
 
 </script>

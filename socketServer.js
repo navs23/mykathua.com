@@ -8,13 +8,27 @@ var music = require('./helper/music.js');
 var twt = require('./helper/tweet.js');
 var io;
 var geoip = require('geoip-lite'); 
-var data ={};
-data.connections = 0;
-data.coordinates=[];
+var data =[];
+
 socketService.init=function(webserver){
     
 
  
+}
+
+function indexOf(data,key,value)
+{
+    var retval =-1;
+for (var i in data)
+{
+    
+    if ((data[i][key])==value)
+    {
+        retval = i;
+        break;
+    }
+}
+return retval;
 }
 
 socketService.start=function(webserver){
@@ -29,27 +43,31 @@ io = socketio.listen(webserver);
 
 // socket server
 io.sockets.on('connection', function(socket) {
+     var item={};
+     var req=socket.request;
+     item.ip = req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : req.connection.remoteAddress;
      
-    data.connections++;   
+     if (indexOf(data,'ip',item.ip) == -1)
+   {
+       var geo = geoip.lookup(item.ip);
+       
+       if (geo != undefined || geo != null)
+       item.coordinates=geo.ll;
+       
+        data.push(item);
+   }
     socket.emit('onConnect',data);
-   
-    var ip = socket.request.connection._peername.address;
-    ip =ip.replace('::','');
-    if (ip.indexOf(':')>0)
-    {
-        var arr = ip.split(':');
-        ip=arr[1];
-    }
-    var geo = geoip.lookup(ip);
-   console.log(ip);
-   if (geo != undefined || geo != null)
-    data.coordinates.push({"coordinates":geo.ll})
     
-    data.rawip=socket.request.connection._peername.address;
-    data.ip =ip;
+    socket.on('disconnect', function(socket){
+   // data.connections--;
     
-    socket.on('disconnect', function(s){
-    data.connections--;
+     var req=socket.request;
+     var ip = req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : req.connection.remoteAddress;
+     console.log('disconnected ip address is %s',ip);
+    
+    var index =(indexOf(data,'ip',ip));
+    
+     data.splice(index);
     socket.emit('onConnect',data);
     
     });
@@ -57,7 +75,7 @@ io.sockets.on('connection', function(socket) {
     setInterval(function(){
       
         
-        socket.emit('memory',{totalmem:(os.totalmem()/1000000),freemem:(os.freemem()/1000000),connectioncount:data.connections
+        socket.emit('memory',{totalmem:(os.totalmem()/1000000),freemem:(os.freemem()/1000000),connectioncount:data.length
             ,rss:process.memoryUsage().rss/1000000
             ,heapTotal:process.memoryUsage().heapTotal/1000000
             ,heapUsed:process.memoryUsage().heapUsed/1000000
