@@ -32,7 +32,7 @@ io.sockets.on('connection', function(socket) {
      
     data.connections++;   
     socket.emit('onConnect',data);
-   /*
+   
     var ip = socket.request.connection._peername.address;
     ip =ip.replace('::','');
     if (ip.indexOf(':')>0)
@@ -42,10 +42,10 @@ io.sockets.on('connection', function(socket) {
     }
     var geo = geoip.lookup(ip);
    console.log(ip);
-   
+   if (geo != undefined || geo != null)
     data.coordinates.push({"coordinates":geo.ll})
     
-    */
+    
     socket.on('disconnect', function(s){
     data.connections--;
     socket.emit('onConnect',data);
@@ -60,7 +60,7 @@ io.sockets.on('connection', function(socket) {
             ,heapTotal:process.memoryUsage().heapTotal/1000000
             ,heapUsed:process.memoryUsage().heapUsed/1000000
             ,external:process.memoryUsage().external/1000000
-            
+            ,data:data
             
         }) ;
         
