@@ -109,7 +109,7 @@ mykathua.Chat.prototype.init=function(){
 
     self.socket.on('ConnCount',function(data){
        
-       self.$(self.options.connectionAnchor).html(data.connections + ' live user(s) connected');
+       self.$(self.options.connectionAnchor).html(data.connectioncount + ' live user(s) connected');
        
        
        
