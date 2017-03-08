@@ -31,6 +31,7 @@ io = socketio.listen(webserver);
 io.sockets.on('connection', function(socket) {
      
     data.connections++;   
+    socket.emit('onConnect',data);
    /*
     var ip = socket.request.connection._peername.address;
     ip =ip.replace('::','');
@@ -46,16 +47,13 @@ io.sockets.on('connection', function(socket) {
     
     */
     socket.on('disconnect', function(s){
-    
-    console.log('disconnected..%s',s);
-    
     data.connections--;
-    
+    socket.emit('onConnect',data);
     
     });
     
     setInterval(function(){
-        socket.emit('onConnect',data);
+      
         
         socket.emit('memory',{totalmem:(os.totalmem()/1000000),freemem:(os.freemem()/1000000),connectioncount:data.connections
             ,rss:process.memoryUsage().rss/1000000
