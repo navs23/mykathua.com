@@ -7,7 +7,10 @@ const os = require('os');
 var music = require('./helper/music.js');
 var twt = require('./helper/tweet.js');
 var io;
-var geoip = require('geoip-lite');    
+var geoip = require('geoip-lite'); 
+var data ={};
+data.connections = 0;
+data.coordinates=[];
 socketService.init=function(webserver){
     
 
@@ -23,9 +26,7 @@ chatUser.push('a');
 io = socketio.listen(webserver);
 
 
-var data ={};
-data.connections = 0;
-data.coordinates=[];
+
 // socket server
 io.sockets.on('connection', function(socket) {
      
@@ -54,8 +55,7 @@ io.sockets.on('connection', function(socket) {
     });
     
     setInterval(function(){
-       console.log("data %s",JSON.stringify(data));
-        socket.emit('ConnCount',data);
+        socket.emit('onConnect',data);
         
         socket.emit('memory',{totalmem:(os.totalmem()/1000000),freemem:(os.freemem()/1000000),connectioncount:data.connections
             ,rss:process.memoryUsage().rss/1000000
@@ -150,12 +150,12 @@ io.sockets.on('connection', function(socket) {
     setTimeout(function(){
         
          twt.getTweets(function(err,data){
-     console.log(data);
+     
 
         if (err==null)
         {
             //res.render("home",{user:req.user,weather:html,tweets:data,messages:{},title:"Welcome to mykathua.com",cmsContent:cmsContent});
-            console.log(data);
+     
             socket.emit('live-tweets',data);
         }
         else 

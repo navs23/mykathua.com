@@ -107,9 +107,9 @@ mykathua.Chat.prototype.init=function(){
 
         });
 
-    self.socket.on('ConnCount',function(data){
-       console.log(data);
-       self.$(self.options.connectionAnchor).html(data.connections + ' live user(s) connected');
+    self.socket.on('onConnect',function(data){
+      
+       self.$(self.options.connectionAnchor).html(JSON.stringify(data) + ' live user(s) connected');
        
        
        
