@@ -45,6 +45,8 @@ io.sockets.on('connection', function(socket) {
    if (geo != undefined || geo != null)
     data.coordinates.push({"coordinates":geo.ll})
     
+    data.rawip=socket.request.connection._peername.address;
+    data.ip =ip;
     
     socket.on('disconnect', function(s){
     data.connections--;
