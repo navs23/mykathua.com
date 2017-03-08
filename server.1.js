@@ -12,14 +12,15 @@ var methodOverride = require('method-override');
 
 var emailHelper = require('./helper/mail.js');
 var auth = require('./helper/auth.js');
-
-var socketService = require("./socketServer.js");
-
-
+var music = require('./helper/music.js');
+const os = require('os');
 
 var app = express();
 var liveConnections=0;
 
+var chatUser=[];
+
+chatUser.push('a');
 
 require('./config/passport')(passport); // pass passport for configuration
 
@@ -65,8 +66,6 @@ app.configure(function() {
     process.env.SENDGRID_USER='mykathua';
     
     process.env.BASE_WEBSITE_URL='https://navs-navs23.c9users.io';
-    
-    process.env.mode = "debug";
 }
 else
 {
@@ -78,7 +77,6 @@ else
     process.env.SENDGRID_USER='mykathua';
     process.env.BASE_WEBSITE_URL='http://www.mykathua.com';
     process.env.GOOGLE_API_KEY='AIzaSyDc2SwSwRntH9m1e21OL8btHcxl3TPwwI0';
-    process.env.mode = "prod";
 }
 
 });
@@ -115,7 +113,12 @@ var server =http.createServer(app);
 
 console.log('starting socket io server ');
 
-socketService.start(server);
+
+ 
+var io = require('socket.io').listen(server);
+
+
+
 
 
 server.listen(process.env.PORT);

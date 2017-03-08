@@ -299,3 +299,7 @@ background: transparent url(/resources//img/play.png) no-repeat center center;
 {
     font-size:.85em;
 }
+ #map {
+        height: 100%;
+        background-color: red;
+      }

@@ -7,11 +7,17 @@
 });
 @html.block("js",function(){
 <script src="/resources/js/local/media.js"></script>  
+<script src="/socket.io/socket.io.js"></script>
  
 })
+
+ 
 <div class="container">
 @html.block("main",function(model){
-
+<div class = "row">
+    <iframe src ="test.html"></iframe>
+ 
+</div>
 
 <div class="row">
     
@@ -29,8 +35,7 @@
       
 </p>
 
-
-
+ 
 <div class="home-main-message" style="background-color:none">
 
 @html.raw(model.cmsContent.cmsTopHeader)
@@ -82,6 +87,7 @@
 <div class="border-right">
 @html.raw(model.weather)
 </div>
+
 })
 
 @html.block("leftSideBarAdvertisement",function(model){
@@ -100,7 +106,7 @@
 @html.block("rightSideBar",function(model){
 <h2>@@Kathua</h2>
 <div style="background-color:none;" class="border-left" id="divTweets">
-<ul id='tweets'>
+<ul id='tweets' class="tweets">
     @html.raw(model.tweets)
     
     
@@ -131,6 +137,17 @@
    	,100);
           
    
+/*global io
+global $
+*/
+var socket=io();
+ socket.on('live-tweets',function(tweets){
+    
+     $('ul.tweets').html('');
+     //alert(1);
+     $('ul.tweets').html(tweets);
+       
+    });
          
 
 
@@ -139,3 +156,43 @@
 });
 
 </script>
+
+<script>
+ /*
+ global google
+ */
+      var map;
+      function initMap() {
+          
+        map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 2,
+          center: new google.maps.LatLng(2.8,-187.3),
+          mapTypeId: 'terrain'
+        });
+
+      alert(map);
+		var data={"data":[
+							{"coordinates":[51.5597,0.0708]}
+							,{"coordinates":[47.6801,-122.1206]}
+							]
+				 };
+	//	plotmap(data);
+      }
+
+  function plotmap(results) {
+        for (var i = 0; i < results.data.length; i++) {
+			alert(i);
+          var coords = results.data[i].coordinates;
+          var latLng = new google.maps.LatLng(coords[0],coords[1]);
+			
+		var marker = new google.maps.Marker({
+            position: latLng,
+            map: map
+          });
+        }
+      }
+	  
+	  
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDc2SwSwRntH9m1e21OL8btHcxl3TPwwI0&callback=initMap">
+    </script>

@@ -13,7 +13,7 @@
        <div class="col-md-12">
            <!--a href="/job/details/@e.link" target="_new"-->
                <img height="50" width="50" class ="img-thumbnail text-center" style="vertical-align:middle;" src="@e.img"/>
-         <a href="#" onclick="return showJobDetails('#@e.id','/job/details/@e.link'); " data-toggle="collapse" data-target='#@e.id' >
+         <a href="#" onclick="return showJobDetails('#@e.id','@e.link'); " data-toggle="collapse" data-target='#@e.id' >
           <span class="text-info">@e.position</span>
           </a>
          
@@ -87,8 +87,9 @@
 });
 
 var showJobDetails=(e,url)=>{
-    //alert(e);
+   //alert(url);
     //alert($(e).text());
+    url ='/job/details?target=' + url;
     var html=getJobText(url)
     
    $(e).html(html);
@@ -97,7 +98,7 @@ var showJobDetails=(e,url)=>{
 }
 
 var getJobText=function(url){
-	
+	//alert(url);
 	return getJsonData(url,null);
 	
 

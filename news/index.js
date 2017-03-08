@@ -24,12 +24,16 @@
     
     setInterval(function(){
         
+        console.log('mem used %d',process.memoryUsage().heapUsed()/1000000);
         if(bBuildingNews) {
             console.log('prior build proces is still running');
             return;}
          newsAggregator(dbNews,function(err,newsItems){
-             if (err == null)
+             if (err == null){
                 console.log('news aggregation re-build finished');
+                  console.log('mem used after %d',process.memoryUsage().heapUsed()/1000000);
+                
+             }
             else 
                 console.log(err);
         });
@@ -58,9 +62,7 @@
                 });
                  });      
     }
-   
   
-     
   var newsAggregator = function(db,cb){
     
        bBuildingNews=true
@@ -99,6 +101,7 @@
                saveNewsInDb(dbNews,{newsSource:'googleNews'},news,function(err,result){
                     if (err == null )
                     {
+                        news =null;
                         console.log(result.length);    
                         callback(err,result);
                     }
@@ -151,7 +154,8 @@
                saveNewsInDb(dbNews,{newsSource:'dailyexcelsiorNews'},news,function(err,result){
                     if (err == null )
                     {
-                        console.log(result.length);    
+                        console.log(result.length);
+                        news =null;
                         callback(err,result);
                     }
                     else
@@ -200,7 +204,8 @@
                saveNewsInDb(dbNews,{newsSource:'bbcNews'},news,function(err,result){
                     if (err == null )
                     {
-                        console.log(result.length);    
+                        console.log(result.length);
+                        news =null;
                         callback(err,result);
                     }
                     else
@@ -251,7 +256,7 @@
                saveNewsInDb(dbNews,{newsSource:'jagranNews'},news,function(err,result){
                     if (err == null )
                     {
-                        
+                        news =null;
                         callback(err,result);
                     }
                     else
@@ -303,7 +308,7 @@
                saveNewsInDb(dbNews,{newsSource:'kashmirtimes'},news,function(err,result){
                     if (err == null )
                     {
-                        
+                        news =null;
                         callback(err,result);
                     }
                     else
@@ -353,7 +358,8 @@
                saveNewsInDb(dbNews,{newsSource:'jammulinksNews'},news,function(err,result){
                     if (err == null )
                     {
-                        console.log(result);    
+                        
+                        news =null;
                         callback(err,result);
                     }
                     else

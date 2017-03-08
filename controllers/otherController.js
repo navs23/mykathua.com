@@ -170,42 +170,8 @@
     //https://www.freshersworld.com/jobs/category/Govt-Sector-job-vacancies
     
    
-    app.get("/jobs/jk/",function(req,res){
-    
-    var url='http://www.sarkarinaukrisarch.in/states/jobs-in-jammu-and-kashmir';
-    renderJob(url,req,res);
-    
-    
-    
-    });
-    
-    app.get("/job/details/:link",function(req,res,next){
-    var link = req.params.link;
-    console.log(link);
-    var data = {};
-    data.link = link;
-   var url = dex.decrypt(link);
-    
-    jobdetails(url,function(html){
-     res.send(html); 
-     
-    },function(err){
-      res.send(err);
-    });
-    
-    });
-    
-    app.get("/jobs/jk/:pageIndex",function(req,res){
-    var url='http://www.sarkarinaukrisarch.in/states/jobs-in-jammu-and-kashmir';
-    renderJob(url,req,res);
-    
-    });
-    app.get("/jobs/",function(req,res){
-    var url='http://www.sarkarinaukrisarch.in';
-     renderJob(url,req,res);
-    
-    });
-    
+   
+   
     app.get("/executesql/",function(req,res){
      //req.app.get("joblinks").push({jobid:1,joblik:'http://jobid/1'});
      res.send(req.app.get("joblinks"));
@@ -218,16 +184,7 @@
      res.send(err);
     })
     */
-    });
-    
-    
-    
-    app.get("/jobs/:pageIndex",function(req,res){
-    var url='http://www.sarkarinaukrisarch.in';
-    renderJob(url,req,res);
-    
-    });
-    
+    }); 
      app.get("/api/railway/links",function(req,res){
       raliwayLinks(function(links){
        res.send(links);
@@ -241,109 +198,8 @@
     
     });
     
-var renderJob=function(searchUrl,req,res){
- console.log(searchUrl);
-  var pageIndex =1;
-  if (req.params.pageIndex !=undefined || req.params.pageIndex !=null) pageIndex=req.params.pageIndex;
-  var pagination={};
-  if (pageIndex==1)
-   pagination.previousPageIndex=1;
-   else
-    pagination.previousPageIndex=pageIndex-1;
-    
-  pagination.nextPageIndex = parseInt(pageIndex) +1;
-  
-  console.log('%d,%d',pagination.nextPageIndex,pagination.previousPageIndex);
-   var url=searchUrl +'/page/' + pageIndex +'/';
-   console.log(url);
-   jobsearch(url,function(data){
-        
-        res.render('other/jobs',{data:data,recordCount:data.length,user:req.user,pagination:pagination});
-   });
- 
-}
 
-var jobsearch = function(url,cb){
- 
-  
-  var jobItem={};
-  var joblist=[];
-  
-   //console.log(url);
-   dex.scrape(url,function(html){
-   
-     async.waterfall([function(next){
-      //console.log(1);
-      next(2);
-     
-     },function(val,next){
-      val++;
-      next (val,next);
-      console.log(val);
-      
-      
-     }],function(){console.log(3);});
-     
-       var $=cheerio.load(html);
-       $('div[id=post-entry]').find('article').each(function(i,e){
-        
-        jobItem={};
-        jobItem.img = $(e).find('img').attr('src');
-        
-        jobItem.link=$(e).find('div.post-thumb a').attr('href');
-        jobItem.position = $(e).find('div.post-thumb a').attr('title');
-        jobItem.jobText = $(e).find('div.post-content').text().trim().replace('...Read More','');
-        jobItem.postDate = $(e).find('i.icon-time').text().trim();
-        jobItem.id ="jb" + i;
-        jobItem.origlink =jobItem.link;
-        if (jobItem.link != undefined)
-        jobItem.link=dex.encrypt(jobItem.link);
-       // console.log(req);
-        /*
-        if (jobItem.link != undefined){
-        dex.scrape(jobItem.link,function(data){
-         
-         var $2= cheerio.load(data);
-         jobItem.fullText = $2('div.post-top').html();
-         
-       
-         
-        });
-        
-        }*/
-        
-         joblist.push(jobItem);
-        
-       });
-       
-        return cb(joblist); 
-        
-     
-       });  
-       
-     }
 
-var jobdetails = function(url,cb,cberr){
- 
-var fulltext='';
-
- dex.scrape(url,function(html){
-  
-  var $= cheerio.load(html);
-  
-   try{
-        var temp= $('div.post-content').html();
-       var $2= cheerio.load(temp);
-         $2('div.adsense-single').remove();
-         $2=cheerio.load($2.html());
-         $2('img').remove();
-         //console.log($2.html());
-         
-         return cb($2.html());  
-         
- }catch(err){cberr(err); }
- });
-}
     
 var raliwayLinks=function(cb,cberr){
 var links=[];
