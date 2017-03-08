@@ -18,10 +18,9 @@
     "1.0A", "/callback", "HMAC-SHA1");
   
    // var tweetUrl =https://api.twitter.com/1.1/statuses/home_timeline.json
-   
-   var tweetUrl ='https://api.twitter.com/1.1/search/tweets.json?geocode=31.3116,76.1868,50km&count=25'
-   //?q=#hashtag1+OR+#hashtag2+from:username1+OR+from:username2
-  // var tweetUrl ='https://api.twitter.com/1.1/statuses/retweets_of_me.json?count=50&amp;since_id=259320959964680190&amp;max_id=259320959964680500';
+   var tweetUrl ='https://api.twitter.com/1.1/search/tweets.json?q=mykathua OR kathua OR #kathua OR basohali OR Basoli'
+   //var tweetUrl ='https://api.twitter.com/1.1/search/tweets.json?geocode=31.3116,76.1868,5km&count=25?q=#hashtag1+OR+#kathua+from:@mykathua+OR+from:@kathua';
+  //var tweetUrl ='https://api.twitter.com/1.1/statuses/retweets_of_me.json?count=50&amp;since_id=259320959964680190&amp;max_id=259320959964680500';
    
     oa.get(tweetUrl, process.env.TWITTER_ACCESS_TOKEN_KEY, process.env.TWITTER_ACCESS_TOKEN_SECRET, function(error, tweets) {
         console.log(error);

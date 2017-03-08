@@ -14,10 +14,7 @@
  
 <div class="container">
 @html.block("main",function(model){
-<div class = "row">
-    <iframe src ="test.html"></iframe>
- 
-</div>
+
 
 <div class="row">
     
