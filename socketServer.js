@@ -30,7 +30,7 @@ data.coordinates=[];
 io.sockets.on('connection', function(socket) {
      
     data.connections++;   
-   
+   /*
     var ip = socket.request.connection._peername.address;
     ip =ip.replace('::','');
     if (ip.indexOf(':')>0)
@@ -40,9 +40,10 @@ io.sockets.on('connection', function(socket) {
     }
     var geo = geoip.lookup(ip);
    console.log(ip);
+   
     data.coordinates.push({"coordinates":geo.ll})
     
-    
+    */
     socket.on('disconnect', function(s){
     
     console.log('disconnected..%s',s);
@@ -53,7 +54,7 @@ io.sockets.on('connection', function(socket) {
     });
     
     setInterval(function(){
-       
+       console.log("data %s",JSON.stringify(data));
         socket.emit('ConnCount',data);
         
         socket.emit('memory',{totalmem:(os.totalmem()/1000000),freemem:(os.freemem()/1000000),connectioncount:data.connections
