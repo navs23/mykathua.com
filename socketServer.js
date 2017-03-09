@@ -51,8 +51,10 @@ io.sockets.on('connection', function(socket) {
    {
        var geo = geoip.lookup(item.ip);
        
-       if (geo != undefined || geo != null)
+       if (geo != undefined || geo != null){
        item.coordinates=geo.ll;
+       item.data=geo;
+       }
        
         data.push(item);
    }
