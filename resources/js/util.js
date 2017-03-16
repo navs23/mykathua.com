@@ -77,6 +77,7 @@ var getJsonData = function (url, data) {
             OnError(xhr, errorType, exception);
         }
     });
+    
    return retVal;
 
 };
@@ -84,7 +85,7 @@ var getJsonData = function (url, data) {
 var getJsonDataAsync = function (url, options,errorCb, successCb) {
 
     $.ajax({
-        async: false,
+        async: true,
         url: url,
         data: options,
 
