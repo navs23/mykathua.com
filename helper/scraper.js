@@ -73,7 +73,7 @@
     scraper.crawl4music=function(item,cb){
    
     var c = new crawler();
-    
+   
     c.queue([{
     uri: item.getUrl(),
     
@@ -105,6 +105,66 @@
 }]);
     
      } 
+    
+    scraper.crawl4RadioStations=function(item,cb){
+    
+    var station;
+    var stations=[];
+    var c = new crawler();
+    
+    c.queue([{
+    uri: item.getUrl(),
+    
+    jQuery: 'cheerio',
+ 
+  options: {
+        normalizeWhitespace: true,
+        xmlMode: false
+    },
+    // The global callback won't be called 
+    callback: function (error, res, done) {
+        if(error){
+            
+            console.log(error);
+        }else{
+            
+            var $ = res.$;
+           
+            
+         
+             $(item.selector).each(function(i,e){
+                    
+                   
+                    var element=$(this);
+                    station={};
+                    station.genere=item.genere;
+                    station.title = item.getName(element);
+                    station.currentSong=item.getCurrentSong(element);
+                    station.listerCount=item.getListenerCount(element);
+                    station.mp3=item.getSource(element);
+                    if (station.title !='Vybez Station')
+                    stations.push(station);
+                    //console.log(station);
+                     //cb(null,station);
+                   
+        
+    });
+        setTimeout(function(){
+              cb(null,stations);
+            done();
+            
+        },5*1000);
+      
+            
+        }
+      
+      
+      
+    }
+    
+}]);
+    
+     }
      
     scraper.crawl4jobs=function(db,item,cb){
         
@@ -201,6 +261,42 @@
 }]);
     
      } 
+     
+    // crypto currency
+    
+    scraper.getHttpResponse = function(item,cb){
+        
+         var c = new crawler();
+    
+    c.queue([{
+    uri: item.uri,
+    
+    jQuery: 'cheerio',
+ 
+  options: {
+        normalizeWhitespace: true,
+        xmlMode: false
+    },
+    // The global callback won't be called 
+    callback: function (error, res, done) {
+        if(error){
+            
+            console.log(error);
+        }else{
+            
+            
+            
+            cb(null,res);
+            done();
+        }
+      
+      
+      
+    }
+    
+}]);
+        
+    }
      
     
 })(module.exports);
