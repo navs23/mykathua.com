@@ -2,7 +2,8 @@
     
     var scraper = require("../helper/scraper.js");
     var async = require('async');
-   
+   var Datastore = require('nedb')
+    var musicCache = new Datastore({ filename:  'music.db',autoload:true});
     music.listPlayingSongs=function(cb){
        var songs=[];
        var urls=[{
@@ -72,6 +73,47 @@
     }
     );
        // cb(null,songs);
+    }
+    music.getStationList = function(item,cb){
+        
+    scraper.crawl4RadioStations(
+    {
+           
+        genere:item.genere,
+        getUrl:function(){return 'https://www.internet-radio.com/stations/' +item.genere + '/';}
+        ,selector:'table.table tr'
+        ,getName:function(e){return  e.find('h4').text();} 
+        ,getListenerCount:function(e){return e.find('p').text();}
+        ,getCurrentSong:function(e){return e.find('b').text();}
+        ,getSource:function(e){ 
+
+         var temp= e.find('a[title="M3U Playlist File"]').attr('href');
+        temp = temp.replace('/servers/tools/playlistgenerator/?u=','').replace('live.m3u&t=.m3u',';');
+         temp= temp.replace('/servers/tools/playlistgenerator/?u=','').replace('listen.pls&t=.m3u',';');
+          temp= temp.replace('/servers/tools/playlistgenerator/?u=','').replace('listen.pls?sid=1&t=.m3u',';');
+        return temp;
+        
+              
+              
+          }
+        
+            },
+            function(err,stations){
+                if (err == null)  
+                {
+              
+                //console.log(stations);
+                
+                //setTimeout(function(){
+                     cb(null,stations)
+                    
+                //},5*1000);
+                 
+                }
+                else 
+                console.log(err);
+            });
+            
     }
 
     
