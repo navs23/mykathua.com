@@ -1,0 +1,79 @@
+@html.extend('layout',function(model){
+
+@html.block("css",function(){
+<link rel="stylesheet" href="/resources/css/local/media.css"/>
+});
+@html.block("js",function(){
+<script src="/resources/js/local/media.js"></script>  
+
+});
+@html.block("main",function(model){
+    @if (model.error){
+        <p class="text-error"> error occured:@model.error</p>
+        }
+        
+ <h3>A great place for watchng video contents that matter most to kathua!</h3>
+<i>Watch,share and get famous!!</i>   
+ 
+<div>
+      <ul>
+  @model.videos.forEach(function(v){
+        
+          <li class="thumb">
+             <a href="https://www.youtube.com/embed/@v.id.videoId" data-title="@v.snippet.title" data-width="512" data-height="288">
+              <img src="@v.snippet.thumbnails.default.url" /></a>
+           <p><strong>Channel Title:</strong> @v.snippet.channelTitle</p>
+             <p><strong>Published On:</strong> @v.snippet.publishedAt</p>
+          <p><strong>Title:</strong>@v.snippet.title</p>
+          @if(v.snippet.description !=''){
+          <p><strong>Description:</strong>@v.snippet.description</p>
+          }
+        </li>
+         <hr/>
+            
+          })
+          </ul>  
+      </div>    
+     
+   })
+
+ 
+
+})
+
+})
+
+<script type="text/javascript">
+  /*global $*/ 
+//$('.video-local').hide();
+
+$(function () {
+    var iframe = $('<iframe frameborder="0" marginwidth="0" marginheight="0" allowfullscreen></iframe>');
+    var dialog = $("<div></div>").append(iframe).appendTo("body").dialog({
+        autoOpen: false,
+        modal: true,
+        resizable: false,
+        width: "auto",
+        height: "auto",
+        close: function () {
+            iframe.attr("src", "");
+        }
+    });
+    $(".thumb a").on("click", function (e) {
+        e.preventDefault();
+        var src = $(this).attr("href");
+        var title = $(this).attr("data-title");
+        var width = $(this).attr("data-width");
+        var height = $(this).attr("data-height");
+        iframe.attr({
+            width: +width,
+            height: +height,
+            src: src
+        });
+        dialog.dialog("option", "title", title).dialog("open");
+        $('button.ui-dialog-titlebar-close').html('<strong>X</strong>');
+    });
+});
+
+
+</script>

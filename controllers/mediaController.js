@@ -48,15 +48,13 @@ node-cache module added
                 
                 
             });
-             app.get("/videos/",function(req,res,next){
+             app.get("/videos/:name?",function(req,res,next){
                
                
-                            videos.search({searchStr:'kathua'},function(data){
+                            videos.search({searchStr:req.params.name||'kathua'},function(data){
                               
-                                //for(var i =0;i<data.length;i++)
-                                //console.log(JSON.stringify(data[0]));
                                 
-                            res.render("media/videos",{user:req.user,videos:data,title:"Latest videos about Kathua"});          
+                            res.render("media/videos2",{user:req.user,videos:data,title:"Latest videos about Kathua"});          
                     
                 });
                     
@@ -249,9 +247,9 @@ node-cache module added
             //res.end(); 
             });
             
-            app.get("/api/videos/:video",function(req,res){
-            console.log(req.params.video);
-                videos.search({searchStr:'kathua'},function(data){
+            app.get("/api/videos/:video?",function(req,res){
+            //console.log(req.params.video);
+                videos.search({searchStr:req.params.video || 'kathua'},function(data){
                    res.send(data);
                     
                 });
