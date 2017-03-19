@@ -6,13 +6,14 @@ var socketio=require('socket.io');
 const os = require('os');
 var music = require('./helper/music.js');
 var twt = require('./helper/tweet.js');
+var colors = require('colors');
 var io;
 var geoip = require('geoip-lite'); 
 var data =[];
-
+var listener_count =0;
 socketService.init=function(webserver){
     
-
+listener_count =0;
  
 }
 
@@ -43,6 +44,8 @@ io = socketio.listen(webserver);
 
 // socket server
 io.sockets.on('connection', function(socket) {
+     
+     //console.log('connected'.green,socket.handshake.url);
      var item={};
      var req=socket.request;
      item.ip = req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : req.connection.remoteAddress;
@@ -58,19 +61,21 @@ io.sockets.on('connection', function(socket) {
        
         data.push(item);
    }
-    socket.emit('onConnect',data);
+    io.sockets.emit('onConnect',data);
     
     socket.on('disconnect', function(socket){
+        
    // data.connections--;
-    
+     listener_count == 0 ? 0:listener_count--;
      var req=socket.request;
      var ip = req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : req.connection.remoteAddress;
-     console.log('disconnected ip address is %s',ip);
+     console.log('disconnected ip address is %s'.red,ip);
     
     var index =(indexOf(data,'ip',ip));
     
      data.splice(index);
-    socket.emit('onConnect',data);
+    //io.sockets.emit('onConnect',data);
+     io.sockets.emit('listener-count',{listener_count:listener_count});
     
     });
     
@@ -183,6 +188,19 @@ io.sockets.on('connection', function(socket) {
                             });
     },5*60*1000)
     
+    socket.on('station-play',function(item){
+        if (item.event=='play')
+            listener_count++;
+         else if (item.event=='pause')
+            listener_count--;
+        else if (item.event=='abort' || item.event == 'suspend')
+                    listener_count == 0 ? 0:listener_count--;
+        
+                console.log('total count is %d',listener_count);
+        io.sockets.emit('listener-count',{listener_count:listener_count});
+        
+        
+    });
     
 });
 
