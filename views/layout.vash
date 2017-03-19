@@ -141,7 +141,7 @@
                 
                 
                 <div id="main" class="col-md-8" style="background-color:none">
-                    <div class="fuild-container">@html.block("main")git 
+                    <div class="fuild-container">@html.block("main")
                     </div>
                     </div>
                 
@@ -287,6 +287,7 @@ chat.init();
 $('#aconnections').on('click',function(){
     
   $("#mapdialog").dialog('open');
+   $('button.ui-dialog-titlebar-close').html('<strong>X</strong>');
    
 });
 
