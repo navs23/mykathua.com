@@ -6,7 +6,7 @@
     vm.search= function(params,cb){	yss({
 		key: process.env.GOOGLE_API_KEY,
 		query: params.searchStr || "kathua",
-		maxResults: params.maxResults || 20,
+		maxResults: params.maxResults || 50,
 		regionCode:"IN"
 	},
 		function(result){

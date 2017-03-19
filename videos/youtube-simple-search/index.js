@@ -11,7 +11,7 @@ module.exports = function (options, callback) {
   let params = {
     key: options.key,
     q: options.query,
-    maxResults: options.maxResults || 10,
+    maxResults: options.maxResults || 50,
     part: 'snippet',
     type: 'video',
     order:'date'
