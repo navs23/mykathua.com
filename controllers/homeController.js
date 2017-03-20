@@ -42,7 +42,7 @@ var setupRoutes=function(app){
             
             var data={url:req.url,ipaddress:ip,dated:new Date().toGMTString(),geo:geo};
             savewebhits(data,function(err,res){
-                console.log(res);
+                //console.log(res);
                 
             });
             

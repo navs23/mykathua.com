@@ -10,10 +10,19 @@ var colors = require('colors');
 var io;
 var geoip = require('geoip-lite'); 
 var data =[];
-var listener_count =0;
+var pageVisitor=[
+    {name:'home',vistorCount:0},
+    {name:'news',vistorCount:0},
+    {name:'video',vistorCount:0},
+    {name:'music',vistorCount:0},
+    {name:'job',vistorCount:0},
+    {name:'gallery',vistorCount:0},
+    {name:'contacts',vistorCount:0},
+    {name:'trainstatus',vistorCount:0},
+    ];
 socketService.init=function(webserver){
     
-listener_count =0;
+
  
 }
 
@@ -48,10 +57,12 @@ io.sockets.on('connection', function(socket) {
      //console.log('connected'.green,socket.handshake.url);
      var item={};
      var req=socket.request;
-     item.ip = req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : req.connection.remoteAddress;
+     if(req)
+     {
+        item.ip = req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : req.connection.remoteAddress;
      
      if (indexOf(data,'ip',item.ip) == -1)
-   {
+        {
        var geo = geoip.lookup(item.ip);
        
        if (geo != undefined || geo != null){
@@ -61,21 +72,14 @@ io.sockets.on('connection', function(socket) {
        
         data.push(item);
    }
+     }
     io.sockets.emit('onConnect',data);
     
     socket.on('disconnect', function(socket){
         
    // data.connections--;
-     listener_count == 0 ? 0:listener_count--;
-     var req=socket.request;
-     var ip = req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : req.connection.remoteAddress;
-     console.log('disconnected ip address is %s'.red,ip);
-    
-    var index =(indexOf(data,'ip',ip));
-    
-     data.splice(index);
-    //io.sockets.emit('onConnect',data);
-     io.sockets.emit('listener-count',{listener_count:listener_count});
+     
+     
     
     });
     
@@ -88,9 +92,10 @@ io.sockets.on('connection', function(socket) {
             ,heapUsed:process.memoryUsage().heapUsed/1000000
             ,external:process.memoryUsage().external/1000000
             ,data:data
+            ,pageVisitor:pageVisitor
             
         }) ;
-        
+        /*
         music.listPlayingSongs(function(err,songs){
             if (err==null)
             {
@@ -100,6 +105,7 @@ io.sockets.on('connection', function(socket) {
             else
             console.log(err);
         });
+        */
         /*
        
         */
@@ -172,6 +178,34 @@ io.sockets.on('connection', function(socket) {
        
     });
     
+    socket.on('page',function(data){
+         console.log('%s',JSON.stringify(data));
+         var index=-1;
+        for(var i =0;i<pageVisitor.length;i++)
+        {
+            if (pageVisitor[i].name== data.pagename)
+            {
+            index=i;
+            break;
+            }
+        }
+        
+        if (data.event=='arrived')
+        {
+            
+            pageVisitor[index].vistorCount<0?1:pageVisitor[index].vistorCount++;
+        }
+        else
+        {
+            pageVisitor[index].vistorCount<=0?0:pageVisitor[index].vistorCount--;
+        }
+        
+        console.log('%s',JSON.stringify(pageVisitor[index]));
+        io.sockets.emit('visitor-count',pageVisitor[index]);
+        
+    });
+    
+    
     setTimeout(function(){
         
          twt.getTweets(function(err,data){
@@ -188,19 +222,7 @@ io.sockets.on('connection', function(socket) {
                             });
     },5*60*1000)
     
-    socket.on('station-play',function(item){
-        if (item.event=='play')
-            listener_count++;
-         else if (item.event=='pause')
-            listener_count--;
-        else if (item.event=='abort' || item.event == 'suspend')
-                    listener_count == 0 ? 0:listener_count--;
-        
-                console.log('total count is %d',listener_count);
-        io.sockets.emit('listener-count',{listener_count:listener_count});
-        
-        
-    });
+    
     
 });
 

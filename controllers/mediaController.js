@@ -54,7 +54,7 @@ node-cache module added
                             videos.search({searchStr:req.params.name||'kathua'},function(data){
                               
                                 
-                            res.render("media/videos2",{user:req.user,videos:data,title:"Latest videos about Kathua"});          
+                            res.render("media/videos2",{user:req.user,videos:data,title:"Latest videos trending videos from Kathua @@mykathua.com"});          
                     
                 });
                     
@@ -64,7 +64,7 @@ node-cache module added
             app.get("/api/news/",function(req,res,next){
                 
                 
-                console.log('getting news');
+                
                  news.NewItemsAsync(function(err,result){
                      
                 res.send(result);
@@ -76,7 +76,7 @@ node-cache module added
              app.get("/api/newsfromSQL/",function(req,res,next){
                 
                 
-                console.log('getting news');
+                
                  news.GetNewItemsFromSql(function(err,result){
                      
                 res.send(result);

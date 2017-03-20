@@ -69,9 +69,16 @@
 })
 
 <script type="text/javascript">
+	/*global $*/
+	/*global io
+	global socket
+	global getStoryComments
+	*/
      $(document).ready(function () {
+    
+     socket.emit('page',{pagename:'job',event:'arrived'});
          
-            	getStoryComments({id:5,diverr:'#divError'},function(err){
+    getStoryComments({id:5,diverr:'#divError'},function(err){
    		
    	
    		
@@ -83,6 +90,19 @@
    		
    		
    	});
+
+    socket.on('visitor-count',function(data){
+     if(data.name =='job')
+     {
+     	$('#visitorCount').html('<a href="#" style="text-decoration: none;" class="info">' + data.vistorCount + ' <i class="fa fa-users"></i> '+ 'viewing this page</a>');
+     }
+     	
+     });   
+        
+     $(window).unload(function() {
+  
+		socket.emit('page',{pagename:'job',event:'left'});
+		});
 
 });
 

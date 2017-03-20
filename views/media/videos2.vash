@@ -72,10 +72,14 @@
 })
 
 <script type="text/javascript">
-  /*global $*/ 
-//$('.video-local').hide();
-
-$(function () {
+  /*global $
+    global io
+  global socket
+  */ 
+    
+  $(document).ready(function () {
+      socket.emit('page',{pagename:'video',event:'arrived'});	
+      $(function () {
     var iframe = $('<iframe frameborder="0" marginwidth="0" marginheight="0" allowfullscreen></iframe>');
     var dialog = $("<div></div>").append(iframe).appendTo("body").dialog({
         autoOpen: false,
@@ -103,5 +107,21 @@ $(function () {
     });
 });
 
+     $(window).unload(function() {
+  
+		socket.emit('page',{pagename:'video',event:'left'});
+		});
+
+  socket.on('visitor-count',function(data){
+     if(data.name =='video')
+     {
+     	$('#visitorCount').html('<a href="#" style="text-decoration: none;" class="info">' + data.vistorCount + ' <i class="fa fa-users"></i> '+ 'viewing this page</a>');
+     }
+     	
+     });  
+      
+      
+      
+  });
 
 </script>

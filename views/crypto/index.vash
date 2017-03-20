@@ -1,0 +1,85 @@
+@html.extend('layout',function(model){
+@html.block("css",function(){
+<meta name="description" content="mykathua.com, kathua Radio, fm radio kathua, fm kathua,Dogri and hindi music,naveen sharma kathua"/>
+<meta name="description" content="mykathua.com, kathua music,radio online music,folk and bollywood music"/>
+
+});
+
+@html.block("js",function(){
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+});
+@html.block("main",function(model){
+    @if (model.error){
+        <p class="text-error"> error occured:@model.error</p>
+        }
+        <h3></h3>
+       <p></p>
+
+
+<div class="row">
+    <div class="md-col-12">
+ 
+  <table class="table table-hover table-stripped">
+           <thead style="font-weight:bold;">
+               <tr>
+               <td>Position</td>
+               <td>symbol</td>
+               <td>Name</td>
+               <td>Time</td>
+               <td>USD Price</td>
+               <td>BTC Price</td>
+               <td>Change 24</td>
+               
+               </tr>
+           </thead>
+       <tbody>
+
+        @model.marketdata.result.forEach(function(e){
+        <tr>
+            <td>@e.position</td>
+            @{
+            
+            var imagesrc  = 'http://capfeed.com/images/currencyicons/'+ e.symbol.toLowerCase() +'-42.png';
+            
+            <td><img src = '@imagesrc' /></td>
+            }
+            
+            <td>@e.name</td>
+            <td>@e.time</td>
+            <td>@e.usdPrice</td>
+            <td>@e.btcPrice</td>
+            <td>@e.change24</td>
+           
+        </tr>
+        
+        })
+        </tbody>
+</table>
+
+</div>
+</div>
+
+
+})
+
+})
+
+<script type="text/javascript">
+/*global $ */
+	
+     $(document).ready(function () {
+    
+     
+     
+    
+     
+});
+
+   		
+ 
+
+
+
+ 
+
+</script>

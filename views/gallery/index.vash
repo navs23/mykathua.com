@@ -49,11 +49,17 @@ and we would love to publish your photo on <a href='www.mykathua.com'>mykahtua.c
 })
 
 <script type="text/javascript">
+	/*global $*/
+	/*global io
+	global socket
+	global getStoryComments
+	*/
 var images=[];
+
      $(document).ready(function () {
         
         var url ='/api/gallery/';
-       // $("#slider").hide();
+        socket.emit('page',{pagename:'gallery',event:'arrived'});
         
         getJsonDataAsync(url,null,function(){},function(data){
         
@@ -92,13 +98,13 @@ var images=[];
     
 });
     
-$("#slider").bind("onNextSlide", function(e,d) { 
+      $("#slider").bind("onNextSlide", function(e,d) { 
    //refreshComments(d.slideId);
    
 });
    
 
-$("#slider").bind("onPreviousSlide", function(e,d) {
+      $("#slider").bind("onPreviousSlide", function(e,d) {
     
    //refreshComments(d.slideId);
     
@@ -157,6 +163,18 @@ $('.instagram').on('willLoadInstagram', function(event, options) {
   });
   */
 
+socket.on('visitor-count',function(data){
+     if(data.name =='gallery')
+     {
+     	$('#visitorCount').html('<a href="#" style="text-decoration: none;" class="info">' + data.vistorCount + ' <i class="fa fa-users"></i> '+ 'viewing this page</a>');
+     }
+     	
+     });   
+        
+     $(window).unload(function() {
+  
+		socket.emit('page',{pagename:'gallery',event:'left'});
+		});
 
 });
 

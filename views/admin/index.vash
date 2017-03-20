@@ -69,7 +69,7 @@ var socket=io();
         $('#divstat ul').append('<li>heap used:' + item.heapUsed + 'MB' + '</li>');
         $('#divstat ul').append('<li>external:' + item.external + 'MB' + '</li>');
         $('#divstat ul').append('<li>data:' + JSON.stringify(item.data) + '</li>');
-        
+        $('#divstat ul').append('<li>data:' + JSON.stringify(item.pageVisitor) + '</li>');
           $('#divstat ul').append('<li>connections:' + item.connectioncount + '</li>');
        //html('available mem:' + item.totalmem + 'KB<br/>free mem:' + item.freemem +'KB<br/>used mem:'+ (item.totalmem - item.freemem) + 'KB');
        

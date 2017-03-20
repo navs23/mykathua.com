@@ -1,7 +1,7 @@
 @html.extend('layout',function(model){
 @html.block("css",function(){
-    <meta name="description" content="mykathua.com, kathua Radio, fm radio kathua, fm kathua,Dogri and hindi music,naveen sharma kathua"/>
-    <meta name="description" content="mykathua.com, kathua music,radio online music,folk and bollywood music"/>
+ <meta name="description" content="mykathua.com, kathua Radio, fm radio kathua, fm kathua,Dogri and hindi music,naveen sharma kathua"/>
+ <meta name="description" content="mykathua.com, kathua music,radio online music,folk and bollywood music"/>
 <link rel="stylesheet" href="/node_modules/jplayer/dist/skin/blue.monday/css/jplayer.blue.monday.min.css"/>
 
 
@@ -15,7 +15,6 @@
 <script src="/node_modules/jplayer/dist/add-on/jplayer.playlist.js"></script>  
 <script src="/resources/js/local/media.js"></script>  
 <script src="/resources/js/musicdata.js"></script>  
-<script type='text/javascript' src='//cdn.jsdelivr.net/jquery.marquee/1.3.9/jquery.marquee.min.js'></script> 
 <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 });
 @html.block("main",function(model){
@@ -23,6 +22,8 @@
         <p class="text-error"> error occured:@model.error</p>
         }
         <h3>One stop radio station @@ <a hfref "/music/">www.mykathua.com/music/</a></h3>
+        
+        
        <p>Just sit back,relax and enjoy your favorite music on your favourite Radio station</p>
 <p><i>Don't forget to leave your comments</i></p>
 <div class="row">
@@ -37,7 +38,9 @@
 		<option value='reggae'>Reggae</option>
 		<option value='meditation'>Meditation/Bhajan</option>
 		
-		</select></td></tr></table></div>
+		</select></td></tr>
+	
+		</table></div>
 <div class="row">
 	<br/>
 </div>
@@ -93,8 +96,8 @@
    
 </div>
 <div class="jp-stats">
-<div class="marquee"></div>
 </div>
+
 <div class="row">
     <div class="col-md-12">
 
@@ -105,7 +108,7 @@
         
     </div>
 
-
+<div id="defaultRadio" station='@model.station'></div>
 
 
 
@@ -117,30 +120,21 @@
 	var ojplayer=null;
 	var radioStations=null;
 	/*global $*/
-	/*global io*/
-	var marqueeString='';
-	var socket = io();
-	var bMarqueeStarted=false;
-	var marqueeOption={
-	//speed in milliseconds of the marquee
-	duration: 5000,
-	//gap in pixels between the tickers
-	gap: 50,
-	//time in milliseconds before the marquee will start animating
-	delayBeforeStart: 0,
-	//'left' or 'right'
-	direction: 'left',
-	//true or false - should the marquee be duplicated to show an effect of continues flow
-	duplicated: true
-	};
+	/*global io
+	global socket
+	*/
+
+	//var socket = io();
+
 	
      $(document).ready(function () {
-     	
-    //getJsonDataAsync('api/stations/',null,function(err){},function(stations){
-
-
-	
-	renderRadioPlayer("#jquery_jplayer_1","#jp_container_1",getRadioStations('hindi'));
+     
+     socket.emit('page',{pagename:'music',event:'arrived'});	
+     
+   
+	 var defaultStation =$('#defaultRadio').attr('station');
+	 renderRadioPlayer("#jquery_jplayer_1","#jp_container_1",getRadioStations('hindi'));
+     
      $('.genre-filter').on('change',function(e){
      	
      
@@ -150,12 +144,9 @@
      	 
      	 renderRadioPlayer("#jquery_jplayer_1","#jp_container_1",stations);
      	 	
-     
-     
+    
      	
      });
-     
-     
      
      socket.on('song-nowplaying', function(data) {
         	
@@ -173,8 +164,22 @@
         	}
 		
         });
+        
+     socket.on('visitor-count',function(data){
+     if(data.name =='music')
+     {
+     	$('#visitorCount').html('<a href="#" style="text-decoration: none;" class="info">' + data.vistorCount + ' <i class="fa fa-users"></i> '+ 'viewing this page</a>');
+     }
+     	
+     });   
+        
+     $(window).unload(function() {
+  
+		socket.emit('page',{pagename:'music',event:'left'});
+		});
+        
     });
-//});
+
 
    		
    	getStoryComments({id:4,diverr:'#divError'},function(err){
@@ -188,9 +193,6 @@
    	});
 
 
-
-
-
 function getRadioStations(genre){
 
 var temp =getRadionStationList(genre);
@@ -200,7 +202,8 @@ return temp;
 var renderRadioPlayer= function(playerdiv,containerdiv,radioStations){
 	 ojplayer=new jPlayerPlaylist({
 		jPlayer: playerdiv,
-		cssSelectorAncestor: containerdiv
+		cssSelectorAncestor: containerdiv,
+		poster: "http://www.jplayer.org/audio/poster/Miaow_640x360.png"
 	},radioStations, {
 		swfPath: "/node_modules/jplayer/dist/jplayer",
 		supplied: "mp3",
@@ -212,6 +215,56 @@ var renderRadioPlayer= function(playerdiv,containerdiv,radioStations){
 	});
 	
 }
+
+$("#jquery_jplayer_1").bind($.jPlayer.event.play, function(event) { // Add a listener to report the time play began
+  
+ playStopPlayer({'event':'play'});
+ 
+  
+});
+
+$("#jquery_jplayer_1").bind($.jPlayer.event.pause, function(event) { // Add a listener to report the time play began
+  
+  playStopPlayer({'event':'pause'});
+  
+});
+
+$("#jquery_jplayer_1").bind($.jPlayer.event.suspend, function(event) { // Add a listener to report the time play began
+  playStopPlayer({'event':'suspend'});
+  
+});
+
+$("#jquery_jplayer_1").bind($.jPlayer.event.abort, function(event) { // Add a listener to report the time play began
+   playStopPlayer({'event':'abort'});
+  
+});
+
+$("#jquery_jplayer_1").bind($.jPlayer.event.stalled, function(event) { // Add a listener to report the time play began
+   playStopPlayer({'event':'stalled'});
+  
+});
+
+function playStopPlayer(item){
+	/*
+//	alert(playstop);
+	var icount=0;
+	if(playstop==1)
+	{
+		icount=1;
+	 $('#nowplaying').remove();
+	 $('li.jp-playlist-current').append('<span id ="nowplaying"> playing</span>');
+	}
+	 else if(playstop==2) 
+	 {
+	 $('#nowplaying').remove();
+	 
+	 icount=-1;
+	 }
+	 */
+	 socket.emit('station-play',item);
+}
+
+/*
 /*
 var getRadioStats=function(){
 	

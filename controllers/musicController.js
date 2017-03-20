@@ -9,20 +9,20 @@
     
     musicController.init= function(app){
         
-        app.get("/music/:genere?",function(req,res){
+        app.get("/music/:station?",function(req,res){
        
-       music.getStationList({genere:req.params.genere || 'hindi'},function(err,stations){
+       //music.getStationList({genere:req.params.genere || 'hindi'},function(err,stations){
     
-        res.render("music/index2",{title:title,"user":req.user,"html":"",stations:stations});
+        res.render("music/index2",{title:title,"user":req.user,"html":"",station:req.params.station});
     
-});
+//});
      
            
             
             
        });
        
-         app.get("/music/api/stations/:genere?",function(req,res){
+        app.get("/music/api/stations/:genere?",function(req,res){
        
             music.getStationList({genere:req.params.genere || 'hindi'},function(err,stations){
             console.log(stations);
@@ -34,6 +34,7 @@
             
             
        });
+        
         app.get("/api/dogriRadio/CurrentSong/",function(req,res,next){
         
         radio.getDogriRadioStats(function(data){res.send(data);},function(err){

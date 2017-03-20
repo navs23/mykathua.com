@@ -1,4 +1,5 @@
 (function (controllers){
+    
     var homeController=require("./homeController"),
      accountController = require("./accountController"),
      classifiedController = require("./classifiedController"),
@@ -10,7 +11,8 @@
      aboutController = require("./aboutController"),
      adminController = require("./adminController"),
      bdcController = require("./bdcController"),
-     jobController = require("./jobController");
+     jobController = require("./jobController"),
+     cryptoController = require("./cryptoController");
      
     controllers.init = function(app,passport){
         
@@ -29,6 +31,8 @@
         otherController.init(app);
         aboutController.init(app);
         jobController.init(app);
+        
+        cryptoController.init(app);
          
     };
     

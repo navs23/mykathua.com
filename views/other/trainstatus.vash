@@ -34,9 +34,24 @@
 })
 
 <script type="text/javascript">
+     /*global $*/
+	/*global io
+	global socket
+	global getStoryComments
+	*/
      $(document).ready(function () {
-        // $()
-
+     socket.emit('page',{pagename:'trainstatus',event:'arrived'});
+     socket.on('visitor-count',function(data){
+     if(data.name =='trainstatus')
+     {
+     	$('#visitorCount').html('<a href="#" style="text-decoration: none;" class="info">' + data.vistorCount + ' <i class="fa fa-users"></i> '+ 'viewing this page</a>');
+     }
+     	
+     });   
+        
+     $(window).unload(function() {
+  
+		socket.emit('page',{pagename:'trainstatus',event:'left'});
+		});
 });
-
 </script>
