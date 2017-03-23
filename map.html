@@ -28,9 +28,9 @@
           mapTypeId: google.maps.MapTypeId.TERRAIN
         });
 
-    /*  
+    /*
 		var data={"data":[
-							{"coordinates":[51.5597,0.0708]}
+							{"coordinates":[51.6515548,0.24817509999999998]}
 							,{"coordinates":[47.6801,-122.1206]}
 							]
 				 };
@@ -42,7 +42,7 @@
         for (var i = 0; i < data.length; i++) {
 		
           var coords = data[i].coordinates;
-          var latLng = new google.maps.LatLng(coords[0],coords[1]);
+          var latLng = new google.maps.LatLng(coords[1],coords[0]);
 			
 		var marker = new google.maps.Marker({
             position: latLng,
@@ -52,10 +52,11 @@
       }
 	  
 	     socket.on('onConnect', function(data) {
-        	
-       plotmap(data);
+        
+        plotmap(data);
 		
         });
+        
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDc2SwSwRntH9m1e21OL8btHcxl3TPwwI0&callback=initMap">
     </script>

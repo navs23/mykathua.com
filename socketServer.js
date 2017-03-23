@@ -4,11 +4,13 @@
 "use strict"
 var socketio=require('socket.io');
 const os = require('os');
-var music = require('./helper/music.js');
-var twt = require('./helper/tweet.js');
-var colors = require('colors');
-var io;
-var geoip = require('geoip-lite'); 
+var music = require('./helper/music.js'),
+ twt = require('./helper/tweet.js'),
+ colors = require('colors'),
+ io,
+geoip = require('geoip-lite');
+
+
 var data =[];
 var pageVisitor=[
     {name:'home',vistorCount:0},
@@ -82,6 +84,13 @@ io.sockets.on('connection', function(socket) {
      
     
     });
+    
+    setInterval(function(){
+       
+       io.sockets.emit('display-time', {});
+         //io.sockets.emit('display-time', {});
+         
+    },1*1000);
     
     setInterval(function(){
       

@@ -1,4 +1,4 @@
-
+var moment = require('moment');
 function searliseJsonIntoHtmlTable(jsonData) {
     
     var tableHeadRow = '';

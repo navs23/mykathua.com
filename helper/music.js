@@ -75,7 +75,7 @@
        // cb(null,songs);
     }
     music.getStationList = function(item,cb){
-        
+    
     scraper.crawl4RadioStations(
     {
            
@@ -89,13 +89,10 @@
 
          var temp= e.find('a[title="M3U Playlist File"]').attr('href');
         temp = temp.replace('/servers/tools/playlistgenerator/?u=','').replace('live.m3u&t=.m3u',';');
-         temp= temp.replace('/servers/tools/playlistgenerator/?u=','').replace('listen.pls&t=.m3u',';');
-          temp= temp.replace('/servers/tools/playlistgenerator/?u=','').replace('listen.pls?sid=1&t=.m3u',';');
+        temp= temp.replace('/servers/tools/playlistgenerator/?u=','').replace('listen.pls&t=.m3u',';');
+        temp= temp.replace('/servers/tools/playlistgenerator/?u=','').replace('listen.pls?sid=1&t=.m3u',';');
         return temp;
-        
-              
-              
-          }
+        }
         
             },
             function(err,stations){

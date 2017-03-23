@@ -67,6 +67,9 @@ app.configure(function() {
     process.env.BASE_WEBSITE_URL='https://navs-navs23.c9users.io';
     
     process.env.mode = "debug";
+    
+    process.env.pricecheckindiaKey='EQBSKJNCPNHSHCOP';
+    process.env.pricecheckindiaUsername ='navshotm';
 }
 else
 {

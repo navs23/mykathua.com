@@ -307,3 +307,25 @@ background: transparent url(/resources//img/play.png) no-repeat center center;
 iframe {
     border: none;
 }      
+
+.img-container
+{
+    color:red;
+}
+.img-text
+{
+    z-index:100;
+    position:absolute;    
+    top:0px;
+   background-color: transparent;
+   color:white;
+
+}
+
+.clock
+{
+    font-size:10;
+    font-weight:italic;
+    /*color:red;*/
+    
+}

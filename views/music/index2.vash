@@ -131,8 +131,7 @@
      
      socket.emit('page',{pagename:'music',event:'arrived'});	
      
-   
-	 var defaultStation =$('#defaultRadio').attr('station');
+   	 var defaultStation =$('#defaultRadio').attr('station');
 	 renderRadioPlayer("#jquery_jplayer_1","#jp_container_1",getRadioStations('hindi'));
      
      $('.genre-filter').on('change',function(e){

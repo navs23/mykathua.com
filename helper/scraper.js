@@ -73,7 +73,7 @@
     scraper.crawl4music=function(item,cb){
    
     var c = new crawler();
-   
+    
     c.queue([{
     uri: item.getUrl(),
     
@@ -105,66 +105,6 @@
 }]);
     
      } 
-    
-    scraper.crawl4RadioStations=function(item,cb){
-    
-    var station;
-    var stations=[];
-    var c = new crawler();
-    
-    c.queue([{
-    uri: item.getUrl(),
-    
-    jQuery: 'cheerio',
- 
-  options: {
-        normalizeWhitespace: true,
-        xmlMode: false
-    },
-    // The global callback won't be called 
-    callback: function (error, res, done) {
-        if(error){
-            
-            console.log(error);
-        }else{
-            
-            var $ = res.$;
-           
-            
-         
-             $(item.selector).each(function(i,e){
-                    
-                   
-                    var element=$(this);
-                    station={};
-                    station.genere=item.genere;
-                    station.title = item.getName(element);
-                    station.currentSong=item.getCurrentSong(element);
-                    station.listerCount=item.getListenerCount(element);
-                    station.mp3=item.getSource(element);
-                    if (station.title !='Vybez Station')
-                    stations.push(station);
-                    //console.log(station);
-                     //cb(null,station);
-                   
-        
-    });
-        setTimeout(function(){
-              cb(null,stations);
-            done();
-            
-        },5*1000);
-      
-            
-        }
-      
-      
-      
-    }
-    
-}]);
-    
-     }
      
     scraper.crawl4jobs=function(db,item,cb){
         
@@ -297,6 +237,136 @@
 }]);
         
     }
-     
     
+    scraper.crawl4RadioStations=function(item,cb){
+    console.log(item.getUrl());
+    var station;
+    var stations=[];
+    var c = new crawler({
+        maxConnections : 10,
+        jQuery: 'cheerio',
+    // This will be called for each crawled page 
+    callback : function (error, res, done) {
+        if(error){
+            console.log(error);
+        }else{
+            var $ = res.$;
+             $(item.selector).each(function(i,e){
+                    
+                   
+                    var element=$(this);
+                    station={};
+                    station.genere=item.genere;
+                    station.title = item.getName(element);
+                    station.currentSong=item.getCurrentSong(element);
+                    station.listerCount=item.getListenerCount(element);
+                    station.mp3=item.getSource(element);
+                    if (station.title !='Vybez Station')
+                    stations.push(station);
+                   
+                   
+        
+    });
+        }
+        done();
+    }
+});
+c.queue([item.getUrl()]);
+    /*
+    c.queue([{
+    uri: item.getUrl(),
+    
+    jQuery: 'cheerio',
+ 
+  options: {
+        normalizeWhitespace: true,
+        xmlMode: false
+    },
+    // The global callback won't be called 
+    callback: function (error, res, done) {
+        if(error){
+            
+            console.log(error);
+        }else{
+            
+            var $ = res.$;
+           
+            
+         
+             $(item.selector).each(function(i,e){
+                    
+                   
+                    var element=$(this);
+                    station={};
+                    station.genere=item.genere;
+                    station.title = item.getName(element);
+                    station.currentSong=item.getCurrentSong(element);
+                    station.listerCount=item.getListenerCount(element);
+                    station.mp3=item.getSource(element);
+                    if (station.title !='Vybez Station')
+                    stations.push(station);
+                    //console.log(station);
+                     //cb(null,station);
+                   
+        
+    });
+        setTimeout(function(){
+              cb(null,stations);
+            done();
+            
+        },2*1000);
+      
+            
+        }
+      
+      
+      
+    }
+    
+}]);
+    */
+     } 
+    
+    scraper.getIPDetails=function(item,cb){
+        
+        //Geolocation Information
+        var c = new crawler();
+    var url = 'http://whatismyipaddress.com/ip/'+ item.ip;
+    console.log(url);
+    c.queue([{
+    uri: url,
+    
+    jQuery: 'cheerio',
+ 
+  options: {
+        normalizeWhitespace: true,
+        xmlMode: false
+    },
+    // The global callback won't be called 
+    callback: function (error, res, done) {
+        if(error){
+            
+            console.log(error);
+        }else{
+            
+            var $ = res.$;
+            //console.log($);
+            var location={};
+            location=item.getIpLocation($);
+           // location.url = url;
+            
+            
+            cb(null,location);
+            done();
+        }
+      
+      
+      
+    }
+    
+}]);
+        
+    } 
+     
+     
 })(module.exports);

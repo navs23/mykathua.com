@@ -4,14 +4,15 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta name="description" content="mykathua.com, a website about kathua, dogriradio radio dogri, jammu and kashmir india dogri kathua"/>
-    <meta name="description" content="mykathua.com, kathua, kathua news, j&k,Jammu and Kashmir,India,Dogri Radio, Dogri music,naveen sharma kathua"/>
+     <meta name="keywords" content="bollywood music, watch kathua videos,kathua-videos"/>
+    <meta name="keywords" content="kathua, kathua webite, my-kathua, kathua-site, kathua videos,music,news, jobs in kathua,naveen sharma,@@mykathua,mykathua.com,basoli,basohli videos"/>
+
+    <meta name="description" content="A great website about kathua"/>
+    <meta name="description" content="All you want to know about"/>
     <meta name="description" content="mykathua.com, kathua, basoli,buy sell kathua,jobs kathua,kathua train status"/>
-    <meta name="description" content="mykathua.com, www.mykathua.com, listen to dogri online radio"/>
-    <meta name="author" content="Naveen Sharma"/>
-        <title>@model.title
-         
-        </title>
+    
+    <meta name="author" content="Naveen Sharma founder of http://www.mykathua.com"/>
+        <title>@model.title</title>
         
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         
@@ -31,28 +32,34 @@
         <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="/resources/js/angular.min.js"></script>
         <script src="/resources/js/util.js"></script>  
+
         <script src="/resources/js/jquery-comments.min.js"></script>  
          
          
          <script src="/socket.io/socket.io.js"></script>
          
          <script src="/resources/js/chat/chat.js"></script>  
-         
+         <script src="/resources/js/client/dateformat.js"></script> 
           
          
         @html.block("js")
    </head>
     <body>
         <div class="page">
+           
              <div class="row" style="background-color:none;">
                 <div class="col-md-12">
                     
                <header>
-                   
-                  <img class="header" src="/resources/img/kth-main.png" />
+                   <div id="img-container">
+                    
+                    
+                  <img class="header header-image img-responsive" src="/resources/img/kth-main.png" />
+                  
+                  <p class="img-text pull-left"><i class="fa fa fa-clock-o fa-2x"></i><i class="clock"></i></p>
                   
                    </header>
-               
+               </div>
                 </div>
              </div>
              <div class="fluid-container" style="background-color:none">
@@ -75,15 +82,15 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                <li><a href="/" class="menuitem">Home <span class="sr-only">(current)</span></a></li>
-                <li><a href="/news/" class="menuitem">News/Articles</a></li>
-                 <li><a href="/videos/" class="menuitem">Videos</a></li>
-                <li><a  href="/music/" class="menuitem">Live Music</a></li>
-                <li><a href="/gallery/" class="menuitem">Photo Gallery</a></li>
+                <li><a href="/" class="menuitem"><i class="fa fa-home fa-1x" aria-hidden="true"></i>&nbsp;Home<span class="sr-only">(current)</span></a></li>
+                <li><a href="/news/" class="menuitem"><i class="fa fa-newspaper-o fa-1x" aria-hidden="true"></i>&nbsp;News</a></li>
+                 <li><a href="/videos/" class="menuitem"><i class="fa fa-video-camera fa-1x" aria-hidden="true"></i>&nbsp;Videos</a></li>
+                <li><a  href="/music/" class="menuitem"><i class="fa fa-music fa-1x" aria-hidden="true"></i>&nbsp;Live Music</a></li>
+                <li><a href="/gallery/" class="menuitem"><i class="fa fa-camera-retro fa-1x" aria-hidden="true"></i>&nbsp;Photo Gallery</a></li>
                
-                <li><a href="/jobs/" class="menuitem">Jobs</a></li>
-                <li><a href="/directory/" class="menuitem">Useful Contacts and links</a></li>
-                <li><a href="/trainstatus/" class="menuitem">Live Train Status</a></li>
+                <li><a href="/jobs/" class="menuitem"><i class="fa fa-handshake-o fa-1x" aria-hidden="true"></i>&nbsp;Jobs</a></li>
+                <li><a href="/directory/" class="menuitem"><i class="fa fa-address-book fa-1x" aria-hidden="true"></i>&nbsp;Useful Contacts</a></li>
+                <li><a href="/trainstatus/" class="menuitem"><i class="fa fa-train fa-1x" aria-hidden="true"></i>&nbsp;Live Train Status</a></li>
                 @if(model.user != undefined && model.user.displayName == 'kathua'){
                  <li><a href="/bdc/" class="menuitem">Blood Donor Club</a></li>
                   <li><a href="/classified/" class="menuitem">Classified</a></li>
@@ -103,16 +110,17 @@
               
                
                 @if (model.user == undefined){
-                <li><a href="/login/" class="menuitem" id="liLoginName" >Log in</a></li>
+                <li><a href="/login/" class="menuitem" id="liLoginName" ><i class="fa fa-sign-in fa-1x" aria-hidden="true"></i>&nbsp;Log in</a></li>
                 }
                 else{
-                 <li><a href="/logout/" class="menuitem">Log Out</a></li>
+                 <li><a href="/logout/" class="menuitem"><i class="fa fa-sign-out fa-1x" aria-hidden="true"></i>&nbsp;Log Out</a></li>
                 }  
                 
                 @if (model.user == 'kathua')
                 {
                  
                 }
+                
                 </ul>
              
                 </div><!-- /.navbar-collapse -->
@@ -215,8 +223,8 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel">Beta!!</h3>
-        <span>User name</span><input type="text" name="" class="chat-username"/><input type="button" value="Start Chating" class="btn-success chat-newusername"/>
+        <h3 id="myModalLabel">Wellcome to live chat</h3>
+        <span>Please enter you name</span><input type="text" name="" class="chat-username"/><input type="button" value="Start Chating" class="btn-success chat-newusername"/>
         <div class="chat-error" style="font-color:red;font-style:italic;"></div> 
       </div>
       <div class="modal-body">
@@ -265,13 +273,16 @@
 </html>
 
 <script type="text/javascript">
+
 var socket=io();
 $(document).ready(function () {
-    
+   
 /*global $*/   
 /*global Chat*/   
 /*global io*/   
 /*global mykathua*/
+/*global formatDate*/
+
 
 $( function() {
     $("#mapdialog").dialog({
@@ -285,6 +296,15 @@ var chat= new mykathua.Chat({},socket,$);
 
 chat.init();
 
+socket.on('display-time',function(t){
+    
+  
+
+    $('.clock').html(new Date());
+    
+    dt=null;
+    
+})
 
 $('#aconnections').on('click',function(){
     
