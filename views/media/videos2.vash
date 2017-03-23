@@ -11,7 +11,11 @@
 @html.block("js",function(){
 <script src="/resources/js/local/media.js"></script>  
 
-});
+})
+@html.block("metadata",function(model){
+<meta name="keywords" content="kathua video,dogir video, kathua latest videos,kathua youtube, mykathua.com/videos/kathua, watch kathua videos, kathua youtube"/>
+
+})
 @html.block("main",function(model){
     @if (model.error){
         <p class="text-error"> error occured:@model.error</p>

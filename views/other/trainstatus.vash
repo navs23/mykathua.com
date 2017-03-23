@@ -30,6 +30,11 @@
 </div>
 })
 
+@html.block("metadata",function(model){
+<meta name="keywords" content="kathua railway station,kathua train status,kathua jammu train schedule, my kathua, mykathua.com"/>
+
+})
+
 
 })
 

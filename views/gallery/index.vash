@@ -13,6 +13,11 @@
 
 });
 
+@html.block("metadata",function(model){
+<meta name="keywords" content="kathua pictures,kathua images,kathua tourism, kathua popular images,view stunning kathua images"/>
+
+})
+
 @html.block("main",function(model){
     @if (model.error){
         <p class="text-error"> error occured:@model.error</p>

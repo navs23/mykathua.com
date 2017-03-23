@@ -43,6 +43,10 @@
 </div>
 
 })
+@html.block("metadata",function(model){
+<meta name="keywords" content="kathua employment news,kathua govt job,kathua jobs,jammu and kashmir jobs,mykathua.com/jobs, govt jobs in kathua,kathua naukri,jammu and kashmir naukri"/>
+
+})
 
 @html.block("leftSideBar",function(model){
 
@@ -65,6 +69,7 @@
 </div>
 
 })
+
 
 })
 

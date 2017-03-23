@@ -4,12 +4,11 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-     <meta name="keywords" content="bollywood music, watch kathua videos,kathua-videos"/>
-    <meta name="keywords" content="kathua, kathua webite, my-kathua, kathua-site, kathua videos,music,news, jobs in kathua,naveen sharma,@@mykathua,mykathua.com,basoli,basohli videos"/>
-
-    <meta name="description" content="A great website about kathua"/>
-    <meta name="description" content="All you want to know about"/>
-    <meta name="description" content="mykathua.com, kathua, basoli,buy sell kathua,jobs kathua,kathua train status"/>
+     <meta name="keywords" content="my kathua, kathua website, kathua portal, kathua administration, kathua contacts, bollywood music, kathua videos,kathua-videos,kathua images, kathua weather,kathua jobs, kathua music, kathua fm"/>
+    <meta name="keywords" content="basoli,basohli videos, kathua jammu videos"/>
+    @html.block("metadata")
+    <meta name="description" content="A great website on kathua, developed and funded by naveen sharma"/>
+    <meta name="description" content="All you want to know about kathua"/>
     
     <meta name="author" content="Naveen Sharma founder of http://www.mykathua.com"/>
         <title>@model.title</title>
