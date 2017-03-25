@@ -13,7 +13,19 @@
         
     app.get("/gallery/",function(req,res){
         
-       res.render("gallery/index",{title:"Photo Gallery",images:null,user:req.user});
+         data.getGalleryImages(null,function(err,images){
+      if (err==null){
+       console.log(images);
+           res.render("gallery/index",{title:"Photo Gallery",images:images,user:req.user}); 
+      //res.send(images);
+      }
+      else
+      {
+          res.send(err);
+      }
+      
+    });
+      
       
     });
     

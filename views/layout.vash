@@ -38,8 +38,7 @@
          <script src="/socket.io/socket.io.js"></script>
          
          <script src="/resources/js/chat/chat.js"></script>  
-         <script src="/resources/js/client/dateformat.js"></script> 
-          
+        
          
         @html.block("js")
    </head>

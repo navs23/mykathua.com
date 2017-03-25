@@ -1,4 +1,4 @@
-var moment = require('moment');
+
 function searliseJsonIntoHtmlTable(jsonData) {
     
     var tableHeadRow = '';
@@ -246,7 +246,9 @@ var getStoryComments = function(options,cberror,cbsuccess)
 
 var getGalleryImageomments = function(options,cb)
 {
- 
+ /*
+ global $
+ */
     configureComments({
     Id:options.id,  
     commentGetUrl:'/api/gallery/getComments/' ,
@@ -261,7 +263,6 @@ var getGalleryImageomments = function(options,cb)
         $(divError).text(err);
     }
     );
- return;
  
     var commentGetUrl='/api/gallery/getComments/' + options.id; ;
     var commentSaveUrl='/api/gallery/SaveComments/';

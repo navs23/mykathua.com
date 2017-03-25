@@ -2,15 +2,13 @@
 @html.block("css",function(){
  <meta name="description" content="mykathua.com, kathua Radio, fm radio kathua, fm kathua,Dogri and hindi music,naveen sharma kathua"/>
  <meta name="description" content="mykathua.com, kathua music,radio online music,folk and bollywood music"/>
- <meta name="keywords" content="my kathua,kathua website, kathua india,kathua portal,kathua city,kathua bani,kathua jammu"/>
- <meta name="author" content="naveen sharma"/>
 <link rel="stylesheet" href="/node_modules/jplayer/dist/skin/blue.monday/css/jplayer.blue.monday.min.css"/>
 
 
 <!--link rel="stylesheet" href="/resources/css/local/mdi/materialdesignicons.min.css"-->
 <link rel="stylesheet" href="/resources/css/local/music.css"/>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-})
+});
 
 @html.block("js",function(){
 <script src="/node_modules/jplayer/dist/jplayer/jquery.jplayer.min.js"></script>  
@@ -18,11 +16,7 @@
 <script src="/resources/js/local/media.js"></script>  
 <script src="/resources/js/musicdata.js"></script>  
 <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-})
-@html.block("metadata",function(model){
-<meta name="keywords" content="fm kathua, kathua radio, radio kathua,non stop music at mykathua.com, kathua music,dogir music, kathua dogri music,kathua live, listen live radio kathua, jk fm, jammu and kashmir radio"/>
-
-})
+});
 @html.block("main",function(model){
     @if (model.error){
         <p class="text-error"> error occured:@model.error</p>
@@ -203,7 +197,8 @@ var temp =getRadionStationList(genre);
 
 return temp;
 }
-var renderRadioPlayer= function(playerdiv,containerdiv,radioStations){
+function renderRadioPlayer(playerdiv,containerdiv,radioStations){
+	
 	 ojplayer=new jPlayerPlaylist({
 		jPlayer: playerdiv,
 		cssSelectorAncestor: containerdiv,

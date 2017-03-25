@@ -1,4 +1,4 @@
-/*!
+﻿/*!
  * Excolo Slider - A simple jquery slider
  *
  * Examples and documentation at: 
@@ -25,11 +25,10 @@
     **************************************************************/
     Plugin = (function () {
         function Plugin(elem, options) {
-            
             this.elem = elem;
             this.$elem = $(elem);
             this.options = options;
-           // this.onNext=
+
             // This next line takes advantage of HTML5 data attributes
             // to support customization of the plugin on a per-element
             // basis. 
@@ -69,11 +68,7 @@
             activeSlideClass: "es-active",
             slideCaptionClass: "es-caption",
             pagerClass: "es-pager",
-            onNext:function(){},
-            onPrevious:function(){}
-            
         },
-          
 
         /* Initialization function
         **********************************************************/
@@ -131,30 +126,9 @@
 	                );
                 }
                 // Bind click event to buttons
-                var nextSide;
-                $prev.on("click", function (e) { base.previous(function(slideId){
-                    
-                   nextSide=slideId;
-                }); 
-                
-                //$(this).trigger("onPreviousSlide",{slideId:nextSide});
-                
-                $(this).trigger("onPreviousSlide",{slideId:nextSide});
-                    
-                });
-                $next.on("click", function (e) { base.next(function(data){
-                   
-                     //alert(1);
-                     nextSide=data;
-                     
-                    
-                });  
-                
-                $(this).trigger("onNextSlide",{slideId:nextSide}); });
-                
-                $prev.on("touchstart", function (e) {
-                    //alert(2);
-                    e.stopPropagation(); });
+                $prev.on("click", function (e) { base.previous(); });
+                $next.on("click", function (e) { base.next(); });
+                $prev.on("touchstart", function (e) {e.stopPropagation(); });
                 $next.on("touchstart", function (e) {e.stopPropagation(); });
             }
 
@@ -232,7 +206,6 @@
             // Setup touch event handlers
             if (base.config.touchNav) {
                 $container.on("touchstart", function (e) {
-                    
                     var eventData = e.originalEvent.touches[0];
                     e.preventDefault();
                     base._onMoveStart(eventData.pageX, eventData.pageY);
@@ -339,7 +312,7 @@
 
         /* Move to previous slide
         **********************************************************/
-        previous: function (cb) {
+        previous: function () {
             var base, nextSlide;
             // Defined variable to avoid scope problems
             base = this;
@@ -366,24 +339,14 @@
 
             // Update data
             $.data(base, "nextSlide", nextSlide);
-              
+
             // Perform sliding to the previous slide
-           // this.emitEvents('onPreviousSlide',{slideNumber:nextSlide})
-           
-            if (cb !=undefined)
-            {
-            cb(nextSlide);
-            
-            }
-            
-            base.config.onPrevious(nextSlide);  
             return this._slide();
         },
 
         /* Move to next slide
         **********************************************************/
-        next: function (cb) {
-            
+        next: function () {
             var base, nextSlide;
             // Defined variable to avoid scope problems
             base = this;
@@ -409,19 +372,11 @@
 
             // Update data
             $.data(base, "nextSlide", nextSlide);
-           
+
             // Perform sliding to the next slide
-             if (cb !=undefined)
-             {
-                // var $container = $(".slide-wrapper", base.$elem).children().eq(nextSlide);
-            
-                
-                cb(nextSlide);
-             }
-             base.config.onNext(nextSlide);  
             return this._slide();
         },
-        
+
         /* A method to start the slideshow
         **********************************************************/
         start: function () {
@@ -772,7 +727,7 @@
             var base, nextSlideIndex, $container, $slides, $slide, leftPos;
             // Define variable to avoid scope problems
             base = this;
-           // alert(JSON.stringify((this)));
+
             // Data
             nextSlideIndex = base.data.nextSlide;
 
