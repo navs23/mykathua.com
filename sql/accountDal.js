@@ -123,9 +123,10 @@ sql += ',thumbnail nvarchar(255)'
         qry+="NewEmailKey,    NewEmailRequested,    FirstName,LastName,    (FirstName + LastName)  as displayName,    profile_image_url, id from mykth.[User] with (nolock)";
         qry+=" where (username='" + data.username + "' or email='" + data.username + "')";
         */
-        var qry="select top 1 Id, UserId,  UserName as username, Email as email,    [Password] as [password]"
-        qry+=",(FirstName + LastName)  as displayName from mykth.[User] with (nolock)";
-        qry +=" where (username='" + data.username + "' or email='" + data.username + "')";
+        var qry="select top 1 '' as errorCode,Id, UserId,  UserName as username, Email as email,    [Password] as [password]"
+        qry+=",displayName from mykth.[User] with (nolock) ";
+        qry +=" where (username='" + data.username + "' or email='" + data.username + "') and [IsActivated] =1";
+        qry +=" or (token ='" + (data.token || '999') + "')";
         
         console.log(qry);
        
@@ -133,7 +134,7 @@ sql += ',thumbnail nvarchar(255)'
    
       request.query(qry)
         .then(function(user) {
-            
+            console.log(JSON.stringify(user));
             return cb(null,user[0]);})
         .catch(function(err) {
                 console.log('error..');
@@ -156,15 +157,15 @@ sql += ',thumbnail nvarchar(255)'
         sql.connect(config).then(function() {
         
         // update laslogindate column
-        var qry="if exists(select username from mykth.[user] where email ='" + user.username + "' and IsActivated=0) begin ";
+        var qry="if exists(select username from mykth.[user] where email ='" + user.username + "' ) begin ";
         
-        qry +="select 107 as errorCode,'account awaiting confirmation' as errorMessage";
+        qry +="select 107 as errorCode,'email alrady registered' as errorMessage";
         
         qry +=" end";
         
         qry +=" else if exists(select username from mykth.[user] where email ='" + user.username + "') begin ";
         
-        qry +="select 108 as errorCode,'email address alreayd in use' as errorMessage";
+        qry +="select 108 as errorCode,'email address already in use' as errorMessage";
         
         qry +=" end";
         
@@ -174,7 +175,7 @@ sql += ',thumbnail nvarchar(255)'
         
         qry +=")" ;
         
-        qry +=" select UserName,Password,email,displayName,token,'' as message from mykth.[user] where username ='" + user.username + "'";
+        qry +=" select '' as errorCode,'' as errorMessage, UserName,email,displayName,token,'' as message from mykth.[user] where username ='" + user.username + "'";
         qry +=" end";
         
        // values ('703646797646995457','' ,'703646797646995457-mUvHGxvX9mwrSsVa69Cy51RW3sHxwDh','mykathua','','kathua','https://pbs.twimg.com/profile_images/703647887561981952/TCiAB3OV_normal.jpg')
@@ -182,7 +183,7 @@ sql += ',thumbnail nvarchar(255)'
         console.log('sql query\n %s',qry);
         request.query(qry)
             .then(function(recordset) {
-                console.log("%s,%s",'return message -',JSON.stringify(recordset));
+                console.log("%s,%s",'message -',JSON.stringify(recordset));
                 return cb(null,recordset);})
                 
             .catch(function(err) {
@@ -198,15 +199,17 @@ sql += ',thumbnail nvarchar(255)'
         sql.connect(config).then(function() {
         
         // update laslogindate column
-        var qry="if exists(select username from mykth.[user] where NewPasswordKey ='" + user.tocken + "' and IsActivated=0) begin ";
+         var qry="if not exists(select username from mykth.[user] where token ='" + user.tocken + "') select 200 as errorCode,'Ooops..., invalid request.' as message";
         
-        qry +="update  mykth.[user] set IsActivated=1,LastModifiedDate=getdate() where tocken='"+ user.tocken + "'";
-        qry +="select 201 as errorCode,'account successfully activated";
+        qry +=" else if exists(select username from mykth.[user] where token ='" + user.tocken + "' and IsActivated=0) begin ";
+        
+        qry +="update  mykth.[user] set IsActivated=1,LastModifiedDate=getdate() where token='"+ user.tocken + "'";
+        qry +=";select 201 as errorCode,'Your account has successfully been activated.' as message";
         qry +=" end";
         
         qry +=" else begin ";
         
-        qry +="select 109 as errorCode,'account already activated";
+        qry +="select 109 as errorCode,'Your account has already been activated.' as message";
         qry +=" end";
         
        // values ('703646797646995457','' ,'703646797646995457-mUvHGxvX9mwrSsVa69Cy51RW3sHxwDh','mykathua','','kathua','https://pbs.twimg.com/profile_images/703647887561981952/TCiAB3OV_normal.jpg')
@@ -214,7 +217,7 @@ sql += ',thumbnail nvarchar(255)'
         console.log(qry);
         request.query(qry)
             .then(function(recordset) {
-                console.log("%s,%s",'return message -',JSON.stringify(recordset));
+                console.log("%s,%s",'message -',JSON.stringify(recordset));
                 return cb(null,recordset);})
                 
             .catch(function(err) {

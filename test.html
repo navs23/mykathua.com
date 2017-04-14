@@ -2,39 +2,62 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script src="/resources/js/client/dateformat.js"></script>
+              <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+              <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         
     </head>
 <body>
 
-<button onclick="myFunction2()">Click me</button>
-
-<p id="demo">hello</p>
-
-<script>
-
-function myFunction2() {
-
-//var t =formatDate();
-
-document.getElementById("demo").innerHTML =myFunction();    
-  
-  /*
-  var dt=new Date();
-  var frmt = "dddd, mmmm dS, yyyy, h:MM:ss TT";
-
-  var dtString = formatDate(dt,frmt );
-  document.getElementById("demo").innerHTML = dt;  
-//document.getElementById("demo").innerHTML = dt;   
-
-    document.getElementById("demo").innerHTML = "Hello World " + dtString;
-    */
-}
-</script>
-
+   
+          <i id='result'></i>
+            <input type="hidden" name="save" value="contact">
+            <button type="submit" id="save" class="btn btn-success">Post your ad</button>
+             <button type="button" id="image" class="btn btn-success">Show Image</button>
         
+
+        <div id ="result"></div>
+        <div id ="content"></div>
+        <div id="images"></div>
+     </br/>   
+<ul>
+<div>
+<li>
+<img id ="image2" src="../resources/img/play.png" border="none" style="width:20px; height:20px; margin-left: 0px;" onlcick="alert(1);"/>
+<div><i>comments</i></div>
+
+</div>   
+</li>
+</ul>
 </body>
 </html>
+<script type="text/javascript">
+$(document).ready(function(){
+  var display = false;
+ 
+  $("#image2").on('click',function(){
+    if (display === true)
+    {
+      $(this).attr("style","width:20px; height:20px; margin-left: 0px;");
+      display = false;
+    }
+    else
+    {
+      $(this).attr("style","width:50px; height:50px; margin-left: 0px;");
+      display = true;
+    }
+     
+     
+  });
+  /*
+  $("#pop-up").on('click',function(){
+   
+     $("#pop-up").toggle(500);
+  });
+  */
+});
+                                                 
+</script>
+
 
 
 

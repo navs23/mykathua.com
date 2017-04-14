@@ -1,0 +1,149 @@
+@html.extend('layout',function(model){
+@html.block("js",function(){
+
+ 
+})
+
+@html.block("main",function(model){
+    @if (model.error){
+        <p class="text-error"> error occured:@model.error</p>
+        }
+<h2>@model.title</h2>
+<input type="hidden" name="tocken" value="@model.tocken"/>
+<div class="container">
+<div class="form-horizontal" >
+         
+          <div class="row-fluid">
+                 @if (model.result.errorCode == "200")
+                 {
+                  <i class="fa fa-thumbs-down fa-5x" aria-hidden="true"></i>
+                <h4 style="color:red;">@model.result.message</h4>
+                 }
+                 @if (model.result.errorCode == "109"){
+                  <i class="fa fa-thumbs-up fa-5x" aria-hidden="true"></i>
+<h4 style="color:green;">@model.result.message</h4>
+                 }
+                 @if (model.result.errorCode == "201"){
+                   <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                   <h4 style="color:green;">@model.result.message</h4>
+                 }
+                 @if (model.result.errorCode == "109" )
+                 {
+                 <br/><a href='/login' class="btn btn-info">Click here to login</a><br/>
+                 }
+                  @if (model.result.errorCode == "201" )
+                 {
+                 <br/><a href='/login' class="btn btn-info">Click here to login</a><br/>
+                 }
+                 @if (model.result.errorCode == "" )
+                 {
+                 <br/>
+                 <i class="fa fa-thumbs-up fa-2x" aria-hidden="true"></i>
+                 <p>Hello @model.result.displayName,</p>
+                  <p style="">Thank you for registering at mykathua.com,<br/>Check your email and follow the instructions to complete your registration.</p>
+                  <p>Many thanks,<br/><u>Mykathua.com</u></p>
+                  
+                  <br/>
+                 <a href='/login' class="btn btn-info">Click here to login</a><br/>
+                 }
+                 <br/>
+            </div>
+           
+         
+        </div>
+
+</div>
+
+
+})
+
+})
+
+
+
+<script type="text/javascript">
+
+     $(document).ready(function () {
+    
+      $('#btnReset').on(('click'),function(){
+  
+    $("#divErrorMessage").html('');
+ 
+   var param={};
+    param.tocken=$("input[name='tocken']").val().trim();
+    param.password1=$("#Password1").val().trim();
+    param.password2=$('#Password2').val().trim();
+    var errorMessage='';
+  
+  
+  if (param.password1.length< 6)
+      errorMessage='Invalid password';
+ /*
+ else if ((param.password1.toString() != data.password2.toString()))
+         errorMessage='Password do not match';
+ */
+ 
+  if (errorMessage != '')
+  {
+    
+    $('#divErrorMessage').html(errorMessage);
+  
+    return false;
+  }
+  
+    $('#divErrorMessage').html('submitting..3');
+   $.post('/account/resetPassword',param,function(response){
+  var res=response[0];
+  
+   $('#divErrorMessage').html(res.errorMessage);
+   if (res.errorCode =="201")
+   {
+         window.location.href='/login/';
+       
+   }
+   
+  return true;
+}).fail(function(err){
+
+    $('#divErrorMessage').html(JSON.stringify(err));
+
+});      
+
+
+
+});
+      
+      $('#btnResetEmail').on(('click'),function(){
+  
+  
+ 
+    $("#divErrorMessage").html('');
+ 
+   var param={};
+    param.email=$("input[name='email']").val().trim();
+    
+    //$('#divErrorMessage').html('submitting..3');
+   $.post('/account/resetPassword',param,function(res){
+  
+     $('#divErrorMessage').html(res.errorMessage);
+     return true;
+  
+}).fail(function(err){
+
+    $('#divErrorMessage').html(JSON.stringify(err));
+
+});      
+
+
+
+});
+
+      
+      
+});
+
+    
+ 
+
+
+</script>

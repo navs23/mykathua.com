@@ -410,7 +410,7 @@ return [
     "title": "Magic 80s Florida",
     "currentSong": "Advert: - Advert:",
     "listerCount": "\n\t\t\t\t322 Listeners\n\t\t\t\t 192 Kbps\n\t\t\t\t\n\t\t\t\t  \n\t\t\t\t",
-    "mp3": "http://airspectrum.cdnstream1.com:8018/1606_192.m3u&t=.m3u"
+    "mp3": "http://airspectrum.cdnstream1.com:8018/1606_192"
   },
   {
     "genere": "rock",

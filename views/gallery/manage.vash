@@ -1,0 +1,178 @@
+@html.extend('layout',function(model){
+@html.block("css",function(){
+<link rel="stylesheet" href="/resources/css/local/home.css"/>
+});
+@html.block("js",function(){
+
+ 
+});
+<div class="container">
+
+@html.block("main",function(model){
+    @if (model.error){
+        <p class="text-error"> error occured:@model.error</p>
+        }
+
+<h4>Please read below guide lines before uploading your picture on mykathua.com </h4>
+    <ul>
+        <li>
+             <i>Don't upload if someone else might own the copyright to it, don't upload it. </i>
+             </li>
+             <li>
+            <i> Don't upload pictures depictig gore, "hate speech" (i.e. demeaning race, gender, age, religious or sexual orientation, etc.), 
+            or material that is threatening, harassing, defamatory, or that encourages violence or crime.</i>
+             </li>
+             <li><i>Don't upload any porn content. Only upload photos about Kathua and surrounding areas e.g. temples, rivers etc.</i></li>
+              
+<li><i>Any picture not meeting above terms and conditions will be taken down and you will not be allowed to uload pictues.</i></li>
+<li>If you agree to the above please proceed and upload your picture </li>
+        
+    </ul>
+   
+<form action='/gallery/uploadnew/' method='POST' enctype="multipart/form-data" ref='uploadForm' id='uploadForm' >
+<div class="row">
+    <table class="table">
+         <tr>
+            <td>Category</td>
+            <td colspan="2"><select class ="category" name ="category">
+                <option value ="">Select image category</option>
+                <option value ="Bridges">Bridges</option>
+<option value ="Buildings and Structures">Buildings and Structures</option>
+<option value ="Dams">Dams</option>
+<option value ="Food">Food</option>
+<option value ="Hillside Towns">Hillside Towns</option>
+<option value ="Hindu Temples">Hindu Temples</option>
+<option value ="Historic Buildings">Historic Buildings</option>
+<option value ="Mills">Mills</option>
+<option value ="Monuments">Monuments</option>
+<option value ="Public Buildings">Public Buildings</option>
+<option value ="Recreational spaces">Recreational spaces</option>
+<option value ="Roads">Roads</option>
+<option value ="Rural Landscapes">Rural Landscapes</option>
+<option value ="Shrines">Shrines</option>
+<option value ="Skylines">Skylines</option>
+<option value ="Villages">Villages</option>
+<option value ="Other">Other</option>
+            </select><span style="color:red;font-size:1.2em;" class="span-error">*</span></td>
+        </tr>
+        <tr>
+            <td>Select image</td>
+            <td><input type="file" name="file" class="img-file"/><span style="color:red;font-size:1.2em;" class="span-error">*</span></td>
+        <td><div class="row">
+     <img id="blah" src="#" alt="" class="img-rounded" style="height:100px; width:100px;" />
+</div></td>
+        </tr>
+        <tr><td>Image Title</td>
+        <td colspan="2">
+            <textarea name="title" class="form-control img-title" rows="1" placeholder="Enter a short image title"></textarea>
+           
+        <span style="color:red;font-size:1.2em;" class="span-titleError">*(15-50) characters</span>
+        </td>
+        </tr>
+         <tr><td>Image description</td>
+        <td colspan="2"><textarea name="description" class="form-control img-description" rows="2" placeholder="Enter a small descripiton about you picture"></textarea>
+        <span style="color:red;font-size:1.2em;" class="span-descriptionError">*(15-100) characters</span>
+        </td>
+        </tr>
+        <tr><td><input type="submit" value="Upload Image" class='btn-submit btn btn-primary' id='btnSubmit'/></td>
+        <td><a href="/gallery/" class='btn btn-info'>Abandon upload</a></td></tr>
+    </table>
+    
+   
+    
+    
+</div>
+
+
+
+</form>
+
+})
+</div>
+
+})
+
+<script type="text/javascript">
+/*global $*/
+    var efile=$('.img-file'),
+    ecategory=$('.category'),
+    etitle = $('.img-title'),
+    edescription = $('.img-description');
+        
+        
+     $(document).ready(function () {
+         
+         etitle.next('span').hide();
+         ecategory.next('span').hide();
+         efile.next('span').hide();
+         edescription.next('span').hide();
+        
+   $(".img-file").change(function(){
+        readURL(this);
+    });
+
+});
+function readURL(input) {
+  
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            
+            reader.onload = function (e) {
+                $('#blah').attr('src', e.target.result);
+                
+            }
+            
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+$( ".btn-submit" ).click(function() {
+    
+ 
+  var retval=true;
+  if (ecategory.val() == '' )
+  {
+ 
+    ecategory.next('span').show();
+    retval=false;
+    
+  }
+  else
+  ecategory.next('span').hide();
+  
+  if (efile.val() == '' )
+  {
+ 
+    efile.next('span').show();
+    retval=false;
+    
+  }
+  else
+  efile.next('span').hide();
+  
+ var t = (etitle.val().length);
+  if (t<15 || t>50 )
+  {
+       
+     $('.span-titleError').show();
+    retval=false;
+    
+  }
+  else
+     $('.span-titleError').hide();
+  t = (edescription.val().length);
+  if (t<15 || t>100 )
+  {
+   
+    $('.span-descriptionError').show();
+    retval=false;
+    
+  }
+  else
+    $('.span-descriptionError').hide();
+  
+  return retval;
+  
+});
+
+</script>

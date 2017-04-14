@@ -14,7 +14,7 @@
 
 	<div class="jumbotron text-center">
 	   <div class"container">
-	 
+	
 	    	<h2><span class="fa fa-lock"></span>Login/Register using mykathua.com</h2>
 
 
@@ -87,6 +87,7 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
         <h3 id="myModalLabel">Registration form</h3>
+         <p id="divRegisterErrorMessage" style="color:red;"></p>
       </div>
       <div class="modal-body">
        
@@ -124,7 +125,7 @@
                   </div>
             </div>
           <div class="form-group"><button type="button" class="btn btn-success pull-right" id="btnRegister">Register</button> <p class="help-block pull-left text-danger hide" id="form-error">&nbsp; The form is not valid. </p></div>
-          <div id="divRegisterErrorMessage" style="color:Red;">error</div>
+         
         </div>
     
          
@@ -221,7 +222,7 @@ $('#btnLoginSubmit').on(('click'),function(){
    // alert(result.redirectUrl);
     
     $('#login').modal('hide');
-    alert('/' || result.redirectUrl);
+    //alert('/' || result.redirectUrl);
      window.location.href= '/' || result.redirectUrl;
      return true;
   }
@@ -257,8 +258,11 @@ $('#btnRegister').on(('click'),function(){
   
   
   
-  if ((/^[A-Za-z]{3,}$/).test(data.name)==false)
+  if ((/^[a-z ,.'-]+$/i).test(data.name)==false)
+  {
       errorMessage='Invalid name';	
+      alert(data.name);
+  }
   
    else if (data.email ='' || (/^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/).test(data.email)==false)
   
@@ -283,19 +287,22 @@ $('#btnRegister').on(('click'),function(){
   
    $.post('/registerMe',data,function(res){
   
-  
-  if (res.errorCode==200)   
+  //alert(JSON.stringify(res));
+  //window.location.href
+  if (res.errorCode=='')   
   {
     
-    $('#divRegisterErrorMessage').html(res.errorMessage);
+    //$('#divRegisterErrorMessage').html(res.errorMessage);
     $('#register').modal('hide');
+    window.location.href='/account/register/success/'+ res.token;
      
      return true;
   }
+  
   else 
   {
      $('#divRegisterErrorMessage').html(res.errorMessage);
-     return true;
+     //return true;
   }
   return true;
 }).fail(function(err){

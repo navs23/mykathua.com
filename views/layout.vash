@@ -280,6 +280,8 @@ $(document).ready(function () {
 /*global io*/   
 /*global mykathua*/
 /*global formatDate*/
+/*glolbal util */
+
 
 
 $( function() {

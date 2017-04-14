@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "my-kathua",
+  "private_key_id": "21145dea8b9123127cccbe1f748bcda9f255e6cd",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCvuMqNEGef3hBA\nirbMBPDD3GXHfkIYEI3je4m7a4SI9RQ5y4FBxi/HZbIZgqaLJTUPf7PI6EzNYosU\nP6tX8PmX8aFVU9jgo3dhCucoeYr8xnH6klTiJrYSAotrX8D/1QVshJ/AiiAuE1O/\nUKgfS3CCB7ozVCAzi2lzxL98mklr0KJt4mcr3J49sldMTiYx//PXftwUWGIqV3R6\nLDfsbc6cHBKIcnVnpTzu8fpWgLVspdlm+AGcvRIJ0kqisqAhFXw6J9J9nS9QDF/9\n2NZGAed2u9v4FKkY09gF2ETpC8zvyqWxqmzF3w67ujTdd/IecoblX4+W3aQaCmTO\nXp780rdtAgMBAAECggEADsH2QOKf0U1VEBaWQ4wmrExWP+raoirBv9kgOB1PhDER\nAcmVkXCTkqt3yayvUABP9H1FHBpmWNlt1MWEHl6el6QzaHciP7t6yyufPkb25UPF\nTsX7WwLlR53vF5VzIAlD61k4EXOIQFZfMjIT7IzpZgJAIQ9vpOSQdqiPbGeIwwUe\n/hjmC2j7D5VwSMr8cpCYAolfWD9xJ6oGZH8N8Mk/ozBvtnr2dD/P81D2nytb3waH\nzF0TMHQwZa33BFWZWSNUmqKSdwo/itIj5GeQaUrylrn+UhOyQC7QLpxvEb9R/fNA\ncHKngHJv9tPg64Fq8bADyq6TRhmG+oZtMqfQfCaaAQKBgQDXDbCS75njwStJMdOK\niuUpH654wbf1W6Ww5/mnOItUhU8QEIqm1nTJT29rAJYbIoyB4H3o6DoGsMw7TmSg\nrmqEAmwKcOXAoQGA/me48CIjLAl7aZVq/aA7JjxFAfPvuIoAGCF1EF9GoIx8IfyV\no8F3Qb8eaL4hCD61pI7/XmcDzwKBgQDRLfeXAwDwaeZRKZUnrHOaM0jbzjfNOJfO\nzXqjUJLUTR96tG6lrG7EmAaQEtj5D/DWpYGPJUj1Tq5mSsmj+MacCIQaNQ4yKz5H\nn6c3V5QNJOb6yTGlXiD9vMo/PjzmReRxVauTGYCBuMRuV6b33qWkuRkYZ5L/KPxw\n+TSvznaUAwKBgDzIDr8I32ri3vQaFBsVNL3RyYMx5WeAlq0Qc5xSu/aQkw8MTdPn\nyyxWujv493QF6MaQh6W7dSMM9zxP5NsRUOOst5Kf5B/0obMutGwt2sgsGyX5apTJ\nyG7PWLt8WNDJTJ/IMjSfAv64Q9yV0okMtpKZT4YtvochiG/Yad49dUo7AoGAdS+m\nVDB3lzgMso10JQzEmq9+cr2dn1fEHDQbL2EVUOB/8TMiBaiLSZHNo2sbqLRYfTet\nVG9T5zGUHHRrcHQPeByBPVlZwZteQavcdvGWXKK+z+Jk8LrCCsR4HWQVo/+l0iRn\ngXo49vN3AEYUoSpXa+fSekyUGmRwwC2saY1l+tcCgYEAt5WCws/NA6VKKQQCQf+a\nPr97xvgiKmb57CTksYiAlEUxTAn7bkYTrLNQgrtAiHG2zd86wSLwWNZ5ZKAm7e6e\nz884jG/BEjwQHbfCn4qDAGDG+VIHpBH1FPNaQqa5effcQ2gjp4xF1fPsjXoGnd1o\ndLlT1FyJ0yur8cDJ/NlVWSc=\n-----END PRIVATE KEY-----\n",
+  "client_email": "my-kathua@appspot.gserviceaccount.com",
+  "client_id": "107309179978956117009",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/my-kathua%40appspot.gserviceaccount.com"
+}

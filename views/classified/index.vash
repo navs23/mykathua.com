@@ -5,10 +5,24 @@
         <p class="text-error"> error occured:@model.error</p>
         }
 <h1>@model.title</h1>
+@html.block("css",function(){
+
+
+<!--link rel="stylesheet" href="/resources/css/local/mdi/materialdesignicons.min.css"
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.2/base-context-min.css"/>
+-->
+})
+
+@html.block("js",function(){
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.js"></script>  
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.js"></script>  
+
+
+})
 <div class="container">
-  <h2>Post your ad</h2>
-  <!-- Trigger the modal with a button -->
-  <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#myModal">Open Modal</button>
+   <!-- Trigger the modal with a button -->
+  <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#myModal">Open</button>
 
   <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
@@ -18,22 +32,63 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Modal Header</h4>
+          <h2 class="modal-title">Publish your advert</h2>
         </div>
         <div class="modal-body">
-          <table class="table">
-            <tr><td>Category</td><td><select><option>Real Estate</option><option>Auto mobile</option><option>Electronics</option><option>Books</option><option>Others</option></select></td></tr>
-            <tr><td>Heading</td><td><input type="text" name=""/></td></tr>
-        <tr><td>Description</td><td><input type="textarea" name="" rows="15" columns="20"/></td></tr>
-          <tr><td>Contact phone Number</td><td><input type="text" name=""/></td></tr>
-          <tr><td>Email addres</td><td><input type="text" name=""/></td></tr>
-          
-          
-          </table>
+          <h3>message</h3>
+ <form method="POST" action="/classified/save/" class="form-horizontal" id="contact-form">
+   <div class="control-group">
+            <label class="control-label" for="item-category">Tell us what you are posting</label>
+            <div class="controls">
+                <select class="item-category">
+                 <option value="na" selected="">Choose One:</option>
+                 <option>Real Estate</option>
+                 <option>Auto mobile</option>
+                 <option>Electronics</option>
+                 <option>Books</option><option>Others</option>
+                </select>
+            </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <div class="control-group">
+            <label class="control-label" for="item-title">Ad title</label>
+            <div class="controls">
+                <input type="text" name="item-title" id="item-title" class="item-title" placeholder="Ad title (max 100 characters)">
+            </div>
         </div>
+        
+        <div class="control-group">
+            <label class="control-label" for="item-description">Item description</label>
+            <div class="controls">
+                <textarea name="item-description" id="item-description" rows="8" class="span5 item-description" placeholder="Ad description(max 1000 characters)."></textarea>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="item-price">How much do you want for your item?</label>
+            <div class="controls">
+                 <span class="input-group-addon">Rs</span>
+                <input type="text" id ="item-price" name ="item-price" class="form-control item-price" placeholder="Item price.">
+            </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="phone">Your phone number</label>
+            <div class="controls">
+                <input type="text" name="phone" id="phone" class="item-phone" placeholder="Your phone number">
+            </div>
+            <label class="control-label" for="email">Your email address</label>
+            <div class="controls">
+                <input type="text" name="email" id="email" class="item-email" placeholder="Your email address">
+            </div>
+        </div>
+        <div class="form-actions">
+          <i id='result'></i>
+            <input type="hidden" name="save" value="contact">
+            <button type="submit" class="btn btn-success">Post your ad</button>
+            <button type="reset" class="btn">Clear</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+    </form>
+        </div>
+        
       </div>
       
     </div>
@@ -64,7 +119,74 @@
 })
 
 <script type="text/javascript">
+/*global $*/
      $(document).ready(function () {
+
+   
+
+  $('#contact-form').validate({
+        rules: {
+            "item-title": {
+                minlength: 1,
+                maxlength:100,
+                required: true
+            },
+            "item-description": {
+                minlength: 2,
+                maxlength:1000,
+                required: true
+            },
+            "item-price":{
+               minlength: 1,
+                maxlength:5,
+                required: true,
+                number:true
+            },
+            email: {
+                required: true,
+                email: true
+            }
+        },
+        highlight: function (element) {
+            $(element).closest('.control-group').removeClass('success').addClass('error');
+        },
+        success: function (element) {
+            element.text('OK!').addClass('valid')
+                .closest('.control-group').removeClass('error').addClass('success');
+        }
+    });
+
+$( "#contact-form" ).submit(function( event ) {
+ 
+  // Stop form from submitting normally
+  event.preventDefault();
+ var data ={}
+ 
+    data.userId='navs',  
+     data.category=$('select.item-category').val();
+     data.title=$('input.item-title').val();
+     data.description=$('input.item-description').val();
+     data.phone=$('input.item-phone').val();
+     data.price=$('input.item-price').val();
+     data.email=$('input.item-email').val();
+     
+       
+ 
+ alert(JSON.stringify(data));
+  // Get some values from elements on the page:
+  var $form = $( this ),
+    term = $form.find( "input[name='s']" ).val(),
+    url = $form.attr( "action" );
+ 
+  // Send the data using post
+  var posting = $.post( url, data );
+ 
+  // Put the results in a div
+  posting.done(function( data ) {
+    var content = $( data ).find( "#content" );
+    $( "#result" ).empty().append( content );
+  });
+});
 
 });
 var showdialog = function(e){
@@ -72,5 +194,6 @@ var showdialog = function(e){
     
     
 }
+
 
 </script>

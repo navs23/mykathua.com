@@ -22,12 +22,9 @@
     @if (model.error){
         <p class="text-error"> error occured:@model.error</p>
         }
-    <h1>@model.title</h1>
-<h3>Our intent is to find some rare and beautiful pictures of Kathua and share them with everyone</h3>
-
-<p>If you have a photo that you would like to share on this gallery, please email your photo to <a href="emailto:mykahtua@gmail.com">mykathua@gmail.com</a>
-and we would love to publish your photo on <a href='www.mykathua.com'>mykahtua.com</a>.
-</p>
+    <h4>Kathua - @model.title</h4><i>You can also upload your picture now&nbsp;<a href='/gallery/manage/' class="btn btn-primary">Upload picture</a>
+    
+    </i>
 
         
 <div class="container">
@@ -36,30 +33,27 @@ and we would love to publish your photo on <a href='www.mykathua.com'>mykahtua.c
 <div id="slider" class="span12" style="border:1 solid red">
      @model.images.forEach(function(item){
      
-     <img imageId="img-@item.id" id="@item.id" class="img-rounded center-block" style="width:100%;height:100%;" src="@item.src" data-plugin-slide-caption="@item.text"/> 
+     <img imageId="img-@item.id" id="@item.id"  class="img-rounded center-block" style="width:100%;height:100%;" src="@item.src" data-plugin-slide-caption="@item.text"/> 
              
     
     })
 </div>
+<div id ="defaultImageId" defaultImageId="@model.defaultImageId"></div>
   <h3>Leave a message</h3>
       <div id='divError'></div>
              <div name="comments" id='divComment1'></div>
 </div>
 </div>
-<!--
-<div class="row">
-    
-<div id="instafeed" class="instagram"></div> 
-    
-</div>
--->
+
 
 })
 
 })
 
 <script type="text/javascript">
-/* global $*/
+/* global $
+global util    
+*/
 $(document).ready(function () {
     
     
@@ -100,7 +94,7 @@ var refreshComments=function(imgId){
    
    
    
-   getGalleryImageomments({id:imgId,diverr:'#divError'},function(err){
+   util.getGalleryImageomments({id:imgId,diverr:'#divError'},function(err){
    		
 
    	},function(data){
@@ -110,7 +104,9 @@ var refreshComments=function(imgId){
     
 }
 
-refreshComments(1);
+//alert($('#defaultImageId').attr('defaultImageId'));
+
+refreshComments($('#defaultImageId').attr('defaultImageId'));
 
 });
 

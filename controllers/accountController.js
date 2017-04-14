@@ -3,6 +3,7 @@
     var dal = require('../sql/accountDal.js');
     var emailHelper = require('../helper/mail.js');
     var validator = require("email-validator");
+    var colors = require('colors');
 
 
      accountController.init= function(app,passport){
@@ -80,10 +81,51 @@
     });
 
     // handle the callback after twitter has authenticated the user
-    app.get('/auth/twitter/callback', passport.authenticate('twitter', {successRedirect : '/',failureRedirect : '/' }));
+    //app.get('/auth/twitter/callback', passport.authenticate('twitter', {successRedirect : '/',failureRedirect : '/' }));
+    
+     app.get('/auth/twitter/callback', passport.authenticate('twitter'),
+     function(req,res){
+         if (req.user)
+         {
+         dal.saveUser(req.user,function(user){
+            res.redirect('/');     
+         },function(err){
+             console.log(err);
+            res.redirect('/'); 
+         })
+            
         
-
-    app.post('/loginMe',passport.authenticate('local', { failureRedirect: '/loginFailure',successRedirect  : '/loginSuccess'}));
+         }
+         else
+            res.redirect('/loginFailure');
+        
+     });
+    
+   // app.post('/loginMe',passport.authenticate('local', { failureRedirect: '/loginFailure',successRedirect  : '/loginSuccess'}));
+    /*
+    app.post('/loginMe',passport.authenticate('local'),
+    function(req,res){
+    
+     console.log('logged in %s '.red,JSON.stringify(req.user));
+     if (req.user)
+     res.redirect('/loginSuccess');
+    else
+     res.redirect('/loginFailure');
+    });
+    */
+    
+    app.post('/loginMe', function(req, res, next) {
+        
+        passport.authenticate('local', function(err, user, info) {
+            if (err) { return next(err); }
+            if (!user) { return res.redirect('/loginFailure'); }
+            req.logIn(user, function(err) {
+            if (err) { return next(err); }
+            console.log(JSON.stringify(user).red);
+      return res.redirect('/loginSuccess/');
+    });
+  })(req, res, next);
+});
     
     app.post('/registerMe', function(req,res){
         console.log(req.body.name);
@@ -122,10 +164,11 @@
             text: JSON.stringify(err)
         });
         
-               return res.send(err);     
+               return res.send(err); 
+               
            }
            
-            console.log(JSON.stringify(registerUserResponse));
+            //console.log(JSON.stringify(registerUserResponse));
             
        
        if (registerUserResponse[0].message ==  '')
@@ -135,11 +178,12 @@
             from: 'do-not-reply@mykathua.com',
             to: req.body.username,
             subject: 'mykathua.com->registeration, email confirmation',
-            html: "<a href='" + process.env.BASE_WEBSITE_URL + registerUserResponse[0].tocken + "'>click here to confirm</a>"
+            html: "Hello " + req.body.name + ",<p>Thank you for registering at mykathua.com, please click on the below link to complete your registration.<br/><br/><a href='" + process.env.BASE_WEBSITE_URL + registerUserResponse[0].token + "'>click here to complete</a></p><br/><p>Many thanks,<br/>Mykathua.com team</p>"
         }
       );
        
-        return res.send({errorCode:200,errorMessage:'awaiting user confirmation'});     
+        return res.send(registerUserResponse[0]); 
+        //return res.render('account/activate',{result:registerUserResponse[0]});
            
        }
        else 
@@ -153,7 +197,19 @@
     });
     
     app.get('/loginFailure', function(req, res, next) {
-      res.send({errorCode:100,errorMessage:'Failed to authenticate, please check your login details and try again'});
+      res.send({errorCode:100,errorMessage:'<p><strong>Error:</strong> Failed to authenticate, please check your login details and try again.</p><p>If you have recently registered check your email and complete your registration.</p>'});
+    });
+    
+    app.get('/account/register/success/:token', function(req, res, next) {
+      dal.findUser({token:req.params.token},function(err,result){
+          if(!err)
+          {
+                console.log(result);
+                return res.render('account/activate',{result:result});
+          }
+else
+        return res.send(err);
+      });
     });
     
     app.get('/loginSuccess', function(req, res, next) {
@@ -165,27 +221,25 @@
       
     });
     
-    app.get('/account/confirm/:tocken',function(req,res){
+    app.get('/account/confirm/:token',function(req,res){
         
-        var tocken=req.params.tocken;
+        var tocken=req.params.token;
         
         dal.activateUser({tocken:tocken},function(err,response){
             
-            if (err !=null)
+            if (!err)
             {
                 console.log('%s,%s','activation response',JSON.stringify(response));    
-                return res.send(response.errorMessage);
+                 res.render('account/activate',{title:"User account activation",result:response[0]});
             }
             
             else
             {
-                return res.send(err);
+                 console.log(JSON.stringify(err));
+                 res.render('account/activate',{result:err});
                 
             }
-        })
-        
-        
-        
+        });
         
     }) ;
     
@@ -256,6 +310,12 @@
         
         
     }) ;
+    
+     app.get('/api/account/isloggedin/', function(req, res, next) {
+       var result = (req.isAuthenticated()===true?{result:'ok'}:{result:'no'});
+       
+       res.send(result);
+    });
 
 };
 

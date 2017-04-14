@@ -117,13 +117,18 @@
 })
 
 <script type="text/javascript">
+/*global util 
+global io
+global $
+*/
+
       $(document).ready(function () {
          
    //    setTimeout(function() { getStoryComments(3); }, 100);
    
    	setTimeout(function() { 
    		
-   		getStoryComments({id:3,diverr:'#divError'},function(err){
+   		util.getStoryComments({id:3,diverr:'#divError'},function(err){
    		 $('#divError').html(err);
    		    
    		},function(data){
@@ -134,9 +139,7 @@
    	,100);
           
    
-/*global io
-global $
-*/
+
 var socket=io();
  socket.on('live-tweets',function(tweets){
     
@@ -167,7 +170,7 @@ var socket=io();
           mapTypeId: 'terrain'
         });
 
-      alert(map);
+     // alert(map);
 		var data={"data":[
 							{"coordinates":[51.5597,0.0708]}
 							,{"coordinates":[47.6801,-122.1206]}
@@ -178,7 +181,7 @@ var socket=io();
 
   function plotmap(results) {
         for (var i = 0; i < results.data.length; i++) {
-			alert(i);
+			//alert(i);
           var coords = results.data[i].coordinates;
           var latLng = new google.maps.LatLng(coords[0],coords[1]);
 			

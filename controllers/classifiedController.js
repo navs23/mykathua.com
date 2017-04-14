@@ -44,6 +44,32 @@
             
         });
         
+        app.post("/classified/save",function(req,res,next){
+             
+             //res.send({result:'pass'});
+            //console.log('%s,%s',req.body.userId,req.params.userId);
+            
+            dal.saveClassifiedAd(req.body,function(data){
+                    
+                  //res.render("classified/index",{title:"classified",data:data});
+                  res.send({error:null,result:'pass'});
+                
+            },
+                function(err){
+                console.log('error....');
+                res.send({error:err,result:'fail'});
+                
+                //return next(err);
+                
+            }
+            );
+            
+          
+           
+            //saveClassifiedAd
+           
+            
+        });
         
 
     };

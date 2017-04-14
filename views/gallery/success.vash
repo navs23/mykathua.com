@@ -1,0 +1,60 @@
+@html.extend('layout',function(model){
+
+@html.block("css",function(){
+<link rel="stylesheet" href="/resources/css/jquery.excoloSlider.css"/>
+
+});
+@html.block("js",function(){
+<script src="/resources/js/Excolo-slider/jquery.excoloSlider.js"></script>  
+<script src="/resources/js/instagram.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-instagram/0.3.1/instagram.min.js"></script>
+
+
+
+});
+
+@html.block("metadata",function(model){
+<meta name="keywords" content="kathua pictures,kathua images,kathua tourism, kathua popular images,view stunning kathua images"/>
+
+})
+
+@html.block("main",function(model){
+    @if (model.error){
+        <p class="text-error"> error occured:@model.error</p>
+        }
+    <h1>@model.title</h1>
+<h3>Photo uploaded successfully</h3>
+
+<p><a href='/gallery/'>Click here to go back to gallery</a>.
+</p>
+
+        
+<div class="container">
+<div class="row-fluid" style="border:1px dotter black;">
+    
+<div id="slider" class="span12" style="border:1 solid red">
+    
+
+<img src="/showimage/@model.data.id"/>
+</div>
+
+</div>
+</div>
+
+})
+
+})
+
+<script type="text/javascript">
+/* global $
+global util    
+*/
+$(document).ready(function () {
+    
+    
+
+
+});
+
+
+</script>

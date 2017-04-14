@@ -14,12 +14,12 @@
         }
     }
     
-    data.init=function(user){
+  data.init=function(user){
     
     _user=user;
     }
     
-    data.getUsers = function(next){
+  data.getUsers = function(next){
     
     sql.connect(config).then(function() {
     var qry="select Firstname+ ' ' + lastname as Name,convert(varchar,CreatedDate,106) as [Member Since],isnull(Comments,'') as Notes from mykth.[User] with (nolock)"
@@ -42,7 +42,7 @@
    
     // end getusers
     
-    data.getStories  = function(param,cb){
+  data.getStories  = function(param,cb){
     
     sql.connect(config).then(function() {
     
@@ -64,7 +64,7 @@
     
     }
     
-    data.getStory  = function(param,fnSuccess,fnError){
+  data.getStory  = function(param,fnSuccess,fnError){
     
     sql.connect(config).then(function() {
     
@@ -93,8 +93,8 @@
     
     }
     
-    // get comments
-    data.getStoryComments  = function(option,cb){
+  // get comments
+  data.getStoryComments  = function(option,cb){
         
        sql.connect(config).then(function() {
         /*
@@ -140,9 +140,9 @@
     });
      
     }
-    // save story comments
+  // save story comments
     
-    data.saveStoryComments  = function(data,cb){
+  data.saveStoryComments  = function(data,cb){
     
     sql.connect(config).then(function() {
     /*
@@ -176,7 +176,7 @@
      
     }
     
-    data.saveWebHit  = function(data,fnSuccess,fnError){
+  data.saveWebHit  = function(data,fnSuccess,fnError){
     
     sql.connect(config).then(function() {
     
@@ -196,7 +196,7 @@
      
     }
     // like
-    data.getWebHit  = function(data,fnSuccess,fnError){
+  data.getWebHit  = function(data,fnSuccess,fnError){
     
     sql.connect(config).then(function() {
     
@@ -214,7 +214,7 @@
      
     }
     
-    data.upVoteStoryComment  = function(data,fnSuccess,fnError){
+  data.upVoteStoryComment  = function(data,fnSuccess,fnError){
     // console.log(JSON.stringify(data));
     sql.connect(config).then(function() {
     /*
@@ -243,11 +243,11 @@
     
     }
     
-    //insert into [mykth].[StoryCommentsLike](StoryCommentsLikeId,StoryCommentsId,UserName) values ()
+  //insert into [mykth].[StoryCommentsLike](StoryCommentsLikeId,StoryCommentsId,UserName) values ()
     
-    //select [Id] ,[Dated],[UserId],[Heading],[CategoryCode],	[Advert],[PhoneNumber],	[EmailAddress] from [mykth].[Classified] with(nolock) order by category, dated desc
+  //select [Id] ,[Dated],[UserId],[Heading],[CategoryCode],	[Advert],[PhoneNumber],	[EmailAddress] from [mykth].[Classified] with(nolock) order by category, dated desc
     
-    data.getClassifiedAds  = function(param,fnSuccess,fnError){
+  data.getClassifiedAds  = function(param,fnSuccess,fnError){
     
     sql.connect(config).then(function() {
     
@@ -264,7 +264,7 @@
     
     };
     
-    data.getMessages  = function(cb){
+  data.getMessages  = function(cb){
     
     sql.connect(config).then(function() {
     
@@ -283,8 +283,7 @@
     
     };
     
-    
-    data.saveClassifiedAd  = function(param,fnSuccess,fnError){
+  data.saveClassifiedAd  = function(param,fnSuccess,fnError){
     
     sql.connect(config).then(function() {
     
@@ -293,13 +292,13 @@
         
         //qry+= param.id + ",";
         qry+= "'" + param.userId + "','";
-        qry+=param.heading + "','";
-        qry+=param.categoryCode + "','";
-        qry+=param.advert + "','";
-        qry+=param.phonenumber + "','";
-        qry+=param.emailaddress + "'";
+        qry+=param.title + "','";
+        qry+=param.category + "','";
+        qry+=param.description + "','";
+        qry+=param.phone + "','";
+        qry+=param.email + "'";
         qry+=")";
-        //console.log(qry);
+        console.log(qry);
         var request = new sql.Request();
         
         request.query(qry)
@@ -309,7 +308,7 @@
     
     }
     
-    data.saveMessage  = function(param,cb){
+  data.saveMessage  = function(param,cb){
     
     sql.connect(config).then(function() {
         
@@ -342,7 +341,7 @@
     
     };
     
-    data.saveJob  = function(jobItem,fnSuccess,fnError){
+  data.saveJob  = function(jobItem,fnSuccess,fnError){
     
     sql.connect(config).then(function() {
         /*
@@ -374,7 +373,7 @@
     
     }
     
-    data.executeSql  = function(cb){
+  data.executeSql  = function(cb){
     
     sql.connect(config).then(function() {
        
@@ -416,7 +415,7 @@
     
     }
     
-    data.saveNews=function(news,cb)    {
+  data.saveNews=function(news,cb)    {
     
     
     sql.connect(config).then(function() {
@@ -458,7 +457,8 @@
     
     }
     // start
-     data.clearNews=function(cb)    {
+  
+  data.clearNews=function(cb)    {
     
     
     sql.connect(config).then(function() {
@@ -476,7 +476,7 @@
      }
     // end
     
-     data.pushNewsFromTempToMain=function(cb)    {
+  data.pushNewsFromTempToMain=function(cb)    {
     
     
     sql.connect(config).then(function() {
@@ -492,7 +492,8 @@
 		});
     });
      }
-    data.getNewsFromDb=function(cb)    {
+    
+  data.getNewsFromDb=function(cb)    {
     sql.connect(config).then(function() {
     
     var qry="select * from  mykth.newsItems order by newssource";
@@ -512,14 +513,31 @@
     
     }
 
-
   data.getGalleryImages  = function(param,cb){
     
     sql.connect(config).then(function() {
     
-    var qry="select id,dated,caption as text,image_text,image_path as src from [mykth].[gallery] where image_path is not null";
+    var qry="select id,dated,caption as text,image_text,image_path as src,isnull(username,'system') as username"
    
-    //console.log(qry);
+    qry += " from [mykth].[gallery] where image_path is not null";
+    
+    
+   qry = ";with cte as ( select row_number() over(order by id) as rowid, id,dated,caption as text,image_text,image_path as src,isnull(username,'system') as username,convert(varchar,dated,106) as upload_date";
+var start= 1;
+if (param.page <=1 ) start =1 
+else (start = (param.page - 1) * 5);
+
+var end = (param.page * 5) || 5;
+qry += " from [mykth].[gallery] with(nolock) where image_path is not null)";
+qry += ",comments as ( select GalleryImageId, count(1) as comment_count from mykth.GalleryImageComment with(nolock) group by GalleryImageId )";
+qry += " select a.*, isnull(b.comment_count,0) as comment_count  from cte a left join comments b on a.id = b.galleryImageId"
+qry += " where (a.rowid between " + start + " and " + end + ")";
+    
+    
+    if (param.id)
+   qry +=' and (id = ' + param.id +')';
+   
+    console.log(qry);
     var request = new sql.Request();
     
     request.query(qry)
@@ -535,16 +553,19 @@
     sql.connect(config).then(function() {
    
     // var qry="select t.name,c.name from sys.tables t inner join sys.columns c on t.object_id=c.object_id where t.name like '%story%'";
-    var qry="insert into [mykth].[gallery](caption,image_text,image_path)";
+    var qry="insert into [mykth].[gallery](caption,category,username,image_text,image_path)";
     
-    qry+="  values ('" + param.caption +"','" ;
-    qry+= param.image_text +"','" ;
-    qry+= param.image_path + "')";
+    qry+="  values ('" + param.caption.toString().replace("'","''") +"','" ;
+     qry+= param.category +"','" ;
+     qry+= param.userName +"','" ;
+    qry+= param.image_text.toString().replace("'","''")  +"','" ;
+    qry+= param.image_path + "');select * from mykth.gallery where id =scope_identity();";
     
+    console.log(qry);
     var request = new sql.Request();
     
     request.query(qry)
-        .then(function(recordset) {cb(null,data);})
+        .then(function(recordset) {cb(null,recordset);})
         .catch(function(err) {cb(err);});
     });
     

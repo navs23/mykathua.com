@@ -9,7 +9,7 @@ var passport = require('passport');
 var flash    = require('connect-flash');
 var methodOverride = require('method-override');
 //var sockethelper = require('./helper/socket.js');
-
+var bodyParser = require('body-parser');
 var emailHelper = require('./helper/mail.js');
 var auth = require('./helper/auth.js');
 
@@ -64,7 +64,7 @@ app.configure(function() {
      
     process.env.SENDGRID_USER='mykathua';
     
-    process.env.BASE_WEBSITE_URL='https://navs-navs23.c9users.io';
+    process.env.BASE_WEBSITE_URL='https://navs-navs23.c9users.io/account/confirm/';
     
     process.env.mode = "debug";
     
@@ -79,7 +79,7 @@ else
     process.env.TWITTER_ACCESS_TOKEN_SECRET='WJSubhpmVHZ3XErI8kueh8TOVlPxnp8gqOeLcokryxoaV';
     process.env.SENDGRID_API_KEY='d1H4OpMPSn-P3wEpGR6g1A';
     process.env.SENDGRID_USER='mykathua';
-    process.env.BASE_WEBSITE_URL='http://www.mykathua.com';
+    process.env.BASE_WEBSITE_URL='http://www.mykathua.com/account/confirm/';
     process.env.GOOGLE_API_KEY='AIzaSyDc2SwSwRntH9m1e21OL8btHcxl3TPwwI0';
     process.env.mode = "prod";
 }

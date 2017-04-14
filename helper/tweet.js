@@ -32,9 +32,10 @@
     
       for(var i=0;i<tweetCount;i++)
         {
-        
+         tweet=data.statuses[i];
+        if (tweet.text.indexOf('tumenevavlena')!=-1) continue;
             //temp ='';        
-            tweet=data.statuses[i];
+           
             temp_data = {
             user_name: tweet.user.name,
             date: dating(tweet.created_at),
@@ -46,9 +47,9 @@
         };
            temp +='<li class="tweet">' + templating(temp_data) + '</li>';
           
-           
+        
         }
-        console.log(temp);
+        //console.log(temp);
         setTimeout(function(){
             
             cb(null,temp);
