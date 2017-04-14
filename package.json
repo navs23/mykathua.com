@@ -35,6 +35,7 @@
     "goo.gl": "^0.1.4",
     "instafeed.js": "^1.4.1",
     "jplayer": "^2.9.2",
+    "kloudless": "git://github.com/Kloudless/kloudless-node.git",
     "mailgun-js": "^0.7.11",
     "method-override": "^2.3.5",
     "moment": "^2.18.0",
