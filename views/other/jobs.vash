@@ -78,16 +78,15 @@
 	/*global io
 	global socket
 	global getStoryComments
+	global util
 	*/
      $(document).ready(function () {
     
      socket.emit('page',{pagename:'job',event:'arrived'});
-         
-    getStoryComments({id:5,diverr:'#divError'},function(err){
-   		
-   	
-   		
-   		//$('#divError').html(err);
+     
+    util.getStoryComments({id:5,diverr:'#divError'},function(err){
+   		if (!err)
+   	        $('#divError').html(err);
    		
    		
    	},function(data){
@@ -111,12 +110,12 @@
 
 });
 
-var showJobDetails=(e,url)=>{
-   //alert(url);
+var showJobDetails=function(e,url){
+   alert(url);
     //alert($(e).text());
     url ='/job/details?target=' + url;
     var html=getJobText(url)
-    
+    alert(html);
    $(e).html(html);
     
     

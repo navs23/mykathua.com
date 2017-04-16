@@ -119,6 +119,7 @@ return {
     }
     ,getStoryComments: function(options,cberror,cbsuccess)
     {
+        //alert(JSON.stringify(options));
         /*
         configureComments({
         Id:options.id,  
