@@ -64,7 +64,7 @@ app.configure(function() {
      
     process.env.SENDGRID_USER='mykathua';
     
-    process.env.BASE_WEBSITE_URL='https://navs-navs23.c9users.io/account/confirm/';
+    process.env.BASE_WEBSITE_URL='http://www.mykathua.com/account/confirm/';
     
     process.env.mode = "debug";
     
