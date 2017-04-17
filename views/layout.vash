@@ -89,10 +89,10 @@
                 <li><a href="/jobs/" class="menuitem"><i class="fa fa-handshake-o fa-1x" aria-hidden="true"></i>&nbsp;Jobs</a></li>
                 <li><a href="/directory/" class="menuitem"><i class="fa fa-address-book fa-1x" aria-hidden="true"></i>&nbsp;Useful Contacts</a></li>
                 <li><a href="/trainstatus/" class="menuitem"><i class="fa fa-train fa-1x" aria-hidden="true"></i>&nbsp;Live Train Status</a></li>
-                 <li><a href="/classified/" class="menuitem">Classified</a></li>
+                 
                 @if(model.user != undefined && model.user.displayName == 'kathua'){
                  <li><a href="/bdc/" class="menuitem">Blood Donor Club</a></li>
-                 
+                 <li><a href="/classified/" class="menuitem">Classified</a></li>
                    <li><a href="/account/" class="menuitem">Fellow KATHUAITES</a></li>
                    <li><a href="/advertise/" class="menuitem">Advertise</a></li>
                    <li class="menu-item dropdown">
