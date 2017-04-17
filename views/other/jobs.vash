@@ -23,7 +23,9 @@
             
            <div class="row">
                <div class="col-md-12 ">
-           <div id='@e.id' class="collapse" style="background-color:#f9f2f4;padding:5px;border:1px solid black;"></div>
+           <div id='@e.id' class="collapse" style="background-color:#f9f2f4;padding:5px;border:2px solid black;">
+               
+           </div>
            </div>
            </div>
        </div>
@@ -111,14 +113,17 @@
 });
 
 var showJobDetails=function(e,url){
-   //alert(url);
-    //alert($(e).text());
+    $(e).empty();
+     $(e).html('<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><i>loading...</i>');
+   setTimeout(function(){
     url ='/job/details?target=' + url;
+   
     var html=getJobText(url);
    
    
-   $(e).html(html);
-    
+    $(e).html(html);
+    //$(this).text('read less');
+   },300);
     
 }
 
