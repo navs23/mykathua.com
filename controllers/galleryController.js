@@ -117,6 +117,7 @@
                      console.log(err);
                       res.render("gallery/success",{error:JSON.stringify(err),data:{}});
                       
+                      
                     
                 }
                 

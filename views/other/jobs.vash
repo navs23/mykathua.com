@@ -17,7 +17,7 @@
           <span class="text-info">@e.position</span>
           </a>
          
-           <p class="text-small">@e.jobText<a href="#" onclick="return showJobDetails('#@e.id','/job/details/@e.link'); " data-toggle="collapse" data-target='#@e.id' ><i>[..Read more]</i></a>
+           <p class="text-small">@e.jobText<a href="#" onclick="return showJobDetails('#@e.id','@e.link'); " data-toggle="collapse" data-target='#@e.id' ><i>[..Read more]</i></a>
             
            </p>
             
@@ -111,11 +111,12 @@
 });
 
 var showJobDetails=function(e,url){
-   alert(url);
+   //alert(url);
     //alert($(e).text());
     url ='/job/details?target=' + url;
-    var html=getJobText(url)
-    alert(html);
+    var html=getJobText(url);
+   
+   
    $(e).html(html);
     
     
@@ -123,7 +124,7 @@ var showJobDetails=function(e,url){
 
 var getJobText=function(url){
 	//alert(url);
-	return getJsonData(url,null);
+	return util.getJsonData(url,null);
 	
 
 	

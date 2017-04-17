@@ -44,7 +44,12 @@ node-cache module added
     console.log('job details link is %s',link);
     
     jobdetails(data.link,function(html){
-     res.send(html); 
+     
+     var $ = cheerio.load(html);
+     console.log($.html());
+     
+     $('center').empty();
+     res.send($.html()); 
      
     },function(err){
       res.send(err);

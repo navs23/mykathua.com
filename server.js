@@ -22,38 +22,23 @@ var liveConnections=0;
 
 
 require('./config/passport')(passport); // pass passport for configuration
-
-app.configure(function() {
-
-    app.use('/', express.static(__dirname + '/'));
-    
-	// set up our express application
-	app.set("env","development");
-	app.set("liveconnections",liveConnections);
-    app.auth=auth;
-   
-    //console.log(JSON.stringify(app.auth));
-
-   // app.use(logger.log);
+app.set("env","development");
+app.set("liveconnections",liveConnections);
+app.auth=auth;
+app.use('/', express.static(__dirname + '/'));
+app.use(express.logger('dev')); // log every request to the console
+app.use(express.cookieParser()); // read cookies (needed for auth)
+app.use(express.bodyParser()); // get information from html forms
 	
-	app.use(express.logger('dev')); // log every request to the console
-	app.use(express.cookieParser()); // read cookies (needed for auth)
-	app.use(express.bodyParser()); // get information from html forms
-	
+app.set("view engine","vash");
 
-
-    app.set("view engine","vash");
-
-
-	// required for passport
-	app.use(express.session({ secret: 'nav33n' })); // session secret
-	app.use(passport.initialize());
-	app.use(passport.session()); // persistent login sessions
-	app.use(flash()); // use connect-flash for flash messages stored in session
-	app.use(methodOverride());
-	//app.use(auth.isLoggedIn);
-	
-	if (app.get('env')=="development"){
+// required for passport
+app.use(express.session({ secret: 'nav33n' })); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash()); // use connect-flash for flash messages stored in session
+app.use(methodOverride());
+if (app.get('env')=="development"){
 
     process.env.TWITTER_CONSUMER_KEY='yBuiGvDaFlNeXdoMjaJAdjvl2';
     process.env.TWITTER_CONSUMER_SECRET='rKD8ZiJ10g5qwHnVrLghnVtDkoRb5q977FTt3N1fn1HYrOaIkY';
@@ -84,7 +69,6 @@ else
     process.env.mode = "prod";
 }
 
-});
 
 process.on('uncaughtException', function (err) {
   console.log('an unhandelled exception has occurred \n %s',err);
