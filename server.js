@@ -5,6 +5,7 @@ var express = require("express");
 var path =require("path");
 
 //var ejsEngine=require("ejs-locals");
+const color = require('colors');
 var passport = require('passport');
 var flash    = require('connect-flash');
 var methodOverride = require('method-override');
@@ -38,6 +39,9 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 app.use(methodOverride());
+
+console.log("your env is %s".blue, process.env.NODE_ENV || "development");
+
 if (app.get('env')=="development"){
 
     process.env.TWITTER_CONSUMER_KEY='yBuiGvDaFlNeXdoMjaJAdjvl2';
@@ -100,7 +104,7 @@ controllers.init(app,passport);
 var server =http.createServer(app);
 
 
-console.log('starting socket io server ');
+console.log('starting socket io server '.blue);
 
 socketService.start(server);
 
