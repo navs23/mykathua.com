@@ -1,65 +1,20 @@
-
 <!DOCTYPE html>
 <html>
-    <head>
-              <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-              <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        
-    </head>
-<body>
-
+  <head>
+    <title>My First React Example</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script>
    
-          <i id='result'></i>
-            <input type="hidden" name="save" value="contact">
-            <button type="submit" id="save" class="btn btn-success">Post your ad</button>
-             <button type="button" id="image" class="btn btn-success">Show Image</button>
-        
-
-        <div id ="result"></div>
-        <div id ="content"></div>
-        <div id="images"></div>
-     </br/>   
-<ul>
-<div>
-<li>
-<img id ="image2" src="../resources/img/play.png" border="none" style="width:20px; height:20px; margin-left: 0px;" onlcick="alert(1);"/>
-<div><i>comments</i></div>
-
-</div>   
-</li>
-</ul>
-</body>
+	   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.min.js"></script>
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
+	     <script src="/node_modules/underscore/underscore.js"></script>
+	   
+  </head>
+  <body>
+    <div id="root"></div>
+	
+    <script type="text/jsx">
+     
+    </script>
+	 <script src="./resources/js/client/util.js" type="text/jsx"></script>
+  </body>
 </html>
-<script type="text/javascript">
-$(document).ready(function(){
-  var display = false;
- 
-  $("#image2").on('click',function(){
-    if (display === true)
-    {
-      $(this).attr("style","width:20px; height:20px; margin-left: 0px;");
-      display = false;
-    }
-    else
-    {
-      $(this).attr("style","width:50px; height:50px; margin-left: 0px;");
-      display = true;
-    }
-     
-     
-  });
-  /*
-  $("#pop-up").on('click',function(){
-   
-     $("#pop-up").toggle(500);
-  });
-  */
-});
-                                                 
-</script>
-
-
-
-
-
-

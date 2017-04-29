@@ -24,20 +24,23 @@
         
         @html.block("css")
          
-      <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         
         
         <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="/resources/js/angular.min.js"></script>
         <script src="/resources/js/util.js"></script>  
-
+        
         <script src="/resources/js/jquery-comments.min.js"></script>  
-         
-         
-         <script src="/socket.io/socket.io.js"></script>
-         
-         <script src="/resources/js/chat/chat.js"></script>  
+         <script src="/node_modules/underscore/underscore.js"></script>
+        
+        <script src="/socket.io/socket.io.js"></script>
+        
+        <script src="/resources/js/chat/chat.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script>
+        
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
         
          
         @html.block("js")
@@ -171,7 +174,7 @@
 }
 
 </footer>
-
+	
 </body> 
 
 <div id="contactUs" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Contact-Us" aria-hidden="true">
@@ -408,3 +411,5 @@ var loginPageRedirect=function(){
 
 
 </script>
+
+ 

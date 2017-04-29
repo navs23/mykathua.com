@@ -14,8 +14,6 @@
 <script src="/resources/js/instagram.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-instagram/0.3.1/instagram.min.js"></script>
 
-
-
 });
 
 @html.block("metadata",function(model){
@@ -33,15 +31,14 @@
 <br/>
         
 <div class="container">
+
 <div class="row-fluid" style="border:1px dotter black;">
     
 <ul style="list-style: none;">
      @model.images.forEach(function(item){
      <li>
-         <!--
-        <a href="#" data-imgsrc="@item.src" class="image-preview" data-caption="@item.text">
-   -->
-  <img class="gallery-image img-rounded" name ="image" src="@item.src" imageId="img-@item.id" id="@item.id" border="none" style="height: 150px; width: 150px;" onclick="showImage(this);" />
+        
+  <img class="gallery-image img-rounded" name ="image" src="@item.src" imageId="img-@item.id" id="@item.id" border="none" style="height: 150px; width: 150px;" onclick="lib.gallery.showImage(this);" />
   <br/>
   <i><small>@item.text uploaded by </small>@item.username on @item.upload_date</i>
 <div>
@@ -86,12 +83,83 @@
 /* global $
 global util    
 */
-
-function showImage(e){
-    var $e = $(e),
-     display =$e.attr('display') || 0;
+(function(){
+   
+    
+    $(document).ready(function () {
+    
+                lib.gallery.wireEvents();
+ 
+        });
+    
+}());
+var lib = lib ||  {} ;
+  lib.gallery = (function(){
+    
+    var refreshComments=function(imgId,cb){
+    //var imgId =images[slideId];
+   var $comment=$("div[name='comments'");
+   
+   $comment.removeAttr('id');
+   $comment.attr('id','divComment' + imgId);
+   
+   
+   
+   util.getGalleryImageomments({id:imgId,diverr:'#divError'},function(err){
+   		
+        cb(err,null);
+   	},function(data){
+   		//alert(data);
+   		cb(null,data);
+   	});
+    
+}
+    
+    var showComments=  function($el){
+        //alert(1);
+    
+    
+    var imageId=$el.data('imageid');
+    var commentId = $el.data('commentid');
+ 
   
-       
+  if ($el.attr('isvisible')==1)
+  {
+      
+       $("div[name='comments'").remove();
+       $el.attr('isvisible',0);
+   
+  }
+ else
+ {
+    
+    $el.attr('isvisible',1);
+    $("div[name='comments'").remove();
+    $el.after("<div name='comments' isvisible='1'><i class='fa fa-cog fa-spin fa-fw'></i></div>")
+    setTimeout(function(){
+    
+    refreshComments(imageId,function(err,data){
+        
+    });    
+      
+  },1000);
+  
+ 
+ }
+    };
+    
+    var wireEvents = function(){
+    
+    $('.acomments').on('click',function(){
+        //alert(2);
+        var $el = $(this);
+        lib.gallery.showComments($el);});
+}
+    
+    function showImage(e){
+    var $e = $(e),
+     display = $e.attr('display') || 0;
+  
     if (display ==1)
     {
      
@@ -118,65 +186,29 @@ function showImage(e){
     }
    
 }
-$(document).ready(function () {
-    
-
- 
- 
-$('.acomments').on('click',function(){
-
-  var $el = $(this);
-    
-   var imageId=$el.data('imageid');
-  var commentId = $el.data('commentid');
-  
-  if ($el.attr('isvisible')==1)
-  {
-   $("div[name='comments'").remove();
-   $el.attr('isvisible',0)
-   
-  }
- else
- {
-   $el.attr('isvisible',1);
-  $("div[name='comments'").remove();
-  $el.after("<div name='comments' isvisible='1'><i class='fa fa-cog fa-spin fa-fw'></i></div>")
-  setTimeout(function(){
-    
-    refreshComments(imageId,function(err,data){
+    return {
         
-    });    
-      
-  },1000);
-  
- 
- }
-});
-
-
-
-
-var refreshComments=function(imgId,cb){
-    //var imgId =images[slideId];
-   $comment=$("div[name='comments'");
-   
-   $comment.removeAttr('id');
-   $comment.attr('id','divComment' + imgId);
-   
-   
-   
-   util.getGalleryImageomments({id:imgId,diverr:'#divError'},function(err){
-   		
-        cb(err,null);
-   	},function(data){
-   		//alert(data);
-   		cb(null,data);
-   	});
+        showComments:showComments,
+        showImage:showImage,
+        wireEvents:wireEvents
+        
+    };
     
-}
+    
+    
+    
+}());
 
 
-});
+
+
+
+
+
+
+
+
+
 
 
 </script>

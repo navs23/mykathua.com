@@ -522,7 +522,7 @@
     qry += " from [mykth].[gallery] where image_path is not null";
     
     
-   qry = ";with cte as ( select row_number() over(order by id) as rowid, id,dated,caption as text,image_text,image_path as src,isnull(username,'system') as username,convert(varchar,dated,106) as upload_date";
+   qry = ";with cte as ( select row_number() over(order by id desc) as rowid, id,dated,caption as text,image_text,image_path as src,isnull(username,'system') as username,convert(varchar,dated,106) as upload_date";
 var start= 1;
 if (param.page <=1 ) start =1 
 else (start = (param.page - 1) * 5);

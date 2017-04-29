@@ -16,6 +16,7 @@ async.series(
           pages.map(function(page){
               
            scraper.crawl4jobs( null, {
+               
             getUrl:function(){return options.url}
             ,jobsWrapperSelector:'article'
             ,sortOrder:1
@@ -41,7 +42,7 @@ async.series(
             {
              
               ictr++;
-              console.log(ictr);
+              console.log(JSON.stringify(data));
               (jobs.push(data));
               if (pages.length == ictr){
                   console.log('final');

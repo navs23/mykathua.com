@@ -42,7 +42,7 @@ app.use(methodOverride());
 
 console.log("your env is %s".blue, process.env.NODE_ENV || "development");
 
-if (app.get('env')=="development"){
+if (process.env.NODE_ENV || "development"){
 
     process.env.TWITTER_CONSUMER_KEY='yBuiGvDaFlNeXdoMjaJAdjvl2';
     process.env.TWITTER_CONSUMER_SECRET='rKD8ZiJ10g5qwHnVrLghnVtDkoRb5q977FTt3N1fn1HYrOaIkY';
@@ -53,7 +53,7 @@ if (app.get('env')=="development"){
      
     process.env.SENDGRID_USER='mykathua';
     
-    process.env.BASE_WEBSITE_URL='http://www.mykathua.com/account/confirm/';
+    process.env.BASE_WEBSITE_URL='https://navs-navs23.c9users.io/account/confirm/';
     
     process.env.mode = "debug";
     
