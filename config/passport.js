@@ -38,8 +38,8 @@ module.exports = function(passport) {
     // =========================================================================
     passport.use(new TwitterStrategy({
 
-        consumerKey     : 'yBuiGvDaFlNeXdoMjaJAdjvl2',
-        consumerSecret  : 'rKD8ZiJ10g5qwHnVrLghnVtDkoRb5q977FTt3N1fn1HYrOaIkY',
+        consumerKey     : '',
+        consumerSecret  : '',
        // callbackURL     : 'http://navs-navs23.c9users.io/auth/twitter/callback'
         callbackURL     : '/auth/twitter/callback'
 
@@ -86,8 +86,8 @@ module.exports = function(passport) {
      passport.use(new FacebookStrategy({
 
         // pull in our app id and secret from our auth.js file
-        clientID        : '1508327992809142',
-        clientSecret    : 'bb939e0489c4caca9167bfc508f77c5b',
+        clientID        : '',
+        clientSecret    : '',
         callbackURL     : '/auth/facebook/callback'
         
 
