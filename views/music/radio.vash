@@ -1,0 +1,78 @@
+    <ul class="stations">
+            <li>
+                <span href="#" title="All India Radio AIR Kathua" class="h4">
+                    <img src="https://onlineradiofm.in/assets/image/radio/100/air-kathua.jpg" class="leftimg" 
+                    alt="All India Radio AIR Kathua 102.2 FM">All India Radio AIR Kathua 102.2 FM</span>
+                <div class="name">From: <span>24 April 1991</span> | Bitrate: <span>51 Kbps</span></div>
+                <div><audio controls >
+                    <source src="https://radioindia.net/radio/air_kathua_radio/icecast.audio" type="audio/ogg">
+                    <source src="https://radioindia.net/radio/air_kathua_radio/icecast.audio" type="audio/mpeg">
+                  Your browser does not support the audio element.
+                  </audio></div>
+                <div class="name">Genre: <span>news,talk.</span></div>
+                <div class="name">Frequency: <span>102.2 FM</span></div>
+                <div class="name">Language: <span>hindi</span></div>
+                <div class="name">Contact number: <span>+91 1922 234888</span></div>
+                </li>
+           
+                <li>
+                    <span  title="All India Radio AIR Jammu" class="h4">
+                        <img src="https://onlineradiofm.in/assets/image/radio/100/top-fm.jpg" class="leftimg" alt="TOP FM India 91.1 FM">All India Radio AIR Jammu</span>
+                        <div class="name">From: <span></span> | Bitrate: <span>51 Kbps</span></div>
+                    <div><audio controls>
+                        <source src="https://radioindia.net/radio/air_jammu_radio/icecast.audio" type="audio/ogg">
+                        <source src="https://radioindia.net/radio/air_jammu_radio/icecast.audio" type="audio/mpeg">
+                      Your browser does not support the audio element.
+                      </audio></div>
+                    <div class="name">Genre: <span>pop,bollywood,talk</span></div>
+                    <div class="name">Frequency:  <span>100.3 FM</span></div>
+                    <div class="name">Language: <span>hindi,urdu,dogri</span></div>
+                    <div class="name">Contact number: <span>079 2687 3914</span></div>
+                    </li>
+                   <li>
+            <span  title="All India Radio Srinagar Kashmir" class="h4">
+                <img src="https://onlineradiofm.in/assets/image/radio/100/radio-kashmir.jpg" 
+                class="leftimg" alt="All India Radio Srinagar Kashmir 102.2 FM">All India Radio Srinagar Kashmir 102.2 FM
+            </span>
+            <div class="name">From: <span>2002</span> | Bitrate: <span>49 Kbps</span></div>
+            <div><audio controls>
+                <source src=" https://radioindia.net/radio/air_srinagar_radio/icecast.audio" type="audio/ogg">
+                <source src=" https://radioindia.net/radio/air_srinagar_radio/icecast.audio" type="audio/mpeg">
+              Your browser does not support the audio element.
+              </audio></div>
+            <div class="name">Genre: <span>classic</span></div>
+            <div class="name">Frequency: <span>102.2 FM</span></div>
+            <div class="name">Language: <span>urdu,hindi,punjabi</span></div>
+           
+            <div class="name">Contact number: <span>+91-11-23421300</span></div>
+            </li>
+            <li>
+                <span  title="Air FM Rainbow" class="h4">
+                    <img src="https://onlineradiofm.in/assets/image/radio/100/all-india-air.png" class="leftimg" alt="Air Rainbow 100.7 FM">Air Rainbow 100.7 FM</span>
+                <div class="name">From: <span>1 February 1993</span> | Bitrate: <span>49 Kbps</span></div>
+                <div><audio controls>
+                    <source src="https://radioindia.net/radio/rainbow_radio/icecast.audio" type="audio/ogg">
+                    <source src="https://radioindia.net/radio/rainbow_radio/icecast.audio" type="audio/mpeg">
+                  Your browser does not support the audio element.
+                  </audio></div>
+                
+                <div class="name">Genre: <span>classic,Pop,Community</span></div>
+                <div class="name">Frequency: <span>100.7 FM</span></div>
+                <div class="name">Language: <span>urdu,hindi,punjabi</span></div>
+                <div class="name">Contact number: <span>+91-11-23421300</span></div>
+                </li>
+                <li>
+                  <span  alt="Radio Vividh Bharati" class="h4"><img src="https://onlineradiofm.in/assets/image/radio/100/vividhbharati.jpg" 
+                    alt="Radio Vividh Bharati" class="leftimg">Radio Vividh Bharati</span>
+                  <div class="name">From: <span> 2 October 1957 </span> | Bitrate: <span> 49 Kbps </span></div>
+                  <div><audio controls>
+                    <source src="https://radioindia.net/radio/vividhbharti/icecast.audio" type="audio/ogg">
+                  
+                  Your browser does not support the audio element.
+                  </audio></div>
+                  <div class="name">Country: <span> India </span></div>
+                  <div class="name">City: <span> Delhi </span></div>
+                  <div class="name">Genre: <span>classic,Pop,Community</span></div>
+                  <div class="name">Language: <span>urdu,hindi,punjabi</span></div>  
+                </li>
+        </ul>
