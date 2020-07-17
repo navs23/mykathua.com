@@ -19,7 +19,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.11.1"
+    "axios": "^0.19.2"
   },
   "gitHead": "5ce1de2119d9571406373f92208c2744b553adfc",
   "bugs": {
