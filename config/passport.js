@@ -38,8 +38,8 @@ module.exports = function(passport) {
     // =========================================================================
     passport.use(new TwitterStrategy({
 
-        consumerKey     : '',
-        consumerSecret  : '',
+        consumerKey     : process.env.TWITTER_CONSUMER_KEY,
+        consumerSecret  : process.env.TWITTER_CONSUMER_SECRET,
        // callbackURL     : 'http://navs-navs23.c9users.io/auth/twitter/callback'
         callbackURL     : '/auth/twitter/callback'
 
@@ -86,8 +86,8 @@ module.exports = function(passport) {
      passport.use(new FacebookStrategy({
 
         // pull in our app id and secret from our auth.js file
-        clientID        : '',
-        clientSecret    : '',
+        clientID        : 'tbd',
+        clientSecret    : 'tbd',
         callbackURL     : '/auth/facebook/callback'
         
 
