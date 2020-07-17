@@ -11,7 +11,7 @@
   "dependencies": {
     "@google-cloud/storage": "^0.8.0",
     "async": "~0.2.8",
-    "axios": "^0.15.3",
+    "axios": "^0.19.2",
     "body-parser": "^1.17.1",
     "bootstrap": "^3.3.6",
     "browserify": "^13.0.0",
