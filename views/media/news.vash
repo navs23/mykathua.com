@@ -1,0 +1,71 @@
+@html.extend('layout',function(model){
+
+@html.block("css",function(){
+<link rel="stylesheet" href="/resources/css/local/media.css"/>
+});
+@html.block("js",function(){
+<script src="/resources/js/local/media.js"></script>  
+
+});
+@html.block("main",function(model){
+    @if (model.error){
+        <p class="text-error"> error occured:@model.error</p>
+        }
+        
+<div class="row">
+   
+    @{
+    
+     
+            @model.news.forEach(function(e){
+            
+             <div class="col col-md-6">
+              @if(e.imgsrc.length>10){
+                        <a href="@e.link" target="_new">
+                     
+                        <img height="150" width="150" class ="img-thumbnail text-center" style="vertical-align:middle;" src="@e.imgsrc"/>
+                        </a>
+                        }
+                       <p>                    
+                       @e.abstract
+                       <span class="text-small">@e.detail<a href="@e.link" target="_new">read more</a></span>
+                       </p>
+                       <span class="small-text-grey">@e.source &nbsp;&nbsp;|&nbsp;&nbsp;@e.postdate</span>
+                       </div>
+           
+                   })
+     }
+</div>
+})
+
+})
+
+<script type="text/javascript">
+  /*global $*/ 
+//$('.video-local').hide();
+$(document).ready(function(){
+        
+        /*global $*/
+	/*global io
+	global socket
+	global getStoryComments
+	*/
+     $(document).ready(function () {
+     socket.emit('page',{pagename:'news',event:'arrived'});
+     socket.on('visitor-count',function(data){
+     if(data.name =='news')
+     {
+     	$('#visitorCount').html('<a href="#" style="text-decoration: none;" class="info">' + data.vistorCount + ' <i class="fa fa-users"></i> '+ 'viewing this page</a>');
+     }
+     	
+     });   
+        
+     $(window).unload(function() {
+  
+		socket.emit('page',{pagename:'news',event:'left'});
+		});
+});
+    });
+
+
+</script>
