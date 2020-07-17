@@ -1,7 +1,7 @@
 @html.extend('layout',function(model){
 @html.block("css",function(){
- <meta name="description" content="mykathua.com, kathua Radio, fm radio kathua, fm kathua,Dogri and hindi music,naveen sharma kathua"/>
- <meta name="description" content="mykathua.com, kathua music,radio online music,folk and bollywood music"/>
+    <meta name="description" content="mykathua.com, kathua Radio, fm radio kathua, fm kathua,Dogri and hindi music,naveen sharma kathua"/>
+    <meta name="description" content="mykathua.com, kathua music,radio online music,folk and bollywood music"/>
 <link rel="stylesheet" href="/node_modules/jplayer/dist/skin/blue.monday/css/jplayer.blue.monday.min.css"/>
 
 
@@ -14,7 +14,7 @@
 <script src="/node_modules/jplayer/dist/jplayer/jquery.jplayer.min.js"></script>  
 <script src="/node_modules/jplayer/dist/add-on/jplayer.playlist.js"></script>  
 <script src="/resources/js/local/media.js"></script>  
-<script src="/resources/js/musicdata.js"></script>  
+<script type='text/javascript' src='//cdn.jsdelivr.net/jquery.marquee/1.3.9/jquery.marquee.min.js'></script> 
 <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 });
 @html.block("main",function(model){
@@ -22,24 +22,16 @@
         <p class="text-error"> error occured:@model.error</p>
         }
         <h3>One stop radio station @@ <a hfref "/music/">www.mykathua.com/music/</a></h3>
-        
        <p>Just sit back,relax and enjoy your favorite music on your favourite Radio station</p>
 <p><i>Don't forget to leave your comments</i></p>
 <div class="row">
-	<table><tr><td><h3>Filter By Genre</h3></td><td>&nbsp;<select class="genre-filter">
-		<option value='hindi'>All</option>
-		<option value='bollywood'>Bollywood</option>
-		<option value='punjabi'>Punjabi</option>
-		<option value='rock'>Rock</option>
-	
-		<option value ='80s'>80s</option>
-		<option value='hip hop'>Hip Hop</option>
-		<option value='reggae'>Reggae</option>
-		<option value='meditation'>Meditation/Bhajan</option>
-		
-		</select></td></tr>
-	
-		</table></div>
+	<table><tr><td><strong>Filter</strong></td><td>&nbsp;<select class="genre-filter">
+		<option>All</option>
+		<option>Dogri</option>
+		<option>Bollywood</option>
+		<option>Rock</option>
+		<option>Bhajan</option>
+		</select></td></tr></table></div>
 <div class="row">
 	<br/>
 </div>
@@ -95,8 +87,8 @@
    
 </div>
 <div class="jp-stats">
+<div class="marquee"></div>
 </div>
-
 <div class="row">
     <div class="col-md-12">
 
@@ -107,7 +99,7 @@
         
     </div>
 
-<div id="defaultRadio" station='@model.station'></div>
+
 
 
 
@@ -117,36 +109,42 @@
 
 <script type="text/javascript">
 	var ojplayer=null;
-	var radioStations=null;
 	/*global $*/
-	/*global io
-	global socket
-	*/
-
-	//var socket = io();
-
+	/*global io*/
+	var marqueeString='';
+	var socket = io();
+	var bMarqueeStarted=false;
+	var marqueeOption={
+	//speed in milliseconds of the marquee
+	duration: 5000,
+	//gap in pixels between the tickers
+	gap: 50,
+	//time in milliseconds before the marquee will start animating
+	delayBeforeStart: 0,
+	//'left' or 'right'
+	direction: 'left',
+	//true or false - should the marquee be duplicated to show an effect of continues flow
+	duplicated: true
+	};
 	
      $(document).ready(function () {
+    
      
-     socket.emit('page',{pagename:'music',event:'arrived'});	
-     
-   	 var defaultStation =$('#defaultRadio').attr('station');
-	 renderRadioPlayer("#jquery_jplayer_1","#jp_container_1",getRadioStations('hindi'));
      
      $('.genre-filter').on('change',function(e){
      	
-     
-     	var stations= getRadioStations($('.genre-filter').val().trim());
-     	 	
+     	 var stations=getRadioStations(function(e){if (e.genre == $('.genre-filter').val() || $('.genre-filter').val() =='All') return e;});
+     	 
      	 $("#jquery_jplayer_1").jPlayer( "destroy");
      	 
      	 renderRadioPlayer("#jquery_jplayer_1","#jp_container_1",stations);
-     	 	
-    
      	
      });
      
-     socket.on('song-nowplaying', function(data) {
+     renderRadioPlayer("#jquery_jplayer_1","#jp_container_1",getRadioStations(function(e){if (e.genre == $('.genre-filter').val() || $('.genre-filter').val() =='All')return e;}));
+     
+        
+        socket.on('song-nowplaying', function(data) {
         	
         	for(var i =0;i<data.length;i++)
         	{
@@ -162,27 +160,15 @@
         	}
 		
         });
-        
-     socket.on('visitor-count',function(data){
-     if(data.name =='music')
-     {
-     	$('#visitorCount').html('<a href="#" style="text-decoration: none;" class="info">' + data.vistorCount + ' <i class="fa fa-users"></i> '+ 'viewing this page</a>');
-     }
-     	
-     });   
-        
-     $(window).unload(function() {
-  
-		socket.emit('page',{pagename:'music',event:'left'});
-		});
-        
-    });
-
+     
+});
 
    		
    	getStoryComments({id:4,diverr:'#divError'},function(err){
    		
    	
+   		
+   		//$('#divError').html(err);
    		
    		
    	},function(data){
@@ -191,18 +177,113 @@
    	});
 
 
-function getRadioStations(genre){
+//var ga= function(s, e, t, ctl, url){}
 
-var temp =getRadionStationList(genre);
-
-return temp;
-}
-function renderRadioPlayer(playerdiv,containerdiv,radioStations){
+function getRadioStations(filter){
+var radioStations= 
+[
+		/*
+			{
+			genre:"Dogri",
+			title:"Dogri Songs",
+			mp3:"http://74.50.122.103:7738/;stream/1;"
+			
+		
+		}
+		,*/
+		{
+			genre:"Bollywood",
+			title:"JK City FM",
+			mp3:"http://69.175.94.98:8138/;"
+		
+		},
+		{
+			genre:"bollywood",
+			title:"Bollywood Sada Bahar",
+			mp3:"http://192.240.102.133:8512/;stream/1;"
+		},
+		{
+			genre:"Bollywood",
+			title:"Hits of Bollywood",
+			mp3:"http://50.7.77.115:8174/;"
+		},
+		{
+			genre:"Bollywood",
+			title:"Hindi Evergreen Hits",
+			mp3:"http://50.7.77.114:8296/;"
+		
+		},
+		
+		{
+		genre:"Bollywood",
+			title:"Radio HSL",
+			mp3:"http://50.7.70.66:8485/;"
+		
+		}
+		/*,{
+		genre:"Dance",
+			title:"Dancers music Radio",
+			mp3:"http://uk1.internet-radio.com:8187/;stream"
+		}*/
+		,
+		
+		{
+			genre:"Bollywood",
+			title:"Kishore Kumar Radio"
+			,mp3:"http://208.115.222.203:8834/;"
+			
+		},
+		{title:"Radio Central",mp3:"http://176.31.107.8:8459/;"},
+		{
+			genre:"Bollywood",
+			title:"Hits Of Bollywood",
+			mp3:"http://50.7.77.115:8174/;"
+		
+		}
+		,{
+			genre:"Bollywood",
+			title:"Non-stop hits"
+			,mp3:"http://198.178.123.14:8216/;stream/1"
+			
+		}
+		
+		,{
+				genre:"Bhajan",
+			title:"OM Radio - Chillout, Ambient, Instrumental, Meditative"
+			,mp3:"http://178.168.28.148:8000/"
+			
+		}
+		,
+		{
+				genre:"Bhajan",
+			title:"Bhajan Radio"
+			,mp3:"http://188.165.192.5:8159/;stream/1"
+			
+		}
+			,
+		{
+			genre:"Bhajan",
+			title:"Radio Jai Ho - Bhajan"
+			,mp3:"http://198.105.214.140:7868/;stream/1"
+			
+		}
+		
+			,
+		{
+			genre:"Rock",
+			title:"Classic Rock Florida - SHE Radio"
+			,mp3:"http://us1.internet-radio.com/proxy/dougclassicrock?mp=/;"
+			
+		}
+		
+	];
 	
+	return radioStations.filter(filter);
+}
+var renderRadioPlayer= function(playerdiv,containerdiv,radioStations){
 	 ojplayer=new jPlayerPlaylist({
 		jPlayer: playerdiv,
-		cssSelectorAncestor: containerdiv,
-		poster: "http://www.jplayer.org/audio/poster/Miaow_640x360.png"
+		cssSelectorAncestor: containerdiv
 	},radioStations, {
 		swfPath: "/node_modules/jplayer/dist/jplayer",
 		supplied: "mp3",
@@ -214,56 +295,6 @@ function renderRadioPlayer(playerdiv,containerdiv,radioStations){
 	});
 	
 }
-
-$("#jquery_jplayer_1").bind($.jPlayer.event.play, function(event) { // Add a listener to report the time play began
-  
- playStopPlayer({'event':'play'});
- 
-  
-});
-
-$("#jquery_jplayer_1").bind($.jPlayer.event.pause, function(event) { // Add a listener to report the time play began
-  
-  playStopPlayer({'event':'pause'});
-  
-});
-
-$("#jquery_jplayer_1").bind($.jPlayer.event.suspend, function(event) { // Add a listener to report the time play began
-  playStopPlayer({'event':'suspend'});
-  
-});
-
-$("#jquery_jplayer_1").bind($.jPlayer.event.abort, function(event) { // Add a listener to report the time play began
-   playStopPlayer({'event':'abort'});
-  
-});
-
-$("#jquery_jplayer_1").bind($.jPlayer.event.stalled, function(event) { // Add a listener to report the time play began
-   playStopPlayer({'event':'stalled'});
-  
-});
-
-function playStopPlayer(item){
-	/*
-//	alert(playstop);
-	var icount=0;
-	if(playstop==1)
-	{
-		icount=1;
-	 $('#nowplaying').remove();
-	 $('li.jp-playlist-current').append('<span id ="nowplaying"> playing</span>');
-	}
-	 else if(playstop==2) 
-	 {
-	 $('#nowplaying').remove();
-	 
-	 icount=-1;
-	 }
-	 */
-	 socket.emit('station-play',item);
-}
-
-/*
 /*
 var getRadioStats=function(){
 	
