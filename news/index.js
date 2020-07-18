@@ -24,14 +24,14 @@
     
     setInterval(function(){
         
-        console.log('mem used %d',process.memoryUsage().heapUsed()/1000000);
+       // console.log('mem used %d',process.memoryUsage().heapUsed()/1000000);
         if(bBuildingNews) {
             console.log('prior build proces is still running');
             return;}
          newsAggregator(dbNews,function(err,newsItems){
              if (err == null){
                 console.log('news aggregation re-build finished');
-                  console.log('mem used after %d',process.memoryUsage().heapUsed()/1000000);
+                //console.log('mem used after %d',process.memoryUsage().heapUsed()/1000000);
                 
              }
             else 
