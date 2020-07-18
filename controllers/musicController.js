@@ -13,7 +13,7 @@
        
        //music.getStationList({genere:req.params.genere || 'hindi'},function(err,stations){
     
-        res.render("music/index2",{title:title,"user":req.user,"html":"",station:req.params.station});
+        res.render("music/index",{title:title,"user":req.user,"html":"",station:req.params.station});
     
 //});
      
