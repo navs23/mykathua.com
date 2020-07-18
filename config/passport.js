@@ -38,8 +38,8 @@ module.exports = function(passport) {
     // =========================================================================
     passport.use(new TwitterStrategy({
 
-        consumerKey     : process.env.TWITTER_CONSUMER_KEY,
-        consumerSecret  : process.env.TWITTER_CONSUMER_SECRET,
+        consumerKey     : process.env.TWITTER_CONSUMER_KEY || 'tbd',
+        consumerSecret  : process.env.TWITTER_CONSUMER_SECRET || 'tbd',
        // callbackURL     : 'http://navs-navs23.c9users.io/auth/twitter/callback'
         callbackURL     : '/auth/twitter/callback'
 
