@@ -11,7 +11,7 @@
   "dependencies": {
     "@google-cloud/storage": "^0.8.0",
     "async": "~0.2.8",
-    "axios": "^0.15.3",
+    "axios": "^0.19.2",
     "body-parser": "^1.17.1",
     "bootstrap": "^3.3.6",
     "browserify": "^13.0.0",
@@ -37,9 +37,11 @@
     "jplayer": "^2.9.2",
     "jsx-transform": "^2.3.0",
     "kloudless": "git://github.com/Kloudless/kloudless-node.git",
-    "mailgun-js": "^0.7.11",
+    "mailgun-js": "^0.22.0",
+    "memory-cache": "^0.2.0",
     "method-override": "^2.3.5",
     "moment": "^2.18.0",
+    "mongoose": "^5.9.25",
     "mssql": "^3.3.0",
     "multer": "^1.2.0",
     "nedb": "^1.8.0",
@@ -62,12 +64,10 @@
     "socket.io": "^1.4.8",
     "twitter": "^1.2.5",
     "underscore": "^1.8.3",
-    "vash": "^0.11.3",
-    "memory-cache": "^0.2.0",
-    "mongoose": "^5.9.9"
+    "vash": "^0.11.3"
   },
   "scripts": {
-    "start": "NODE_ENV=Production node server.js"
+    "start": "node server.js"
   },
   "devDependencies": {},
   "license": "ISC",
