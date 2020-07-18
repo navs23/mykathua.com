@@ -4,6 +4,22 @@
 <link rel="stylesheet" href="/resources/css/local/home.css"/>
 <link rel="stylesheet" href="/resources/css/local/media.css"/>
 <link rel="stylesheet" href="/resources/css/marquee.css"/>
+<style>
+
+.stations {
+    list-style-type: none;
+    padding-left: 1px;
+}
+.stations span.h4 {
+    color: #428bca;
+    font-weight: bold;
+    font-size:0.75em;
+}
+.stations img.leftimg{
+    border-radius: 10px;;
+
+}
+</style>
 });
 @html.block("js",function(){
 <script src="/resources/js/local/media.js"></script>  
@@ -81,9 +97,32 @@
 
 
 @html.block("leftSideBar",function(model){
-<div class="border-right">
-@html.raw(model.weather)
-</div>
+
+<ul class="stations">
+            <li>
+          <span href="#" title="All India Radio AIR Kathua" class="h4">
+          <img src="https://onlineradiofm.in/assets/image/radio/100/air-kathua.jpg" class="leftimg" 
+          alt="All India Radio AIR Kathua 102.2 FM">
+          <br/>
+          All India Radio AIR Kathua 102.2 FM
+          </span>
+          <div class="name">From: <span>24 April 1991</span> | Bitrate: <span>51 Kbps</span></div>
+          <div><audio controls >
+          <source src="https://radioindia.net/radio/air_kathua_radio/icecast.audio" type="audio/ogg">
+          <source src="https://radioindia.net/radio/air_kathua_radio/icecast.audio" type="audio/mpeg">
+          Your browser does not support the audio element.
+          </audio></div>
+          <div class="name">Genre: <span>news,talk.</span></div>
+          <div class="name">Frequency: <span>102.2 FM</span></div>
+          <div class="name">Language: <span>hindi</span></div>
+          <div class="name">Contact number: <span>+91 1922 234888</span></div>
+          </li>
+              <li>
+              <br/>
+                @html.raw(model.weather)
+                </li>
+</ul>
+
 
 })
 
