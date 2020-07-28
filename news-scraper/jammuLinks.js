@@ -45,7 +45,7 @@ function scrapeNews(html,selector,startId){
                    if (title){
                    newsItem.id= artcileId++;
                    newsItem.title= title;
-                   newsItem.link=$a.attr('href');
+                   newsItem.link= "http://www.jammulinksnews.com/" $a.attr('href');
                    newsItem.imgsrc = image.slice(imageIndex+6,image.length-2) || ''; 
                    newsItem.postdate=  $(this).find('time').attr('datetime') || new Date()  ;;
                    newsItem.author = $(this).find('span.td-post-author-name').text()   ;
