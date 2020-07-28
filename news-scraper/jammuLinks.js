@@ -54,7 +54,7 @@ function scrapeNews(html,selector,startId){
                   if(newsItem.abstract == "")
                    newsItem.abstract = newsItem.title;
    
-                   newsItem.source= "jammulinks.com"
+                   newsItem.source= "jammulinksnews.com"
                    news.push(newsItem);
                    }
                });
