@@ -5,7 +5,27 @@
         <p class="text-error"> error occured:@model.error</p>
         }
     <p><strong>Important names and contact details</strong>  - <i>sourced from official records</i></p>
-<div>@html.raw(model.data)</div>
+ <table class="table"><thead>
+            <tr>
+
+                                          <th scope="col">Name</th>
+                            <th scope="col">Designation</th>
+                            <th scope="col">Address</th>
+                            <th scope="col">Phone</th>
+                          </tr>
+          </thead>
+          <tbody>
+           @model.data.forEach(function(e){
+               <tr>
+            <td>@e.name</table>
+            <td>@e.designation</table>
+            <td>@e.address</table>
+            <td>@e.phone</table>
+            </tr>
+
+ });
+          </tbody>
+          </table>
 
 })
 @html.block("leftSideBar",function(model){
