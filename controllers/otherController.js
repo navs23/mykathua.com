@@ -4,6 +4,8 @@
     var dex =require("../helper");
     var dal =require("../sql");
     var async = require("async");
+    const cacheMiddleware = require("../middleware/cache");
+    let cacheExpiryTime = process.env.cache_expiry_time || 300;
     otherController.init= function(app){
         
      app.get("/trainstatus/",function(req,res){
@@ -107,60 +109,40 @@
         });
         
      // direcotry listing
-     app.get("/directory/",function(req,res,next){
+     app.get("/directory/",cacheMiddleware(cacheExpiryTime),function(req,res,next){
      try{
-         var url='http://www.kathua.nic.in/contacts.htm';
+         var url='https://kathua.nic.in/about-district/whos-who/';
          console.log(url);
          
          dex.scrape(url,function(html){
-         // console.log(html);
-         var tBody='';
-         var $=cheerio.load(html);
-        var tHead='';
-         var temp='';
-        var k=0;
         
-         $('div.mainContent table').next().next().find('tr').each(function(i,e){
-        //   console.log($(e).html());
-        k=0;
-        if (i>0){
-             temp='';
-             $(e).find('td').each(function(j,c){
-              
-             if (i==1)
-             {
-             temp +='<td><b>' + $(c).text() + '</b></td>';}
-             else
-             {
-               if (k==4){
-               
-               temp +='<td><a href="callto:' + $(c).text() +'">' + $(c).text() + '</a></td>';}
-               
-               
-               else
-               {
-               temp +='<td>' + $(c).text() + '</td>';}
-             }
-                
-              k++;  
-               
-             });
+          var $=cheerio.load(html);
+          var contacts=[];   
+          var contact={};
+         $('div.tb_content').each(function(i,e){
+          // console.log($(e).html());
+             $(e).find('tbody tr').each(function(i,e){
+              contact={}
+                 $(e).find('td').each(function(i,cell){
+                    if (i==0)
+                    contact.name = $(cell).html();
+                    if (i==1)
+                    contact.designation = $(cell).html();
+                    if (i==2)
+                    contact.address = $(cell).html();
+                    if (i==3)
+                    contact.phone = $(cell).html();
+                    
+ 
+                 })
+                contacts.push(contact);
              
              
-             if (i==1){
-              tHead='</tr>' + temp + '</tr>';
-              
-             }
-             else
-             
-             tBody +='</tr>' + temp + '</tr>';
-        }
+              });
          
-         });
-         
-         temp='<table  id="tblContacts" class="table table-hover"><thead>' +tHead +'</thead><tbody>'  + tBody +  '</tbody></table>'
-        // console.log(temp);
-         res.render('other/directory',{data:temp,user:req.user});
+          });
+          //console.log(contacts);
+         res.render('other/directory',{data:contacts,user:req.user});
          });
      }catch(err){
       return next();
